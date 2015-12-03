@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+- '0.12'
+branches:
+  except:
+    - release-dev
+before_script:
+after_success:
+- bash release.sh
