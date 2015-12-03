@@ -6,6 +6,10 @@ if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
   echo "Skipping release because this is a pull request"
   exit 0
 fi
+if [[ "$TRAVIS_BRANCH" != "master" ]]
+  echo "Skipping release because this is not the master branch"
+  exit 0
+fi
 
 echo "Releasing $RELEASE_ENV"
 
