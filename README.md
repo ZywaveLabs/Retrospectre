@@ -1,3 +1,4 @@
+![Logo](spectre.png)
 # Retrospectre
 MSOE SDL project.
 
