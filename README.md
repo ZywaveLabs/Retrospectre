@@ -1,3 +1,0 @@
-# Retrospectre
-MSOE SDL project.
-
