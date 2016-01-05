@@ -6,8 +6,8 @@ if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
   echo "Skipping release because this is a pull request"
   exit 0
 fi
-if [[ "$TRAVIS_BRANCH" != "master" ]]; then
-  echo "Skipping release because this is not the master branch"
+if [[ "$TRAVIS_BRANCH" != "master" && "$TRAVIS_TAG" == "" ]]; then
+  echo "Skipping release because this is not the master branch or a tag"
   exit 0
 fi
 
