@@ -6,6 +6,7 @@ node_js:
 branches:
   except:
     - release-dev
+    - release-prd
 before_script:
 after_success:
 - bash release.sh
