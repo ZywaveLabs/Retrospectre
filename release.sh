@@ -2,16 +2,17 @@
 
 set -o errexit -o nounset
 
-if [[ "$TRAVIS_PULL_REQUEST" != "false" ]] then
+if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
   echo "Skipping release because this is a pull request"
   exit 0
 fi
-if [[ "$TRAVIS_BRANCH" != "master" ]] then
+if [[ "$TRAVIS_BRANCH" != "master" ]]; then
   echo "Skipping release because this is not the master branch"
   exit 0
 fi
 
-if [[ "$TRAVIS_TAG" != "" ]] then
+RELEASE_ENV="dev"
+if [[ "$TRAVIS_TAG" != "" ]]; then
   RELEASE_ENV="prd"
 fi
 
