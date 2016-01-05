@@ -12,7 +12,7 @@ if [[ "$TRAVIS_BRANCH" != "master" ]] then
 fi
 
 if [[ "$TRAVIS_TAG" != "" ]] then
-  $RELEASE_ENV="prd"
+  RELEASE_ENV="prd"
 fi
 
 echo "Releasing $RELEASE_ENV"
