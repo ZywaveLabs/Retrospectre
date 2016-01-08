@@ -19,7 +19,7 @@ fi
 echo "Releasing $RELEASE_ENV"
 
 mkdir release
-cp index.html ./release
+cp -rf src/ ./release
 
 cd release
 
