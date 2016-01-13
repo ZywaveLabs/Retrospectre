@@ -1,0 +1,16 @@
+div.content{
+	margin-top:100px;
+}
+h1.center{
+margin-bottom:0 !important;
+}
+
+
+.center {
+    margin-left: 25% !important;
+	margin-right:25%;
+	margin-bottom:3%;
+	text-align:center;
+    width: 50%;
+    padding: 5%;
+}
