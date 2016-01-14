@@ -46,11 +46,12 @@
 	        "returns": "return"
 	      }
 	    }]
-
-
-
-
-
-
+    },
+    "globals": {
+        "require": false,
+        "Meteor": false,
+        "Router": false,
+        "Template": false,
+        "Session": false
     }
 }
