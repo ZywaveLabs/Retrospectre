@@ -1,3 +1,5 @@
+"use strict";
+
 Router.configure({
-    layoutTemplate: 'main-layout'
+    layoutTemplate: "main-layout"
 });
