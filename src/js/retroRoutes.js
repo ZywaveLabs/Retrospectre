@@ -12,14 +12,20 @@ Router.configure({
 //create a route for when directed to the top level homepage
 Router.route('/',{
 	name: 'Home',//give the route a name
-	template:'landingPage',//name of template to render
-	title:'Home'//title of template *for later use*
+	template: 'landingPage',//name of template to render
+	title: 'Home'//title of template *for later use*
+});
+
+Router.route('/create-room', {
+	name: 'Create Room',
+	template: 'createRoom',
+	title: 'Create Room'
 });
 //if current session is on the client side then return the title of the current route taken
 if(Meteor.isClient){
-Template.headerFooter.helpers({
-  title:function(){
-	return Router.current().route.options.title;
+  Template.headerFooter.helpers({
+    title:function(){
+	  return Router.current().route.options.title;
   }
 });
 }
