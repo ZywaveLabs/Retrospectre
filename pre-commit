@@ -1,0 +1,6 @@
+#!/bin/sh
+# Copy this to .git/hooks/ folder!!!!!!
+# Pre-commit hooks
+
+# Lint stuff before committing
+gulp lint
