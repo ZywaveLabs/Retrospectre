@@ -26,4 +26,3 @@ server/					# Server folder
     startup/            # On server startup
 meteor-boilerplate		# Command line tool
 ```
-
