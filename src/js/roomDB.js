@@ -8,18 +8,18 @@
 **/
 var lastRoom;
 var ROOMS = new Mongo.Collection("rooms");
-if(Meteor.isClient)
-{
-	Template.createRoom.events({
-		"hover h1": function(event){
-			alert("The last room is "+lastRoom);
-		}
-	});
+
+if(Meteor.isClient) {
+    Template.createRoom.events({
+        "hover h1": function(e){
+            alert("The last room is " + lastRoom);
+        }
+    });
 }
-if(Meteor.isServer)
-{
-	Meteor.startup(function (){
-		var roomList = ROOMS.find({},{sort: {id: -1}}).fetch();
-		lastRoom = roomList[0].id;
-	});
+if(Meteor.isServer) {
+    Meteor.startup(function (){
+        var roomList = ROOMS.find({},{sort: {id: -1}}).fetch();
+
+        lastRoom = roomList[0].id;
+    });
 }
