@@ -9,7 +9,6 @@
 var lastRoom;
 var newRoomAssignment;
 var ROOMS = new Mongo.Collection("rooms");
-<<<<<<< HEAD
 if(Meteor.isClient)
 {
 	Template.landingPage.events({
@@ -49,20 +48,4 @@ function findLastRoom(){
 
 function isInt(n){
     return Number(n) === n && n % 1 === 0;
-=======
-
-if(Meteor.isClient) {
-    Template.createRoom.events({
-        "hover h1": function(e){
-            alert("The last room is " + lastRoom);
-        }
-    });
-}
-if(Meteor.isServer) {
-    Meteor.startup(function (){
-        var roomList = ROOMS.find({},{sort: {id: -1}}).fetch();
-
-        lastRoom = roomList[0].id;
-    });
->>>>>>> 240076700d5381cfdc99f7d0021440aec739a28f
 }
