@@ -7,9 +7,11 @@
 *the cards in current room and display them
 **/
 
-//var roomId = this.params._id;
-Cards = new Mongo.Collections('cards');
+var roomId;
+Cards = new Mongo.Collection('cards');
 if(Meteor.isClient){
+	console.log(this.params);
+	roomId = this.params._id;
 	Template.room.helpers({
 		cards : function(){
 		//return all cards in db sort by newest
