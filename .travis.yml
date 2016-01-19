@@ -8,5 +8,6 @@ branches:
     - release-dev
     - release-prd
 before_script:
+    - gulp lint
 after_success:
-- bash release.sh
+    - bash release.sh
