@@ -18,6 +18,9 @@ fi
 
 echo "Releasing $RELEASE_ENV"
 
+# Hopefully will break if trying to build, well find out!
+gulp lint
+
 mkdir release
 cp -rf src/. ./release
 
