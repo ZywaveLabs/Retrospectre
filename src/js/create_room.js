@@ -1,9 +1,9 @@
 "use strict"
 
-// if(Meteor.isServer) {
+if(Meteor.isServer) {
 
-// }
+}
 
-// if(Meteor.isClient) {
+if(Meteor.isClient) {
 	
-// }
+}
