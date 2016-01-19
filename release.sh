@@ -18,6 +18,18 @@ fi
 
 echo "Releasing $RELEASE_ENV"
 
+# Hopefully will break if trying to build, we'll find out!
+gulp lint
+result=$?
+if [ $result -eq 0 ]; then
+    echo
+    echo "Linting passed"
+else
+    echo
+    echo "Linting failed, fix above errors"
+    exit $result
+fi
+
 mkdir release
 cp -rf src/. ./release
 
