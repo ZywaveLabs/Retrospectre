@@ -15,7 +15,8 @@ if(Meteor.isClient){
     Template.room.helpers({
         cards : function(){
             // return all cards in db sort by newest
-            return Cards.find({roomID: roomId},{sort: {createdAt: -1}});
+            // return Cards.find({roomID: roomId},{sort: {createdAt: -1}});
+            // ^^^ TODO FIX ^^^
         }
     });
     // will handle the events of the page
@@ -24,6 +25,6 @@ if(Meteor.isClient){
     });
 }
 
-if(Meteor.isServer){
+if(Meteor.isServer) {
 
 }
