@@ -11,16 +11,16 @@ Router.configure({
     layoutTemplate: "headerFooter" // Name of template that contains header and footer used for each page
 });
 //create a route for when directed to the top level homepage
-Router.route('/',{
-	name: 'Home',//give the route a name
-	template: 'landingPage',//name of template to render
-	title: 'Home'//title of template *for later use*
+Router.route("/",{
+    name: "Home",//give the route a name
+    template: "landingPage",//name of template to render
+    title: "Home"//title of template *for later use*
 });
 
-Router.route('/create-room', {
-	name: 'Create Room',
-	template: 'createRoom',
-	title: 'Create Room'
+Router.route("/create-room", {
+    name: "Create Room",
+    template: "createRoom",
+    title: "Create Room"
 });
 
 // If current session is on the client side then return the title of the current route taken

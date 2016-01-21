@@ -7,19 +7,18 @@
 *the cards in current room and display them
 **/
 
-//var roomId = this.params._id;
-Cards = new Mongo.Collection('cards');
-if(Meteor.isClient){
-	Template.room.helpers({
-		cards : function(){
-		//return all cards in db sort by newest
-	    	return cards.find({roomID: roomId},{sort: {createdAt: -1}});
-		}
-	});
-	//will handle the events of the page
-	Template.room.events({
-	});
-}
-if(Meteor.isServer){
-}
+"use strict";
 
+var Cards = new Mongo.Collection("cards");
+
+if(Meteor.isClient){
+    Template.room.helpers({
+        cards : function(){
+        //return all cards in db sort by newest
+        //    return Cards.find({roomID: roomId},{sort: {createdAt: -1}});
+        }
+    });
+    //will handle the events of the page
+    Template.room.events({
+    });
+}
