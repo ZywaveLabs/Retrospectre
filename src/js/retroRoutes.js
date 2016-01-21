@@ -10,20 +10,31 @@
 Router.configure({
     layoutTemplate: "headerFooter" // Name of template that contains header and footer used for each page
 });
-// Create a route for when directed to the top level homepage
+//create a route for when directed to the top level homepage
 Router.route("/",{
-    name: "Home", // Give the route a name
-    template:"landingPage", // Name of template to render
-    title:"Home" // Title of template *for later use*
+    name: "Home",//give the route a name
+    template: "landingPage",//name of template to render
+    title: "Home"//title of template *for later use*
 });
+<<<<<<< HEAD
 //create a route for the rooms
 Router.route("/room",{
 	name: "Room",
 	template: "room",
 	title: "The Poltergeists"
 });
+=======
+
+Router.route("/create-room", {
+    name: "Create Room",
+    template: "createRoom",
+    title: "Create Room"
+});
+
+>>>>>>> origin/createRoom
 // If current session is on the client side then return the title of the current route taken
 if(Meteor.isClient){
+
     Template.headerFooter.helpers({
         title:function(){
             return Router.current().route.options.title;
