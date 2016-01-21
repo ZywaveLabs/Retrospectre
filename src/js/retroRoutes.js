@@ -16,14 +16,13 @@ Router.route("/",{
     template: "landingPage",//name of template to render
     title: "Home"//title of template *for later use*
 });
-<<<<<<< HEAD
+
 //create a route for the rooms
 Router.route("/room",{
 	name: "Room",
 	template: "room",
 	title: "The Poltergeists"
 });
-=======
 
 Router.route("/create-room", {
     name: "Create Room",
@@ -31,7 +30,6 @@ Router.route("/create-room", {
     title: "Create Room"
 });
 
->>>>>>> origin/createRoom
 // If current session is on the client side then return the title of the current route taken
 if(Meteor.isClient){
 

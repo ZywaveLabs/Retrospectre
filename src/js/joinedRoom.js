@@ -6,7 +6,7 @@
 *@purpose Once the room page is rendered, need to connect to
 *the cards in current room and display them
 **/
-<<<<<<< HEAD
+
 Cards = new Mongo.Collection('cards');
 if(Meteor.isClient){
 	if(window.location.href.search('room')!=-1){
@@ -36,23 +36,3 @@ if(Meteor.isClient){
 		console.log(Cards.find({roomCode:Session.get('roomNumber')},{sort: {createdAt: -1}}).fetch());
 		}
 }
-if(Meteor.isServer){
-}
-=======
-
-"use strict";
-
-var Cards = new Mongo.Collection("cards");
-
-if(Meteor.isClient){
-    Template.room.helpers({
-        cards : function(){
-        //return all cards in db sort by newest
-        //    return Cards.find({roomID: roomId},{sort: {createdAt: -1}});
-        }
-    });
-    //will handle the events of the page
-    Template.room.events({
-    });
-}
->>>>>>> origin/createRoom
