@@ -48,10 +48,14 @@
 	    }]
     },
     "globals": {
-        "require": false,
         "Meteor": false,
         "Router": false,
         "Template": false,
-        "Session": false
+        "Mongo": false
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
     }
 }

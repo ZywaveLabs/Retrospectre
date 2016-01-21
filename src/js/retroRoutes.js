@@ -1,3 +1,4 @@
+"use strict";
 /**
 *@author TreJon House
 *@created 1/13/16
@@ -5,9 +6,9 @@
 *@edited 1/13/16
 *@purose To define routes for meteor to execute when a link is clicked
 **/
-//configure a template that will used a layout
+// Configure a template that will used a layout
 Router.configure({
-	layoutTemplate: 'headerFooter'//name of template that contains header and footer used for each page
+    layoutTemplate: "headerFooter" // Name of template that contains header and footer used for each page
 });
 //create a route for when directed to the top level homepage
 Router.route('/',{
@@ -21,11 +22,13 @@ Router.route('/create-room', {
 	template: 'createRoom',
 	title: 'Create Room'
 });
-//if current session is on the client side then return the title of the current route taken
+
+// If current session is on the client side then return the title of the current route taken
 if(Meteor.isClient){
-  Template.headerFooter.helpers({
-    title:function(){
-	  return Router.current().route.options.title;
-  }
-});
+
+    Template.headerFooter.helpers({
+        title:function(){
+            return Router.current().route.options.title;
+        }
+    });
 }
