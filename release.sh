@@ -19,8 +19,9 @@ fi
 echo "Releasing $RELEASE_ENV"
 
 mkdir release
-cd src/
-demeteorizer -o ./release
+# Figure this out later
+# cd src/
+# demeteorizer -o ./release
 cp -rf src/. ./release
 
 cd release
