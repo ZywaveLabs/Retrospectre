@@ -21,3 +21,7 @@ iron:router
 accounts-ui
 accounts-password
 dburles:mongo-collection-instances
+sanjo:jasmine
+velocity:core
+velocity:html-reporter
+momentjs:moment
