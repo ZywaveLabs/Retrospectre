@@ -48,14 +48,14 @@
 	    }]
     },
     "globals": {
-        "Meteor": false,
-        "Router": false,
-        "Template": false,
-        "Mongo": false
+        "MeteorStubs": false
     },
     "env": {
         "browser": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "meteor": true,
+        "jasmine": true,
+        "jquery": true
     }
 }
