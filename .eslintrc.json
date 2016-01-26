@@ -48,13 +48,10 @@
 	    }]
     },
     "globals": {
-<<<<<<< HEAD
         "Meteor": false,
         "Router": false,
         "Template": false,
         "Mongo": false,
-=======
->>>>>>> master
         "MeteorStubs": false
     },
     "env": {
