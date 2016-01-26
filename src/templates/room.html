@@ -1,37 +1,23 @@
 <template name="room">
-<div class="container-fluid">
-<h1> Sprint Retrospective</h1>
-<hr>
-<div class="input-group">
-<input type="text" class="form-control thoughts" placeholder="Thoughts..." aria-describedby="basic-addon1">
-<span class="input-group-addon">
-        <input id="wentWell" type="checkbox" aria-label="..."> Went Well
-      </span>
-<span class="input-group-addon">
-        <input id="wentWrong" type="checkbox" aria-label="..."> Went Wrong
-      </span>
- <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Submit!</button>
-      </span>
-</div>
-<hr>
-{{#if haveCards}}
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-6 col-sm-6">
-				<div class="row">Went Well</div>
-				{{#each wentWell}}
-					{{>card}}
-				{{/each}}
-			</div>
-			<div class="col-xs-6 col-sm-6">
-				<div class="row">Went Wrong</div>
-				{{#each wentWrong}}
-					{{>card}}
-				{{/each}}
+		<h1> Sprint Retrospective</h1>
+		{{> card}}
+		<hr>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-6 col-sm-6">
+					<h2> Good category </h2>
+					{{#each goodCards}}
+						<li>{{text}}</li>
+					{{/each}}
+				</div>
+				<div class="col-xs-6 col-sm-6">
+					<h2> Bad category </h2>
+					{{#each badCards}}
+						<li>{{text}}</li>
+					{{/each}}
+				</div>
 			</div>
 		</div>
 	</div>
-{{/if}}
-</div>
 </template>

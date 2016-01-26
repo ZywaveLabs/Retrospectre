@@ -51,7 +51,9 @@
         "Meteor": false,
         "Router": false,
         "Template": false,
-        "Mongo": false
+        "Mongo": false,
+        "Session": true,
+        "$": true
     },
     "env": {
         "browser": true,
