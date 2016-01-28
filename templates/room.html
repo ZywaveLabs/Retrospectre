@@ -1,0 +1,23 @@
+<template name="room">
+	<div class="container-fluid">
+		<h1> Sprint Retrospective</h1>
+		{{> card}}
+		<hr>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-6 col-sm-6">
+					<h2> Good category </h2>
+					{{#each goodCards}}
+						<li>{{text}}</li>
+					{{/each}}
+				</div>
+				<div class="col-xs-6 col-sm-6">
+					<h2> Bad category </h2>
+					{{#each badCards}}
+						<li>{{text}}</li>
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
