@@ -25,3 +25,5 @@ sanjo:jasmine
 velocity:core
 velocity:html-reporter
 momentjs:moment
+velocity:console-reporter
+sanjo:karma

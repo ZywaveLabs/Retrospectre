@@ -2,14 +2,21 @@ language: node_js
 notifications:
   slack: retrospectre:DT9bWKb0zenFvq6umddlg0ko
 node_js:
-- '0.12'
+    - '0.12'
+env:
+    - JASMINE_SERVER_UNIT=0 JASMINE_SERVER_INTEGRATION=1 JASMINE_CLIENT_UNIT=1 JASMINE_CLIENT_INTEGRATION=1
 branches:
   except:
     - release-dev
     - release-prd
 before_install:
     - "curl https://install.meteor.com/ | sh"
+    - "curl -L http://git.io/ejPSng | /bin/sh"
 before_script:
     - gulp lint
 after_success:
     - bash release.sh
+WORKING_DIR:
+    - src/
+TEST_COMMAND:
+    - meteor --test
