@@ -12,6 +12,8 @@ branches:
     - release-prd
 before_install:
     - "curl https://install.meteor.com/ | sh"
+    - npm install -g gulp
+    - npm install -g velocity-cli
 before_script:
     - gulp lint
 script:
