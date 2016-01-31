@@ -5,17 +5,16 @@ notifications:
 node_js:
     - '0.12'
 env:
-    - JASMINE_SERVER_UNIT=0 JASMINE_SERVER_INTEGRATION=1 JASMINE_CLIENT_UNIT=1 JASMINE_CLIENT_INTEGRATION=1 #WORKING_DIR="src/"" TEST_COMMAND="meteor --test"
+    - JASMINE_SERVER_UNIT=0 JASMINE_SERVER_INTEGRATION=1 JASMINE_CLIENT_UNIT=1 JASMINE_CLIENT_INTEGRATION=1 JASMINE_BROWSER=PhantomJS
 branches:
   except:
     - release-dev
     - release-prd
 before_install:
     - "curl https://install.meteor.com/ | sh"
-    # - "curl -L http://git.io/ejPSng | /bin/sh"
 before_script:
     - gulp lint
 script:
-    - ( cd src && meteor --test )
+    - ( cd src && velocity test-app --ci )
 after_success:
     - bash release.sh
