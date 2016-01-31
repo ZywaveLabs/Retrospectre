@@ -16,6 +16,8 @@ before_install:
     - npm install -g velocity-cli
 before_script:
     - gulp lint
+    - pkill -9 phantomjs || true
+    - pkill -9 node || true
 script:
     - ( cd src && velocity test-app --ci )
 after_success:
