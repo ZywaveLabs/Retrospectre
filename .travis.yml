@@ -13,12 +13,11 @@ branches:
 before_install:
     - "curl https://install.meteor.com/ | sh"
     - npm install -g gulp
-    - npm install -g velocity-cli
+    # - npm install -g velocity-cli
 before_script:
     - gulp lint
-    - pkill -9 phantomjs || true
-    - pkill -9 node || true
 script:
-    - ( cd src && velocity test-app --ci )
+    # - ( cd src && velocity test-app --ci ) # Killing test run on CI until timeout issue is resolved
+    # https://github.com/xolvio/meteor-jasmine/issues/324
 after_success:
     - bash release.sh
