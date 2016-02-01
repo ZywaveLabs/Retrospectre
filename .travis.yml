@@ -1,15 +1,23 @@
 language: node_js
+sudo: required
 notifications:
   slack: retrospectre:DT9bWKb0zenFvq6umddlg0ko
 node_js:
-- '0.12'
+    - '0.12'
+env:
+    - JASMINE_SERVER_UNIT=0 JASMINE_SERVER_INTEGRATION=1 JASMINE_CLIENT_UNIT=1 JASMINE_CLIENT_INTEGRATION=1 JASMINE_BROWSER=PhantomJS
 branches:
   except:
     - release-dev
     - release-prd
 before_install:
     - "curl https://install.meteor.com/ | sh"
+    - npm install -g gulp
+    # - npm install -g velocity-cli
 before_script:
     - gulp lint
+script:
+    # - ( cd src && velocity test-app --ci ) # Killing test run on CI until timeout issue is resolved
+    # https://github.com/xolvio/meteor-jasmine/issues/324
 after_success:
     - bash release.sh
