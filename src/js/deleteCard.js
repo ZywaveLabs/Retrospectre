@@ -6,12 +6,12 @@
 **/
 
 Meteor.methods({
-  deleteCard: function (roomNumber, category, text) {
-    Mongo.Collection.get("cards").remove({
-      roomCode: roomNumber,
-      category: category,
-      createdAt: new Date(),
-      text: text
+    deleteCard: function (roomNumber, category, text) {
+        Mongo.Collection.get("cards").remove({
+        roomCode: roomNumber,
+        category: category,
+        createdAt: new Date(),
+        text: text
     });
   }
 });
