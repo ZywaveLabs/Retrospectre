@@ -99,6 +99,12 @@ if (Meteor.isClient) {
             Session.set("category", category);
         }
     });
+
+    Template.room.events({
+        "click #deleteCardButton": function(){
+            Meteor.call("deleteCard",this._id);
+        }
+    });
 }
 
 if (Meteor.isServer) {
