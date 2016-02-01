@@ -22,10 +22,15 @@ Router.route("/", {
 });
 
 // create a route for the rooms
-Router.route("/room", {
+Router.route("/room/:_roomNumber", {
     name: "Room",
+    path: "/room/:_roomNumber",
     template: "room",
-    title: "The Poltergeists"
+    title: "The Poltergeists",
+    onBeforeAction: function (){
+        Session.set("roomNumber", this.params._roomNumber);
+        this.next();
+    }
 });
 
 Router.route("/create-room", {

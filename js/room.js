@@ -7,7 +7,6 @@ var Cards = new Mongo.Collection("cards");
 
 
 if (Meteor.isClient) {
-
     // to provide a safer code base as far as
     // disallow the client as much control we need to subscribe to
     // certain data
@@ -25,6 +24,7 @@ if (Meteor.isClient) {
 
             Session.set("roomNumber",
                 parseInt(prompt("Enter the designated room number.")));
+            Router.go("/room/" + Session.get("roomNumber"));
         }
 
     });
@@ -69,7 +69,7 @@ if (Meteor.isClient) {
             }
 
             if(Session.get("category") === undefined) {
-                alert("Enter a category for you thought");
+                alert("Enter a category for your thought");
                 return;
             }
 

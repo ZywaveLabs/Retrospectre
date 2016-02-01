@@ -38,7 +38,7 @@ if (Meteor.isClient) {
 
             Meteor.call("addRoom", newRoomID);
             Session.set("roomNumber", newRoomID);
-            Router.go("/room");
+            Router.go("/room/" + newRoomID);
         }
     });
 }

@@ -17,7 +17,7 @@ if (Meteor.isClient) {
             // validate the room number
             if (roomNumber != null && !NaN) {
                 Session.set("roomNumber", roomNumber);
-                Router.go("/room");
+                Router.go("/room/" + roomNumber);
             } else {
                 alert("An invalid room number was given," +
                     "either ask for the number or create a new room.");
