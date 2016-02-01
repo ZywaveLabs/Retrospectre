@@ -7,15 +7,19 @@
 			<div class="row">
 				<div class="col-xs-6 col-sm-6">
 					<h2> Good category </h2>
-					{{#each goodCards}}
-						<li>{{text}}</li>
-					{{/each}}
+					<ul class="fa-ul">
+						{{#each goodCards}}
+							<li><i class="fa fa-spinner fa-pulse"></i>&nbsp;{{text}}&nbsp;<span id="deleteCardButton"><i class="fa fa-trash-o"></i></span></li>
+						{{/each}}
+					</ul>
 				</div>
 				<div class="col-xs-6 col-sm-6">
 					<h2> Bad category </h2>
-					{{#each badCards}}
-						<li>{{text}}</li>
-					{{/each}}
+					<ul class="fa-ul">
+							{{#each badCards}}
+								<li><i class="fa fa-spinner fa-pulse"></i>&nbsp;{{text}}&nbsp;<span id="deleteCardButton"><i class="fa fa-trash-o"></i></span></li>
+							{{/each}}
+					</ul>
 				</div>
 			</div>
 		</div>
