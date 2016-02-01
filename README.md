@@ -4,6 +4,9 @@ MSOE SDL project.
 
 [![Build Status](https://travis-ci.org/Zywave/Retrospectre.svg?branch=master)](https://travis-ci.org/Zywave/Retrospectre)
 
+## Temporary demo location
+[Demo](http://74.91.115.65/)
+
 # Building Locally
 ## Requirements
 * [Node](https://nodejs.org/)
