@@ -69,7 +69,7 @@ if (Meteor.isClient) {
             }
 
             if(Session.get("category") === undefined) {
-                alert("Enter a category for you thought");
+                alert("Enter a category for your thought");
                 return;
             }
 
