@@ -22,13 +22,12 @@ Meteor.methods({
 **/
 
 Meteor.methods({
-  deleteCard: function (roomNumber, category, text) {
-    Mongo.Collection.get("cards").remove({
-      roomCode: roomNumber,
-      category: category,
-      createdAt: new Date(),
-      text: text
+    deleteCard: function (roomNumber, category, text) {
+        Mongo.Collection.get("cards").remove({
+        roomCode: roomNumber,
+        category: category,
+        createdAt: new Date(),
+        text: text
     });
   }
-});
->>>>>>> Created js file for deleteCard
+});>>>>>>> Created js file for deleteCard
