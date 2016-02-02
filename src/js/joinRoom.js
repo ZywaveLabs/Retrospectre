@@ -4,9 +4,12 @@ if (Meteor.isClient) {
 
     Template.joinRoom.events({
 
-        "click #joinRoom": function () {
+        "submit .join-room": function (eve) {
+            eve.preventDefault();
+            // var roomNumber = $("#roomCode:text").val();
+            var roomNumber = eve.target.roomCode.value;
 
-            var roomNumber = $("#roomCode:text").val();
+            alert(roomNumber);
 
             roomNumber = parseInt(roomNumber);
 
