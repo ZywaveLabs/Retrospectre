@@ -9,8 +9,6 @@ if (Meteor.isClient) {
             // var roomNumber = $("#roomCode:text").val();
             var roomNumber = eve.target.roomCode.value;
 
-            alert(roomNumber);
-
             roomNumber = parseInt(roomNumber);
 
             // TODO: I dont think we should limit room codes/numbers to numbers
