@@ -1,4 +1,7 @@
 "use strict";
+var roomGen = {};
+
+roomGen = JSON.parse(Assets.getText("room_gen.json"));
 
 var ROOMS = new Mongo.Collection("rooms");
 
@@ -11,16 +14,10 @@ if (Meteor.isClient) {
     Template.createRoom.helpers({
 
         getNewRoomNumber: function () {
+            var newRoomCode = generateNewRoomCode();
 
-            var lastRoomID = getLastRoomID();
-            var newRoomID;
-
-            if (lastRoomID === null) {
-                lastRoomID = 0;
-            }
-
-            newRoomID = lastRoomID + 1;
-            return newRoomID;
+            Session.set("newRoomCode", newRoomCode);
+            return newRoomCode;
         }
     });
 
@@ -80,6 +77,51 @@ function getLastRoomID() {
     }
 
     return lastRoom;
+}
+
+
+/**
+ * generateNewRoomCode - Generates a new fun room code
+ *
+ * @return {string}  Fun Room code
+ */
+function generateNewRoomCode() {
+    var roomCode = "";
+
+    while(roomCode === "" || roomExists(roomCode)){
+        var noun = roomGen.Nouns[getRandomInt(0, roomGen.Nouns.length)];
+        var adjective = roomGen
+            .Adjectives[getRandomInt(0, roomGen.Adjectives.length)];
+        var verb = roomGen.Verbs[getRandomInt(0, roomGen.Verbs.length)];
+
+        roomCode = adjective + verb + noun;
+    }
+    return adjective + verb + noun;
+}
+
+
+/**
+ * getRandomInt - Returns a random integer between min (included) and max (excluded)
+ *  Using Math.round() will give you a non-uniform distribution!
+ *
+ * @param  {integer} min Minimum integer (Included)
+ * @param  {integer} max Maximum integer (Excluded)
+ * @return {integer}     description
+ */
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+/**
+ * roomExists - Checks to see if room with roomcode exists
+ *
+ * @param  {string} roomCode Room to check if exists already
+ * @return {boolean} Whether room codes exists
+ */
+function roomExists(roomCode){
+    return ROOMS.find({
+        id: roomCode
+    });
 }
 
 function addRoomToDatabase(roomID) {
