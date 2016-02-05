@@ -28,8 +28,7 @@ if (Meteor.isClient) {
     Template.room.helpers({
 
         cards : function(){
-            while(Session.get("roomNumber") == undefined ||
-             isNaN(parseInt(Session.get("roomNumber")))) {
+            while(Session.get("roomNumber") == undefined) {
                 Session.set("roomNumber",
                     prompt("Enter the designated room number."));
             }
@@ -58,8 +57,7 @@ if (Meteor.isClient) {
         "click #submitCardButton": function(){
             event.preventDefault();
 
-            while(Session.get("roomNumber") == undefined ||
-             isNaN(parseInt(Session.get("roomNumber")))) {
+            while(Session.get("roomNumber") == undefined) {
                 Session.set("roomNumber",
                     prompt("Enter the designated room number."));
             }

@@ -5,11 +5,12 @@ var ROOMS = new Mongo.Collection("rooms");
 
 if (Meteor.isClient) {
 
-    Template.createRoom.onCreated(function () {
+    Template.createRoom.onCreated(function() {
         /* TODO: VV BAD VV Make this server only, don't publish rooms to client */
         this.subscribe("rooms");
-        Meteor.call("generateNewRoomCode", function(error, result){
-            if(!error){
+        Meteor.call("generateNewRoomCode", function(error, result) {
+            if (!error) {
+                Session.set("roomCodeAvailable", true);
                 Session.set("newRoomCode", result);
             } else {
                 /* TODO: Errors */
@@ -19,12 +20,16 @@ if (Meteor.isClient) {
 
     Template.createRoom.helpers({
 
-        getNewRoomNumber: function () {
+        getNewRoomNumber: function() {
             return Session.get("newRoomCode");
         },
 
-        roomAvailableShow: function () {
-            return getRandomInt(0,2) == 1 ? "hidden" : "visible";
+        roomNotAvailableShow: function() {
+            return (Session.get("roomCodeAvailable") ? "hidden" : "visible");
+        },
+
+        createRoomDisable: function() {
+            return (Session.get("roomCodeAvailable") ? "" : "disabled");
         }
     });
 
@@ -33,8 +38,9 @@ if (Meteor.isClient) {
         "click #generateNewRoomCodeButton": function() {
             Session.set("newRoomCode", Meteor.call("generateNewRoomCode",
                 function(error, result) {
-                    if(!error){
+                    if (!error) {
                         Session.set("newRoomCode", result);
+                        Session.set("roomCodeAvailable", true);
                     } else {
                         /* TODO: Errors */
                     }
@@ -42,7 +48,7 @@ if (Meteor.isClient) {
             ));
         },
 
-        "submit .create-room": function (eve) {
+        "submit .create-room": function(eve) {
             eve.preventDefault();
             var roomId = eve.target.roomcode.value;
 
@@ -53,6 +59,14 @@ if (Meteor.isClient) {
             Meteor.call("addRoom", roomId);
             Session.set("roomNumber", roomId);
             Router.go("/room/" + roomId);
+        },
+
+        "keyup #newRoomCode input": function(eve) {
+            var newRoomCode = eve.target.value;
+            var show = !roomExists(newRoomCode);
+
+            Session.set("roomCodeAvailable", show);
+            Session.set("newRoomCode", eve.target.value);
         }
     });
 }
@@ -60,8 +74,12 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
     var roomGen = JSON.parse(Assets.getText("room_gen.json"));
 
-    Meteor.publish("rooms", function () {
-        return ROOMS.find({}, { sort: { id: -1 } });
+    Meteor.publish("rooms", function() {
+        return ROOMS.find({}, {
+            sort: {
+                id: -1
+            }
+        });
     });
 
     /**
@@ -72,7 +90,7 @@ if (Meteor.isServer) {
     var generateNewRoomCode = function() {
         var roomCode = "";
 
-        while(roomCode === "" || roomExists(roomCode)){
+        while (roomCode === "" || roomExists(roomCode)) {
             var noun = roomGen.Nouns[getRandomInt(0, roomGen.Nouns.length)];
             var adjective = roomGen
                 .Adjectives[getRandomInt(0, roomGen.Adjectives.length)];
@@ -85,15 +103,15 @@ if (Meteor.isServer) {
 
 
     /**
-    *Adding meteor methods give methods we can
-    *call using meteor.call this mandatory
-    *when trying to handle the DB in any manner
-    *it revokes DB access to the client
-    *this is due to removing the insecure package
-    **/
+     *Adding meteor methods give methods we can
+     *call using meteor.call this mandatory
+     *when trying to handle the DB in any manner
+     *it revokes DB access to the client
+     *this is due to removing the insecure package
+     **/
     Meteor.methods({
 
-        addRoom: function (newRoomID) {
+        addRoom: function(newRoomID) {
             addRoomToDatabase(newRoomID);
         },
 
@@ -121,11 +139,10 @@ function getRandomInt(min, max) {
  * @param  {string} roomCode Room to check if exists already
  * @return {boolean} Whether room codes exists
  */
-function roomExists(roomCode){
-    return false;
-    // return ROOMS.find({ TODO: Finish this
-    //     id: roomCode
-    // });
+function roomExists(roomCode) {
+    return ROOMS.find({
+        id: roomCode
+    }).count() > 0;
 }
 
 
@@ -135,8 +152,10 @@ function roomExists(roomCode){
  * @param  {string} roomID Roomcode to add to database
  */
 function addRoomToDatabase(roomID) {
-    ROOMS.insert({
-        id: String(roomID),
-        dateCreated: new Date()
-    });
+    if(!roomExists(roomID)){
+        ROOMS.insert({
+            id: String(roomID),
+            dateCreated: new Date()
+        });
+    }
 }
