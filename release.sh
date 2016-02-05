@@ -15,7 +15,9 @@ RELEASE_ENV="dev"
 if [[ "$TRAVIS_TAG" != "" ]]; then
   RELEASE_ENV="prd"
 fi
-
+if [[ "$RELEASE_ENV" == "prd" ]]; then
+  bash deploy.sh
+fi
 echo "Releasing $RELEASE_ENV"
 
 mkdir release
