@@ -19,11 +19,7 @@ if (Meteor.isClient) {
         // session storing the room number is lost so we need to
         // ask for one and verify it
         while (Session.get("roomNumber") == null ||
-                Session.get("roomNumber") == undefined ||
-                isNaN(parseInt(Session.get("roomNumber")))) {
-
-            Session.set("roomNumber",
-                parseInt(prompt("Enter the designated room number.")));
+                Session.get("roomNumber") == undefined) {
             Router.go("/room/" + Session.get("roomNumber"));
         }
 
