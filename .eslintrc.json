@@ -48,7 +48,8 @@
 	    }]
     },
     "globals": {
-        "MeteorStubs": false
+        "MeteorStubs": false,
+        "moment": false
     },
     "env": {
         "browser": true,

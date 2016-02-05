@@ -1,6 +1,16 @@
 <template name="createRoom">
-<h1 class="center">CREATE A ROOM</h1>
-<h3 class="center"> Room Code: {{getNewRoomNumber}} </h3>
-<h3 class="center"> Alias: <input type="text" name="alias" value="Moderator"> </h3>
-<input class="center" id="createAndJoinRoomButton" name="joinRoom" type="button" value="CREATE AND JOIN ROOM">
+    <h1 class="center">CREATE A ROOM</h1>
+    <form class="create-room">
+        <h3 class="center">
+            <span>Room Code:
+                <input type="text" id="newRoomCode" name="roomcode" value="{{getNewRoomNumber}}" size="35" maxlength="35">&nbsp;
+                <span id="generateNewRoomCodeButton"><i class="fa fa-refresh"></i></span>&nbsp;
+                <span title="Room name not available" id="roomNotAvailableIcon" style="visibility: {{roomAvailableShow}}"><i class="fa fa-times-circle"></i></span>
+            </span>
+        </h3>
+        <h3 class="center">Alias:
+            <input type="text" name="alias" value="Moderator" size="20" maxlength="20">
+        </h3>
+        <input class="center" id="createAndJoinRoomButton" name="joinRoom" type="submit" value="CREATE AND JOIN ROOM">
+    </form>
 </template>
