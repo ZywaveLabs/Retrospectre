@@ -2,15 +2,20 @@
     <h1 class="center">CREATE A ROOM</h1>
     <form class="create-room">
         <h3 class="center">
-            <span>Room Code:
-                <input type="text" id="newRoomCode" name="roomcode" value="{{getNewRoomNumber}}" size="35" maxlength="35">&nbsp;
-                <span id="generateNewRoomCodeButton"><i class="fa fa-refresh"></i></span>&nbsp;
-                <span title="Room name not available" id="roomNotAvailableIcon" style="visibility: {{roomAvailableShow}}"><i class="fa fa-times-circle"></i></span>
+            <span>
+                <label>Room Code</label>
+                <div id="newRoomCode" class="input-group">
+                    <input type="text" class="form-control" name="roomcode" value="{{getNewRoomNumber}}" size="35" maxlength="35" autocomplete="off">
+                    <div class="input-group-btn">
+                        <button id="generateNewRoomCodeButton" type="button" class="btn btn-default"><i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>
+                <span title="Room name not available" id="roomNotAvailableIcon" style="visibility: {{roomNotAvailableShow}}"><i class="fa fa-times-circle"></i></span>
             </span>
         </h3>
         <h3 class="center">Alias:
-            <input type="text" name="alias" value="Moderator" size="20" maxlength="20">
+            <input type="text" name="alias" value="Moderator" size="20" maxlength="20" autocomplete="off">
         </h3>
-        <input class="center" id="createAndJoinRoomButton" name="joinRoom" type="submit" value="CREATE AND JOIN ROOM">
+        <input class="center" id="createAndJoinRoomButton" name="joinRoom" type="submit" value="CREATE AND JOIN ROOM" {{createRoomDisable}}>
     </form>
 </template>

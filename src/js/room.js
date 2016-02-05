@@ -27,7 +27,6 @@ if (Meteor.isClient) {
     });
 
     Template.room.helpers({
-
         goodCards : function() {
             var author = Session.get("author");
 
@@ -49,8 +48,7 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.room.events({
-
+    Template.card.events({
         "click #revealCardButton": function(){
             Meteor.call("revealCards", Session.get("roomNumber"));
         },
