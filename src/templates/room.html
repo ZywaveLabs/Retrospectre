@@ -1,6 +1,18 @@
 <template name="room">
 	<div class="container-fluid">
 		<h1> Sprint Retrospective</h1>
+		<form id="tagSearchForm" class="navbar-form navbar-right">
+		  <div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-filter"></i></span>
+		    <input id="filters" type="text" class="form-control" placeholder="Filter tags...">
+			  <span class="input-group-btn">
+					<button id="filterTagsButton" type="button" class="btn btn-default">Filter</button>
+				</span>
+				<span class="input-group-btn">
+					<button id="clearFilter" type="button" class="btn btn-danger">Clear Filters</button>
+				</span>
+		  </div>
+		</form>
 		{{> card}}
 		<hr>
 		<div class="container-fluid">
@@ -9,7 +21,25 @@
 					<h2> Good category </h2>
 					<ul class="fa-ul">
 						{{#each goodCards}}
-							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}&nbsp;</li>
+							<div class="row">
+								<div id="card" class="card-panel green">
+									<span class="white-text">
+										{{text}}
+									</span>
+									<div class="card-action">
+										<div class="chip">
+											<i id="deleteCardButton" class="material-icons fa fa-trash-o"></i>
+											Remove Card
+										</div>
+										{{#each tags}}
+											<div class="chip">
+												<tag class="tag">{{this}}</tag>
+												<i id="removeTag" class="material-icons fa fa-ban"></i>
+											</div>
+										{{/each}}
+									</div>
+								</div>
+							</div>
 						{{/each}}
 					</ul>
 				</div>
@@ -17,7 +47,25 @@
 					<h2> Bad category </h2>
 					<ul class="fa-ul">
 							{{#each badCards}}
-								<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}&nbsp;</li>
+								<div class="row">
+									<div id="card" class="card-panel red  accent-4">
+										<span class="grey-text">
+											{{text}}
+										</span>
+										<div class="card-action">
+											<div class="chip">
+												<i id="deleteCardButton" class="material-icons fa fa-trash-o"></i>
+												Remove Card
+											</div>
+											{{#each tags}}
+												<div class="chip">
+													<tag class="tag">{{this}}</tag>
+													<i id="removeTag" class="material-icons fa fa-ban"></i>
+												</div>
+											{{/each}}
+										</div>
+									</div>
+								</div>
 							{{/each}}
 					</ul>
 				</div>

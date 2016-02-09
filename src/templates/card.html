@@ -1,17 +1,30 @@
 <template name="card">
-	<div class="card container-fluid">
-		<hr>
-		<div class="input-group">
-			<input type="text" class="form-control thoughts" placeholder="Thoughts..." aria-describedby="basic-addon1">
-			<span class="input-group-addon">
-				<input type="radio" name="category" id="goodCategoryRadio" aria-label="..."> Good
-			</span>
-			<span class="input-group-addon">
-				<input type="radio" name="category" id="badCategoryRadio" aria-label="..."> Bad
-			</span>
-			<span class="input-group-btn">
-				<button class="btn btn-default" id="submitCardButton" type="button">Submit!</button>
-			</span>
-		</div>
+	<div class="container-fluid">
+		<hr style="margin-top:30px !important">
+		<form class="submitCardForm">
+			<div class="row">
+				<div class="col-xs-6 col-sm-6">
+					<div class="input-group">
+						<span class="input-group-addon">Thoughts</span>
+						<input id="thoughts" type="text" class="form-control thoughts" placeholder="Thoughts..." aria-describedby="basic-addon1">
+						<span class="input-group-addon">
+							<input type="radio" name="category" id="goodCategoryRadio" aria-label="..."> Good
+						</span>
+						<span class="input-group-addon">
+							<input type="radio" name="category" id="badCategoryRadio" aria-label="..."> Bad
+						</span>
+						<span class="input-group-btn">
+							<button class="btn btn-default" id="submitCardButton" type="button">Submit!</button>
+						</span>
+					</div>
+				</div>
+				<div class="col-xs-6 col-sm-6">
+					<div class="input-group">
+						<span class="input-group-addon">Tags:</span>
+						 <input type="text" id="tags" class="form-control tags" placeholder="Seperate tags with a comma ','" aria-describedby="basic-addon1">
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 </template>
