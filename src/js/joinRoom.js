@@ -2,7 +2,7 @@
 
 if (Meteor.isClient) {
 
-    Template.joinRoom.events({
+    Template.landingPage.events({
 
         "submit .join-room": function (eve) {
             eve.preventDefault();

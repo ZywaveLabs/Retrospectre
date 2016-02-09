@@ -6,10 +6,6 @@ if (Meteor.isClient) {
 
         "click #createRoomButton": function () {
             Router.go("Create Room");
-        },
-
-        "click #joinRoom": function () {
-            Router.go("Join Room");
         }
     });
 }
