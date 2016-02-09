@@ -6,7 +6,8 @@ var ROOMS = new Mongo.Collection("rooms");
 if (Meteor.isClient) {
 
     Template.createRoom.onCreated(function() {
-        /* TODO: VV BAD VV Make this server only, don't publish rooms to client */
+        /* TODO: VV BAD VV Make this server only, don't publish rooms to client,
+         * Though, is it actually that bad? Idk */
         this.subscribe("rooms");
         Meteor.call("generateNewRoomCode", function(error, result) {
             if (!error) {
@@ -25,7 +26,7 @@ if (Meteor.isClient) {
         },
 
         roomNotAvailableShow: function() {
-            return (Session.get("roomCodeAvailable") ? "hidden" : "visible");
+            return (Session.get("roomCodeAvailable") ? "none" : "");
         },
 
         createRoomDisable: function() {

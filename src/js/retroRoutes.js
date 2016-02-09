@@ -28,6 +28,20 @@ Router.route("/room/:_roomNumber", {
     template: "room",
     title: "The Poltergeists",
     onBeforeAction: function (){
+        // if(!roomExists(this.params._roomNumber)){ // eslint-disable-line
+        //     console.log("Room does not exist");
+        //     var createNewRoom =
+        //     confirm("This room does not exist, would like to create it now?");
+        //
+        //     if (createNewRoom) {
+        //         console.log("create new room")
+        //         addRoomToDatabase(this.params._roomNumber); // eslint-disable-line
+        //     } else {
+        //         console.log("don't create room");
+        //         this.redirect("/");
+        //     }
+        // }
+        // console.log("Setting session");
         Session.set("roomNumber", this.params._roomNumber);
         this.next();
     }
