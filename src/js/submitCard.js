@@ -22,7 +22,17 @@ Meteor.methods({
             roomCode: roomNumber,
             category: category,
             createdAt: new Date(),
-            text: text
+            text: text,
+            tags: null
+        });
+    },
+    submitCardWithTags: function (roomNumber, category, text, tags){
+        Mongo.Collection.get("cards").insert({
+            roomCode: roomNumber,
+            category: category,
+            createdAt: new Date(),
+            text: text,
+            tags: tags
         });
     }
 });
