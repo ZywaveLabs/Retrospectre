@@ -11,16 +11,16 @@
 					<h2> Good category </h2>
 					<ul class="fa-ul">
 						{{#each goodCards}}
-							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}&nbsp;</li>
+							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}&nbsp;<span id="likeButton"><i class="fa fa-thumbs-o-up"></i></span></li>
 						{{/each}}
 					</ul>
 				</div>
 				<div class="col-xs-6 col-sm-6">
 					<h2> Bad category </h2>
 					<ul class="fa-ul">
-							{{#each badCards}}
-								<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}&nbsp;</li>
-							{{/each}}
+						{{#each badCards}}
+							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}&nbsp;<span id="likeButton"><i class="fa fa-thumbs-o-up"></i></span></li>
+						{{/each}}
 					</ul>
 				</div>
 			</div>
