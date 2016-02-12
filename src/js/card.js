@@ -8,12 +8,10 @@ if (Meteor.isClient) {
             var thought = event.target.thoughts.value;
             var category = undefined;
 
-            // TODO uncomment commented out for testing atm
-            // while(Session.get("roomNumber") == undefined ||
-            //  isNaN(parseInt(Session.get("roomNumber")))) {
-            //     Session.set("roomNumber",
-            //         prompt("Enter the designated room number."));
-            // }
+            while(Session.get("roomNumber") == undefined) {
+                Session.set("roomNumber",
+                    prompt("Enter the designated room number."));
+            }
 
             if(event.target.goodCategoryRadio.checked === true) {
                 category = "good";
