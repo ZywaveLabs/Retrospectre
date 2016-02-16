@@ -1,9 +1,10 @@
+/* global Cards:false */
+
 "use strict";
 /**
 *@author THouse
 *@purpose To provide the room template with data to display
 **/
-var Cards = new Mongo.Collection("cards");
 
 
 if (Meteor.isClient) {
@@ -31,78 +32,35 @@ if (Meteor.isClient) {
 
     Template.room.helpers({
 
-        cards : function(){
-            while(Session.get("roomNumber") == undefined ||
-             isNaN(parseInt(Session.get("roomNumber")))) {
-                Session.set("roomNumber",
-                    prompt("Enter the designated room number."));
-            }
-
-            // return all cards in db sort by newest
-            return Cards.find({
-                roomCode:Session.get("roomNumber")},
-                {sort: {createdAt: -1}});
-        },
-
         goodCards : function() {
+            var author = Session.get("author");
+
             return Cards.find({
-                "roomCode":Session.get("roomNumber"),
-                "category":"good"});
+                "roomCode": Session.get("roomNumber"),
+                "category": "good",
+                $or: [{"reveal": true}, {"author": author}]
+            });
         },
 
         badCards : function() {
+            var author = Session.get("author");
+
             return Cards.find({
-                "roomCode":Session.get("roomNumber"),
-                "category":"bad"});
-        }
-    });
-
-    Template.card.events({
-
-        "click #submitCardButton": function(){
-            event.preventDefault();
-
-            while(Session.get("roomNumber") == undefined ||
-             isNaN(parseInt(Session.get("roomNumber")))) {
-                Session.set("roomNumber",
-                    prompt("Enter the designated room number."));
-            }
-
-            if(Session.get("category") === undefined) {
-                alert("Enter a category for your thought");
-                return;
-            }
-
-            Meteor.call("submitCard", Session.get("roomNumber"),
-                Session.get("category"), $(".thoughts").val());
-
-            $(".thoughts:text").val("");
-        },
-
-        "change #goodCategoryRadio": function() {
-            var category;
-
-            if($("#goodCategoryRadio").prop("checked", true)) {
-                category = "good";
-            }
-
-            Session.set("category", category);
-        },
-
-        "change #badCategoryRadio": function() {
-            var category;
-
-            if($("#badCategoryRadio").prop("checked", true)) {
-                category = "bad";
-            }
-
-            Session.set("category", category);
+                "roomCode": Session.get("roomNumber"),
+                "category": "bad",
+                $or: [{"reveal": true}, {"author": author}]
+            });
         }
     });
 
     Template.room.events({
+
+        "click #revealCardButton": function(){
+            Meteor.call("revealCards", Session.get("roomNumber"));
+        },
+
         "click #deleteCardButton": function(){
-            Meteor.call("deleteCard",this._id);
+            Meteor.call("deleteCard", this._id);
         }
     });
 }
