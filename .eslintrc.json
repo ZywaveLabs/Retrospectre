@@ -35,7 +35,7 @@
 		"global-require": 2,
 		"handle-callback-err": 2,
 		"no-process-exit": 2,
-		"strict": [2, "global"],
+		"strict": [1, "global"],
 		"no-shadow": [2, {"builtinGlobals": true, "hoist": "all", "allow": []}],
 		"no-unused-vars": [1, {"vars": "all", "args": "all"}],
 		"comma-dangle": [2, "never"],
