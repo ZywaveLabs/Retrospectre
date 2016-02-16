@@ -1,3 +1,4 @@
+/* global Cards:false */
 "use strict";
 
 /**
@@ -7,7 +8,7 @@
 
 Meteor.methods({
 
-	submitCard: function (roomNumber, category, text, author) {
+    submitCard: function (roomNumber, category, text, author) {
         Cards.insert({
             roomCode: roomNumber,
             category: category,
@@ -23,7 +24,8 @@ Meteor.methods({
     },
 
     revealCards: function(roomCode) {
-    	Cards.update({"roomCode":roomCode}, {$set: {reveal:true}}, {multi: true});
+        Cards.update({"roomCode":roomCode},
+            {$set: {reveal:true}}, {multi: true});
     }
-});
 
+});

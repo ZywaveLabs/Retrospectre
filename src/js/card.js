@@ -1,9 +1,11 @@
+"use strict";
+
 if (Meteor.isClient) {
-   Template.card.events({
+    Template.card.events({
 
         "submit #card": function(){
             event.preventDefault();
-            
+
             var author = event.target.author.value;
             var thought = event.target.thoughts.value;
             var category = undefined;
@@ -25,7 +27,7 @@ if (Meteor.isClient) {
                 alert("Enter a thought");
                 return ;
             }
-            if(author.length == 0 ) {
+            if(author.length == 0) {
                 alert("Who's thought is this?");
                 return ;
             }
