@@ -1,29 +1,33 @@
 <template name="card">
-	<div class="container-fluid">
-		<hr style="margin-top:30px !important">
-		<form class="submitCardForm">
-			<div class="row">
-				<div class="col-xs-6 col-sm-6">
-					<div class="input-group">
-						<span class="input-group-addon">Thoughts</span>
-						<input id="thoughts" type="text" class="form-control thoughts" placeholder="Thoughts..." aria-describedby="basic-addon1">
-						<span class="input-group-addon">
-							<input type="radio" name="category" id="goodCategoryRadio" aria-label="..."> Good
-						</span>
-						<span class="input-group-addon">
-							<input type="radio" name="category" id="badCategoryRadio" aria-label="..."> Bad
-						</span>
-						<span class="input-group-btn">
-							<button class="btn btn-default" id="submitCardButton" type="button">Submit!</button>
-						</span>
-					</div>
+	<div class="card container-fluid">
+		<hr>
+		<form class="form-horizontal" role="form" id="card">
+			<div class="form-group form-group-lg">
+				<label class="col-sm-2 control-label" for="thoughts">Thought:</label>
+				<div class="col-sm-10">
+					<input class="form-control" type="text" id="thoughts">
 				</div>
-				<div class="col-xs-6 col-sm-6">
-					<div class="input-group">
-						<span class="input-group-addon">Tags:</span>
-						 <input type="text" id="tags" class="form-control tags" placeholder="Seperate tags with a comma ','" aria-describedby="basic-addon1">
-					</div>
+			</div>
+			<div class="form-group form-group-sm">
+				<label class="col-sm-2 control-label" for="author">Tags:</label>
+				<div class="col-sm-2">
+				 <input type="text" id="tags" class="form-control tags" placeholder="Seperate tags with a comma ','">
 				</div>
+			</div>
+			<div class="form-group form-group-sm">
+				<label class="col-sm-2 control-label" for="author">Author:</label>
+				<div class="col-sm-2">
+					<input class="form-control" type="text" id="author">
+				</div>
+			</div>
+			<div class="form-group  form-group-sm">
+				<label class="col-sm-2 control-label">Category:</label>
+				<label class="radio-inline"><input type="radio" name="category" id="goodCategoryRadio">Good</label>
+				<label class="radio-inline"><input type="radio" name="category" id="badCategoryRadio">Bad</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"> </label>
+					<button class="col-sm-2 btn btn-default" id="submitCardButton" type="submit">Submit!</button>
 			</div>
 		</form>
 	</div>

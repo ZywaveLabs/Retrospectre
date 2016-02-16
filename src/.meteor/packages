@@ -27,3 +27,5 @@ velocity:html-reporter
 momentjs:moment
 velocity:console-reporter
 sanjo:karma
+xolvio:template-isolator
+check

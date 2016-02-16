@@ -3,8 +3,6 @@
 *@author THouse
 *@purpose To provide the room template with data to display
 **/
-var Cards = new Mongo.Collection("cards");
-
 
 if (Meteor.isClient) {
     // to provide a safer code base as far as
@@ -31,84 +29,31 @@ if (Meteor.isClient) {
 
     Template.room.helpers({
 
-        cards : function(){
-            while(Session.get("roomNumber") == undefined ||
-             isNaN(parseInt(Session.get("roomNumber")))) {
-                Session.set("roomNumber",
-                    prompt("Enter the designated room number."));
-            }
-
-            // return all cards in db sort by newest
-            return Cards.find({
-                roomCode:Session.get("roomNumber")},
-                {sort: {createdAt: -1}});
-        },
-
         goodCards : function() {
-            return Cards.find({
-                "roomCode":Session.get("roomNumber"),
-                "category":"good"});
+            var author = Session.get("author");
+
+            return Meteor.Collection.get("cards").find({
+                "roomCode": Session.get("roomNumber"),
+                "category": "good",
+                $or: [{"reveal": true}, {"author": author}]
+            });
         },
 
         badCards : function() {
-            return Cards.find({
-                "roomCode":Session.get("roomNumber"),
-                "category":"bad"});
+            var author = Session.get("author");
+
+            return Meteor.Collection.get("cards").find({
+                "roomCode": Session.get("roomNumber"),
+                "category": "bad",
+                $or: [{"reveal": true}, {"author": author}]
+            });
         }
     });
-
-    Template.card.events({
-
-        "click #submitCardButton": function(){
-            event.preventDefault();
-
-            while(Session.get("roomNumber") == undefined ||
-             isNaN(parseInt(Session.get("roomNumber")))) {
-                Session.set("roomNumber",
-                    prompt("Enter the designated room number."));
-            }
-
-            if(Session.get("category") === undefined) {
-                alert("Enter a category for your thought");
-                return;
-            }
-            var tags;
-
-            tags = $("#tags").val();
-            if(tags != null){
-                tags = tags.split(",");
-                Meteor.call("submitCardWithTags", Session.get("roomNumber"),
-                    Session.get("category"), $(".thoughts").val(),tags);
-            }
-            else
-              Meteor.call("submitCard", Session.get("roomNumber"),
-                  Session.get("category"), $(".thoughts").val());
-            $(".thoughts:text").val("");
-            $("#tags:text").val("");
-        },
-
-        "change #goodCategoryRadio": function() {
-            var category;
-
-            if($("#goodCategoryRadio").prop("checked", true)) {
-                category = "good";
-            }
-
-            Session.set("category", category);
-        },
-
-        "change #badCategoryRadio": function() {
-            var category;
-
-            if($("#badCategoryRadio").prop("checked", true)) {
-                category = "bad";
-            }
-
-            Session.set("category", category);
-        }
-    });
-
     Template.room.events({
+        "click #revealCardButton": function(){
+            Meteor.call("revealCards", Session.get("roomNumber"));
+        },
+
         "click #deleteCardButton": function(){
             Meteor.call("deleteCard",this._id);
         },
@@ -175,7 +120,8 @@ if (Meteor.isServer) {
 
     // publish cards data to the client
     Meteor.publish("cards", function () {
-        return Cards.find({}, { sort: { createdAt: -1 } });
+        return Meteor.Collection.get("cards").find({},
+          { sort: { createdAt: -1 } });
     });
 }
 
@@ -242,17 +188,3 @@ function clearFilter(){
         $(".card-panel").eq(i).show();
     }
 }
-
-Meteor.methods({
-    "removeTag": function(text,oldTags,newTags){
-        var cardToUpdate;
-
-        cardToUpdate = Meteor.Collection.get("cards").findOne({
-            text:text,tags:oldTags
-        });
-        Mongo.Collection.get("cards").update(
-           cardToUpdate._id,
-           {$set: {tags:newTags}}
-         );
-    }
-});
