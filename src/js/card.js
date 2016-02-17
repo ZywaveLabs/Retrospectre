@@ -33,14 +33,14 @@ if (Meteor.isClient) {
             }
 
             Session.set("author", author);
-            if(tags != null || tags != ""){
+            if(tags != null && tags != "" && tags != undefined){
                 tags = tags.split(",");
                 Meteor.call("submitCardWithTags", Session.get("roomNumber"),
-                    Session.get("category"),thought,tags,author);
+                  category,thought,tags,author);
             }
             else
               Meteor.call("submitCard", Session.get("roomNumber"),
-                  Session.get("category"), thought,author);
+                  category, thought,author);
             event.target.thoughts.value = "";
             event.target.tags.value = "";
         },

@@ -7,7 +7,7 @@
 
 Meteor.methods({
     submitCard: function (roomNumber, category, text, author) {
-        Mongo.Collection.get("cards").insert({
+        Cards.insert({
             roomCode: roomNumber,
             category: category,
             createdAt: new Date(),
@@ -18,7 +18,7 @@ Meteor.methods({
         });
     },
     submitCardWithTags: function (roomNumber, category, text, tags, author){
-        Mongo.Collection.get("cards").insert({
+        Cards.insert({
             roomCode: roomNumber,
             category: category,
             createdAt: new Date(),
@@ -29,10 +29,10 @@ Meteor.methods({
         });
     },
     deleteCard: function(id) {
-        Mongo.Collection.get("cards").remove(id);
+        Cards.remove(id);
     },
     revealCards: function(roomCode) {
-        Mongo.Collection.get("cards").update({"roomCode":roomCode},
+        Cards.update({"roomCode":roomCode},
 {$set: {reveal:true}}, {multi: true});
     },
     "removeTag": function(text,oldTags,newTags){
@@ -41,7 +41,7 @@ Meteor.methods({
         cardToUpdate = Meteor.Collection.get("cards").findOne({
             text:text,tags:oldTags
         });
-        Mongo.Collection.get("cards").update(
+        Cards.update(
        cardToUpdate._id,
        {$set: {tags:newTags}}
      );

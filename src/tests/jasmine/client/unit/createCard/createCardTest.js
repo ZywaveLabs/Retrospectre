@@ -1,4 +1,4 @@
-
+/*eslint-disable*/
 describe("createCard", function() {
 
   describe("invalid submits", function() {
@@ -9,6 +9,7 @@ describe("createCard", function() {
       event = {
         target: {
           thoughts: {value: ""},
+          tags: {value: ""},
           author: {value: "testAuthor"},
           goodCategoryRadio: {checked: true},
           badCategoryRadio: {checked: false}
@@ -34,6 +35,7 @@ describe("createCard", function() {
       event = {
         target: {
           thoughts: {value: "testThought"},
+          tags: {value: ""},
           author: {value: ""},
           goodCategoryRadio: {checked: true},
           badCategoryRadio: {checked: false}
@@ -58,6 +60,7 @@ describe("createCard", function() {
       event = {
         target: {
           thoughts: {value: "testThought"},
+          tags: {value: ""},
           author: {value: ""},
           goodCategoryRadio: {checked: false},
           badCategoryRadio: {checked: false}
@@ -91,6 +94,7 @@ describe("createCard", function() {
       event = {
         target: {
           thoughts: {value: "testThought"},
+          tags: {value: ""},
           author: {value: "testAuthor"},
           goodCategoryRadio: {checked: true},
           badCategoryRadio: {checked: false}
@@ -114,6 +118,7 @@ describe("createCard", function() {
             category: "good",
             createdAt: baseTime,
             text: "testThought",
+            tags: [],
             author: "testAuthor",
             reveal: false
         });
@@ -127,6 +132,7 @@ describe("createCard", function() {
       event = {
         target: {
           thoughts: {value: "testThought"},
+          tags: {value: ""},
           author: {value: "testAuthor"},
           goodCategoryRadio: {checked: false},
           badCategoryRadio: {checked: true}
@@ -150,6 +156,7 @@ describe("createCard", function() {
             category: "bad",
             createdAt: baseTime,
             text: "testThought",
+            tags: [],
             author: "testAuthor",
             reveal: false
         });

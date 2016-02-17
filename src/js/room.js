@@ -32,7 +32,7 @@ if (Meteor.isClient) {
         goodCards : function() {
             var author = Session.get("author");
 
-            return Meteor.Collection.get("cards").find({
+            return Cards.find({
                 "roomCode": Session.get("roomNumber"),
                 "category": "good",
                 $or: [{"reveal": true}, {"author": author}]
@@ -42,7 +42,7 @@ if (Meteor.isClient) {
         badCards : function() {
             var author = Session.get("author");
 
-            return Meteor.Collection.get("cards").find({
+            return Cards.find({
                 "roomCode": Session.get("roomNumber"),
                 "category": "bad",
                 $or: [{"reveal": true}, {"author": author}]
@@ -57,28 +57,28 @@ if (Meteor.isClient) {
         "click #deleteCardButton": function(){
             Meteor.call("deleteCard",this._id);
         },
-        "click #filterTagsButton": function(){
+        "click #filterTagsButton": function(event){
             var tags;
 
-            tags = $("#filters").val().split(",");
+            tags = event.target.filters.value.split(",");
             for(var i = 0; i < tags.length; i++){
                 tags[i] = tags[i].toLowerCase();
             }
             filterMulitpleTags(tags);
         },
         "click tag": function(e){
-            filterSingleTag(e.toElement.innerHTML.toLowerCase());
+            filterSingleTag(e.toElement.innerHTML);
         },
         "submit #tagSearchForm": function(e){
             e.preventDefault();
             var tags;
 
-            tags = $("#filters").val().split(",");
+            tags = e.target.filters.value.split(",");
             for(var i = 0; i < tags.length; i++){
                 tags[i] = tags[i].toLowerCase();
             }
             filterMulitpleTags(tags);
-            $("#filters").val("");
+            e.target.filters.value = "";
         },
         "click #removeTag": function(e){
             var tags;
@@ -120,7 +120,7 @@ if (Meteor.isServer) {
 
     // publish cards data to the client
     Meteor.publish("cards", function () {
-        return Meteor.Collection.get("cards").find({},
+        return Cards.find({},
           { sort: { createdAt: -1 } });
     });
 }
@@ -130,6 +130,7 @@ if (Meteor.isServer) {
 *Filters cards by the tag given
 **/
 function filterSingleTag(tag){
+    //tag = tag.toLowerCase();
     $("#filters").val(tag);
     var numCards;
 
