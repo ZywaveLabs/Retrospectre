@@ -141,6 +141,9 @@ function getRandomInt(min, max) {
  * @return {boolean} Whether room codes exists
  */
 function roomExists(roomCode) {
+    if(roomCode == ""){
+        return true;
+    }
     return ROOMS.find({
         id: roomCode
     }).count() > 0;
