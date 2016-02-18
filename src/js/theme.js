@@ -1,7 +1,7 @@
 if (Meteor.isClient) {
 
     Template.headerFooter.onCreated(function() {
-        Session.set("theme", "darkly");
+        Session.set("theme", "superhero");
     });
 
     Template.headerFooter.helpers({

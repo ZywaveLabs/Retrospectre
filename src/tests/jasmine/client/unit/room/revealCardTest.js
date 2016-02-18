@@ -1,6 +1,6 @@
 "use strict";
 
-describe("reveal cards", function() {
+xdescribe("reveal cards", function() {
 
     describe("reveal button", function() {
 

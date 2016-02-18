@@ -1,20 +1,16 @@
+/* globals Rooms:false*/
 "use strict";
-
-/* TODO: Make this server only, don't publish rooms to client */
-var ROOMS = new Mongo.Collection("rooms");
 
 if (Meteor.isClient) {
 
     Template.createRoom.onCreated(function() {
-        /* TODO: VV BAD VV Make this server only, don't publish rooms to client,
-         * Though, is it actually that bad? Idk */
         this.subscribe("rooms");
         Meteor.call("generateNewRoomCode", function(error, result) {
             if (!error) {
                 Session.set("roomCodeAvailable", true);
                 Session.set("newRoomCode", result);
             } else {
-                /* TODO: Errors */
+                /* TODO: Handles errors, how do? Log? */
             }
         });
     });
@@ -43,7 +39,7 @@ if (Meteor.isClient) {
                         Session.set("newRoomCode", result);
                         Session.set("roomCodeAvailable", true);
                     } else {
-                        /* TODO: Errors */
+                        /* Error state */
                     }
                 }
             ));
@@ -54,7 +50,7 @@ if (Meteor.isClient) {
             var roomId = eve.target.roomcode.value;
 
             if (roomId === null || roomId === "") {
-                return; /* TODO: Errors */
+                return; /* Error state */
             }
 
             Meteor.call("addRoom", roomId);
@@ -76,7 +72,7 @@ if (Meteor.isServer) {
     var roomGen = JSON.parse(Assets.getText("room_gen.json"));
 
     Meteor.publish("rooms", function() {
-        return ROOMS.find({}, {
+        return Rooms.find({}, {
             sort: {
                 id: -1
             }
@@ -142,9 +138,9 @@ function getRandomInt(min, max) {
  */
 function roomExists(roomCode) {
     if(roomCode == ""){
-        return true;
+        return;
     }
-    return ROOMS.find({
+    return Rooms.find({
         id: roomCode
     }).count() > 0;
 }
@@ -157,7 +153,7 @@ function roomExists(roomCode) {
  */
 function addRoomToDatabase(roomID) {
     if(!roomExists(roomID)){
-        ROOMS.insert({
+        Rooms.insert({
             id: String(roomID),
             dateCreated: new Date()
         });
