@@ -1,0 +1,10 @@
+{
+  "name": "src",
+  "version": "0.0.1",
+  "dependencies": {
+    "select2": "3.4.5",
+    "backbone": "1.1.0",
+    "jasmine-jquery": "^2.1.1"
+  },
+  "private": true
+}

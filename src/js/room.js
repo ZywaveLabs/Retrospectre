@@ -1,4 +1,5 @@
 "use strict";
+/* global Cards:false */
 /**
 *@author THouse
 *@purpose To provide the room template with data to display
@@ -86,7 +87,7 @@ if (Meteor.isClient) {
             var text;
 
             prevEleTag = e.target.previousElementSibling.innerHTML;
-            prevEleTag = prevEleTag.toLowerCase();
+            // prevEleTag = prevEleTag.toLowerCase();
             tags = $(e.toElement.parentNode.parentNode).find(".tag");
             text = $(e.toElement.parentNode.parentNode.previousElementSibling);
             text = text[0].innerText;

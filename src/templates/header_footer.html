@@ -52,6 +52,9 @@
     <!-- </footer> -->
     <!--end of footer-->
     <script>
+      document.title = "Retrospectre - {{title}}";
+      $(window).on('hashchange', function(e){
         document.title = "Retrospectre - {{title}}";
+      });
     </script>
 </template>
