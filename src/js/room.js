@@ -74,7 +74,7 @@ if (Meteor.isClient) {
             }
 
             Meteor.call("submitCard", Session.get("roomNumber"),
-                Session.get("category"), $(".thoughts").val(), 0, "Like");
+                Session.get("category"), $(".thoughts").val(), 0);
 
             $(".thoughts:text").val("");
             
