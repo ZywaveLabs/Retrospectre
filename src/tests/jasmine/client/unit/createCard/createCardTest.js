@@ -110,12 +110,14 @@ describe("createCard", function() {
 
             // Verify
             expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
-                "good", "testThought", "testAuthor");
+                "good", "testThought", "testAuthor", 0, "Like");
             expect(Cards.insert).toHaveBeenCalledWith({
                 roomCode: "testRoom",
                 category: "good",
                 createdAt: baseTime,
                 text: "testThought",
+                likes: 0,
+                likeBtn: "Like",
                 author: "testAuthor",
                 reveal: false
             });
@@ -146,12 +148,14 @@ describe("createCard", function() {
 
             // Verify
             expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
-                "bad", "testThought", "testAuthor");
+                "bad", "testThought", "testAuthor", 0, "Like");
             expect(Cards.insert).toHaveBeenCalledWith({
                 roomCode: "testRoom",
                 category: "bad",
                 createdAt: baseTime,
                 text: "testThought",
+                likes: 0,
+                likeBtn: "Like",
                 author: "testAuthor",
                 reveal: false
             });
