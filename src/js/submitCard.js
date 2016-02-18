@@ -17,12 +17,14 @@
 **/
 
 Meteor.methods({
-    submitCard: function (roomNumber, category, text) {
+    submitCard: function (roomNumber, category, text, likes, likeBtn) {
         Mongo.Collection.get("cards").insert({
             roomCode: roomNumber,
             category: category,
             createdAt: new Date(),
-            text: text
+            text: text,
+            likes: likes,
+            likeBtn: likeBtn
         });
     }
 });

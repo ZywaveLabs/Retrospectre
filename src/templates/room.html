@@ -9,7 +9,7 @@
 					<h2> Good category </h2>
 					<ul class="fa-ul">
 						{{#each goodCards}}
-							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}&nbsp;<span id="likeButton"><i class="fa fa-thumbs-o-up"></i></span></li>
+							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}<br><i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp;<span id="likeButton">{{likeBtn}}</span></li>
 						{{/each}}
 					</ul>
 				</div>
@@ -17,7 +17,7 @@
 					<h2> Bad category </h2>
 					<ul class="fa-ul">
 						{{#each badCards}}
-							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}&nbsp;<span id="likeButton"><i class="fa fa-thumbs-o-up"></i></span></li>
+							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}<br><i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp;<span id="likeButton">{{likeBtn}}</span></li>
 						{{/each}}
 					</ul>
 				</div>

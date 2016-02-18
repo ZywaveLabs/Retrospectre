@@ -74,9 +74,11 @@ if (Meteor.isClient) {
             }
 
             Meteor.call("submitCard", Session.get("roomNumber"),
-                Session.get("category"), $(".thoughts").val());
+                Session.get("category"), $(".thoughts").val(), 0, "Like");
 
             $(".thoughts:text").val("");
+            
+            //Session.setDefault('likes', 0);
         },
 
         "change #goodCategoryRadio": function() {
@@ -103,6 +105,9 @@ if (Meteor.isClient) {
     Template.room.events({
         "click #deleteCardButton": function(){
             Meteor.call("deleteCard",this._id);
+        },
+        "click #likeButton": function(){
+            Mongo.Collection.get("cards").update(  { _id: this._id} , { $inc: {likes: 1} });
         }
     });
 }
@@ -112,5 +117,11 @@ if (Meteor.isServer) {
     // publish cards data to the client
     Meteor.publish("cards", function () {
         return Cards.find({}, { sort: { createdAt: -1 } });
+    });
+    
+    Mongo.Collection.get("cards").allow({
+        update: function (userId, doc, fields, modifier) {
+            return true;
+        },
     });
 }
