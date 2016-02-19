@@ -87,7 +87,7 @@ if (Meteor.isClient) {
             var text;
 
             prevEleTag = e.target.previousElementSibling.innerHTML;
-            // prevEleTag = prevEleTag.toLowerCase();
+            prevEleTag = prevEleTag.toLowerCase();
             tags = $(e.toElement.parentNode.parentNode).find(".tag");
             text = $(e.toElement.parentNode.parentNode.previousElementSibling);
             text = text[0].innerText;
@@ -131,7 +131,7 @@ if (Meteor.isServer) {
 *Filters cards by the tag given
 **/
 function filterSingleTag(tag){
-    //tag = tag.toLowerCase();
+    tag = tag.toLowerCase();
     $("#filters").val(tag);
     var numCards;
 

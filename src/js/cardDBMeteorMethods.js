@@ -1,3 +1,4 @@
+/* global Cards: false */
 "use strict";
 
 /**

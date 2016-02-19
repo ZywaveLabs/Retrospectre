@@ -34,7 +34,7 @@ if (Meteor.isClient) {
 
             Session.set("author", author);
             if(tags != null && tags != "" && tags != undefined){
-                tags = tags.split(",");
+                tags = findUniqueTags(tags.split(","));
                 Meteor.call("submitCardWithTags", Session.get("roomNumber"),
                   category,thought,tags,author);
             }
@@ -64,4 +64,28 @@ if (Meteor.isClient) {
             Session.set("category", category);
         }
     });
+}
+
+/**
+*@param {string[] } tags - array of strings describing the tags
+*@return {string[] } uniqueTags - array of uniqueTags
+**/
+function findUniqueTags(tags){
+    var uniqueTags = [];
+    var count = 0;
+
+    for(var i = 0; i < tags.length; i++){
+        if(tags[i] != "''" && tags[i] != "" && tags[i].length !== 0){
+            if(i == 0){
+                uniqueTags[count] = tags[i];
+                count++;
+            }
+            else if(uniqueTags.indexOf(tags[i]) == -1){
+                uniqueTags[count] = tags[i];
+                count++;
+            }
+        }
+        delete tags[i];
+    }
+    return uniqueTags;
 }
