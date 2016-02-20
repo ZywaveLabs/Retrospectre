@@ -29,13 +29,6 @@ Router.route("/room/:_roomNumber", {
     template: "room",
     title: "The Poltergeists",
     onBeforeAction: function (){
-        // var result = Meteor.wrapAsync(Meteor.call)("roomExists", this.params._roomNumber, function(err){
-        //     console.log(err);
-        // });
-        // console.log(result);
-        // if(!result){
-        //     this.redirect("/");
-        // }
         if(RoomMethods.RoomExists(this.params._roomNumber)){
             Session.set("roomNumber", this.params._roomNumber);
             this.next();

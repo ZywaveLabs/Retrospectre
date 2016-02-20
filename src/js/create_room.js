@@ -61,7 +61,8 @@ if (Meteor.isClient) {
 
         "keyup #newRoomCode input": function(eve) {
             var newRoomCode = eve.target.value;
-            var show = !Meteor.call("roomExists", newRoomCode);
+            var show = (newRoomCode !== null && newRoomCode !== "" &&
+                !RoomMethods.RoomExists(newRoomCode));
 
             Session.set("roomCodeAvailable", show);
             Session.set("newRoomCode", eve.target.value);
@@ -113,7 +114,6 @@ if (Meteor.isServer) {
         },
 
         addRoom: function(newRoomID) {
-            setTimeout(function(){}, 10000);
             RoomMethods.CreateRoom(newRoomID);
         },
 
