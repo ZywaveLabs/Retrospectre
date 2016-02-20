@@ -6,7 +6,6 @@ describe("card category", function() {
 
         it("should retrieve the cards from the good category", function() {
             // Setup
-            // spyOn(Meteor, "call").and.callThrough();
             spyOn(Cards, "find");
             spyOn(Session, "get").and.returnValues("testAuthor", "testRoom");
 
@@ -28,7 +27,6 @@ describe("card category", function() {
 
         it("should retrieve the cards from the bad category", function() {
             // Setup
-            // spyOn(Meteor, "call").and.callThrough();
             spyOn(Cards, "find");
             spyOn(Session, "get").and.returnValues("testAuthor", "testRoom");
 
