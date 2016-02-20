@@ -1,14 +1,14 @@
 <template name="room">
 	<div class="container-fluid">
-		<h1> Sprint Retrospective</h1>
+		<h1 class="text-info"> Sprint Retrospective</h1>
 		{{> card}}
 		<hr>
-		<button class="btn btn-default" id="revealCardButton" type="button">Reveal All Cards</button>
+		<button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
 
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-6 col-sm-6">
-					<h2> Good category </h2>
+					<h2 class="text-info"> Good category </h2>
 					<ul class="fa-ul">
 						{{#each goodCards}}
 							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}<br><i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp;<span id="likeButton">Likes</span></li>
@@ -16,7 +16,7 @@
 					</ul>
 				</div>
 				<div class="col-xs-6 col-sm-6">
-					<h2> Bad category </h2>
+					<h2 class="text-info"> Bad category </h2>
 					<ul class="fa-ul">
 						{{#each badCards}}
 							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}<br><i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp;<span id="likeButton">Likes</span></li>
@@ -25,7 +25,7 @@
 				</div>
 			</div>
             <div style="margin-top: 75px">
-                <h3>Keynotes</h3>
+                <h3 class="text-info">Keynotes</h3>
                 <textarea rows="5" style="width: 100%; margin-bottom: 80px; resize: none" placeholder="Take any notes you may have here..."></textarea>
             </div>
         </div>
