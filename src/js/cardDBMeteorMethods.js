@@ -18,14 +18,14 @@ Meteor.methods({
             reveal: false
         });
     },
-    submitCardWithTags: function (roomNumber, category, text, tags, author){
+    submitCardWithTags: function (cardData){
         Cards.insert({
-            roomCode: roomNumber,
-            category: category,
+            roomCode: cardData[0],
+            category: cardData[1],
             createdAt: new Date(),
-            text: text,
-            tags: tags,
-            author: author,
+            text: cardData[2],
+            tags: cardData[3],
+            author: cardData[4],
             reveal: false
         });
     },

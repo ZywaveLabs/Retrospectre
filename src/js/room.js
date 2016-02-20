@@ -58,10 +58,10 @@ if (Meteor.isClient) {
         "click #deleteCardButton": function(){
             Meteor.call("deleteCard",this._id);
         },
-        "click #filterTagsButton": function(event){
+        "click #filterTagsButton": function(event){// eslint-disable-line
             var tags;
 
-            tags = event.target.filters.value.split(",");
+            tags = event.target.form[0].value.split(",");
             for(var i = 0; i < tags.length; i++){
                 tags[i] = tags[i].toLowerCase();
             }

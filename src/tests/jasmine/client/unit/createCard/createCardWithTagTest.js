@@ -24,8 +24,8 @@ describe("add valid cards with tags",function(){
     jasmine.clock().mockDate(baseTime);
 
     Template.card.fireEvent("submit #card");
-    expect(Meteor.call).toHaveBeenCalledWith("submitCardWithTags", "testRoom",
-              "good", "testThought",["testTag"], "testAuthor");
+    expect(Meteor.call).toHaveBeenCalledWith("submitCardWithTags", ["testRoom",
+              "good", "testThought",["testTag"], "testAuthor"]);
     expect(Cards.insert).toHaveBeenCalledWith({
           roomCode: "testRoom",
           category: "good",
@@ -58,8 +58,8 @@ describe("add valid cards with tags",function(){
     jasmine.clock().mockDate(baseTime);
 
     Template.card.fireEvent("submit #card");
-    expect(Meteor.call).toHaveBeenCalledWith("submitCardWithTags", "testRoom",
-              "good", "testThought",["testTag","jasmine unit","testing"], "testAuthor");
+    expect(Meteor.call).toHaveBeenCalledWith("submitCardWithTags", ["testRoom",
+              "good", "testThought",["testTag","jasmine unit","testing"], "testAuthor"]);
     expect(Cards.insert).toHaveBeenCalledWith({
           roomCode: "testRoom",
           category: "good",
@@ -92,8 +92,8 @@ describe("add valid cards with tags",function(){
     jasmine.clock().mockDate(baseTime);
 
     Template.card.fireEvent("submit #card");
-    expect(Meteor.call).toHaveBeenCalledWith("submitCardWithTags", "testRoom",
-              "good", "testThought",["testTag"], "testAuthor");
+    expect(Meteor.call).toHaveBeenCalledWith("submitCardWithTags", ["testRoom",
+              "good", "testThought",["testTag"], "testAuthor"]);
     expect(Cards.insert).toHaveBeenCalledWith({
           roomCode: "testRoom",
           category: "good",

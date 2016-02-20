@@ -35,8 +35,10 @@ if (Meteor.isClient) {
             Session.set("author", author);
             if(tags != null && tags != "" && tags != undefined){
                 tags = findUniqueTags(tags.split(","));
-                Meteor.call("submitCardWithTags", Session.get("roomNumber"),
-                  category,thought,tags,author);
+                var cardData = [Session.get("roomNumber"),category,
+                thought,tags,author];
+
+                Meteor.call("submitCardWithTags",cardData);
             }
             else
               Meteor.call("submitCard", Session.get("roomNumber"),
@@ -79,8 +81,7 @@ function findUniqueTags(tags){
             if(i == 0){
                 uniqueTags[count] = tags[i];
                 count++;
-            }
-            else if(uniqueTags.indexOf(tags[i]) == -1){
+            } else if(uniqueTags.indexOf(tags[i]) == -1){
                 uniqueTags[count] = tags[i];
                 count++;
             }
