@@ -60,7 +60,12 @@ if (Meteor.isClient) {
         },
 
         "click #deleteCardButton": function(){
-            Meteor.call("deleteCard", this._id);
+            Meteor.call("deleteCard",this._id);
+        },
+
+        "click #likeButton": function(){
+            Mongo.Collection.get("cards").update({ _id: this._id},
+                { $inc: {likes: 1} });
         }
     });
 }
@@ -70,5 +75,11 @@ if (Meteor.isServer) {
     // publish cards data to the client
     Meteor.publish("cards", function () {
         return Cards.find({}, { sort: { createdAt: -1 } });
+    });
+
+    Mongo.Collection.get("cards").allow({
+        update: function (userId, doc, fields, modifier) {
+            return true;
+        }
     });
 }
