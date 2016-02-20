@@ -48,7 +48,7 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.card.events({
+    Template.room.events({
         "click #revealCardButton": function(){
             Meteor.call("revealCards", Session.get("roomNumber"));
         },
