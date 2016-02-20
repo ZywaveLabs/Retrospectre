@@ -35,7 +35,7 @@ if (Meteor.isClient) {
             Session.set("author", author);
 
             Meteor.call("submitCard", Session.get("roomNumber"),
-                category, thought, author);
+                category, thought, author, 0, "Like");
 
             event.target.thoughts.value = "";
         }

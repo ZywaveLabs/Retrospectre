@@ -8,12 +8,14 @@
 
 Meteor.methods({
 
-    submitCard: function (roomNumber, category, text, author) {
+    submitCard: function (roomNumber, category, text, author, likes, likeBtn) { // eslint-disable-line
         Cards.insert({
             roomCode: roomNumber,
             category: category,
             createdAt: new Date(),
             text: text,
+            likes: likes,
+            likeBtn: likeBtn,
             author: author,
             reveal: false
         });
