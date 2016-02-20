@@ -1,3 +1,4 @@
+/* global RoomMethods */
 "use strict";
 
 if (Meteor.isClient) {
@@ -8,10 +9,10 @@ if (Meteor.isClient) {
             eve.preventDefault();
             var room = eve.target.roomCode.value;
 
-            if (room != null && room !== "") {
+            if(room != null && room !== "" && RoomMethods.RoomExists(room)){
                 Session.set("roomNumber", String(room));
                 Router.go("/room/" + String(room));
-            } else {
+            }else{
                 alert("An invalid room number was given," +
                     "either ask for the number or create a new room.");
             }

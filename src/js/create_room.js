@@ -1,4 +1,4 @@
-/* globals Rooms:false*/
+/* globals Rooms:false RoomMethods:false*/
 "use strict";
 
 if (Meteor.isClient) {
@@ -10,7 +10,7 @@ if (Meteor.isClient) {
                 Session.set("roomCodeAvailable", true);
                 Session.set("newRoomCode", result);
             } else {
-                /* TODO: Handles errors, how do? Log? */
+                console.log(error); // eslint-disable-line
             }
         });
     });
@@ -53,14 +53,15 @@ if (Meteor.isClient) {
                 return; /* Error state */
             }
 
-            Meteor.call("addRoom", roomId);
-            Session.set("roomNumber", roomId);
-            Router.go("/room/" + roomId);
+            Meteor.call("addRoom", roomId, function(){
+                Session.set("roomNumber", roomId);
+                Router.go("/room/" + roomId);
+            });
         },
 
         "keyup #newRoomCode input": function(eve) {
             var newRoomCode = eve.target.value;
-            var show = !roomExists(newRoomCode);
+            var show = !Meteor.call("roomExists", newRoomCode);
 
             Session.set("roomCodeAvailable", show);
             Session.set("newRoomCode", eve.target.value);
@@ -87,7 +88,7 @@ if (Meteor.isServer) {
     var generateNewRoomCode = function() {
         var roomCode = "";
 
-        while (roomCode === "" || roomExists(roomCode)) {
+        while (roomCode === "" || RoomMethods.RoomExists(roomCode)) {
             var noun = roomGen.Nouns[getRandomInt(0, roomGen.Nouns.length)];
             var adjective = roomGen
                 .Adjectives[getRandomInt(0, roomGen.Adjectives.length)];
@@ -107,9 +108,13 @@ if (Meteor.isServer) {
      *this is due to removing the insecure package
      **/
     Meteor.methods({
+        roomExists: function(roomID) {
+            return RoomMethods.RoomExists(roomID);
+        },
 
         addRoom: function(newRoomID) {
-            addRoomToDatabase(newRoomID);
+            setTimeout(function(){}, 10000);
+            RoomMethods.CreateRoom(newRoomID);
         },
 
         generateNewRoomCode: function() {
@@ -128,34 +133,4 @@ if (Meteor.isServer) {
  */
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
-}
-
-/**
- * roomExists - Checks to see if room with roomcode exists
- *
- * @param  {string} roomCode Room to check if exists already
- * @return {boolean} Whether room codes exists
- */
-function roomExists(roomCode) {
-    if(roomCode == ""){
-        return;
-    }
-    return Rooms.find({
-        id: roomCode
-    }).count() > 0;
-}
-
-
-/**
- * addRoomToDatabase - Adds a room to the database
- *
- * @param  {string} roomID Roomcode to add to database
- */
-function addRoomToDatabase(roomID) {
-    if(!roomExists(roomID)){
-        Rooms.insert({
-            id: String(roomID),
-            dateCreated: new Date()
-        });
-    }
 }

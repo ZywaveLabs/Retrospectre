@@ -1,40 +1,54 @@
-/* globals Rooms:false Cards:false */
+/* globals Rooms:false */
 "use strict";
 
-xdescribe("creating a room", function() {
-    it("can create a room when the room code does not exist", function() {
-        // Setup
-        var expectedId = "myId"
-        event = jasmine.createSpyObj("event", ["preventDefault", "target"]);
-        event = {
-            target: {
-                roomcode: {value: expectedId}
-            },
-            preventDefault: function() {}
+describe("submit .create-room", function() {
+    it("should create a room normally if roomId given is not null\
+        or empty", function() {
+        var expectedId = "myId";
+        var mockEvent = {
+            event: {
+                preventDefault: function(){},
+                target:{roomcode:{value:expectedId}}
+            }
         };
 
-        // spyOn(Meteor, "call").and.callThrough();
         spyOn(Meteor, "call");
-        spyOn(Rooms, "find").and.returnValue({expectedId});
-        spyOn(Session, "get").and.returnValue("testRoom");
 
-        // Execute
-        Template.createRoom.fireEvent("submit .create-room");
+        Template.createRoom.fireEvent("submit .create-room", mockEvent);
 
-        // Verify
-        expect(Meteor.call).toHaveBeenCalledWith("addRoom", expectedId);
-        expect(Rooms.find).toHaveBeenCalledWith({"id": expectedId});
+        expect(Meteor.call).toHaveBeenCalledWith("addRoom", expectedId,
+            jasmine.any(Function));
     });
 
-    xit("cannot create a room when the room code exists", function() {
+    it("cannot create a room when the room code is null", function() {
+        var expectedId = null;
+        var mockEvent = {
+            event: {
+                preventDefault: function(){},
+                target:{roomcode:{value:expectedId}}
+            }
+        };
 
+        spyOn(Meteor, "call");
+
+        Template.createRoom.fireEvent("submit .create-room", mockEvent);
+
+        expect(Meteor.call).not.toHaveBeenCalled();
     });
 
-    xit("cannot create a room without a name", function() {
+    it("cannot create a room without a name", function() {
+        var expectedId = "";
+        var mockEvent = {
+            event: {
+                preventDefault: function(){},
+                target:{roomcode:{value:expectedId}}
+            }
+        };
 
-    });
+        spyOn(Meteor, "call");
 
-    xit("generate a new room code which is valid", function() {
+        Template.createRoom.fireEvent("submit .create-room", mockEvent);
 
+        expect(Meteor.call).not.toHaveBeenCalled();
     });
 });

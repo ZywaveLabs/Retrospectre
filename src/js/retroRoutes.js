@@ -1,4 +1,5 @@
-"use strict";
+/* global RoomMethods */
+// "use strict";
 /**
 *@author TreJon House
 *@created 1/13/16
@@ -28,22 +29,20 @@ Router.route("/room/:_roomNumber", {
     template: "room",
     title: "The Poltergeists",
     onBeforeAction: function (){
-        // if(!roomExists(this.params._roomNumber)){ // eslint-disable-line
-        //     console.log("Room does not exist");
-        //     var createNewRoom =
-        //     confirm("This room does not exist, would like to create it now?");
-        //
-        //     if (createNewRoom) {
-        //         console.log("create new room")
-        //         addRoomToDatabase(this.params._roomNumber); // eslint-disable-line
-        //     } else {
-        //         console.log("don't create room");
-        //         this.redirect("/");
-        //     }
+        // var result = Meteor.wrapAsync(Meteor.call)("roomExists", this.params._roomNumber, function(err){
+        //     console.log(err);
+        // });
+        // console.log(result);
+        // if(!result){
+        //     this.redirect("/");
         // }
-        // console.log("Setting session");
-        Session.set("roomNumber", this.params._roomNumber);
-        this.next();
+        if(RoomMethods.RoomExists(this.params._roomNumber)){
+            Session.set("roomNumber", this.params._roomNumber);
+            this.next();
+        }else{
+            alert("Room does not exist, redirecting to home");
+            this.redirect("/");
+        }
     }
 });
 
