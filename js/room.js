@@ -45,6 +45,7 @@ if (Meteor.isClient) {
             });
         }
     });
+
     Template.room.events({
         "click #revealCardButton": function(){
             Meteor.call("revealCards", Session.get("roomNumber"));
@@ -53,29 +54,33 @@ if (Meteor.isClient) {
         "click #deleteCardButton": function(){
             Meteor.call("deleteCard",this._id);
         },
-        "click #filterTagsButton": function(event){// eslint-disable-line
-            var tags;
 
-            tags = event.target.form[0].value.split(",");
+        "click #filterTagsButton": function(event){// eslint-disable-line
+            var tags = event.target.form[0].value.split(",");
+
             for(var i = 0; i < tags.length; i++){
                 tags[i] = tags[i].toLowerCase();
             }
+
             filterMultipleTags(tags);
         },
+
         "click tag": function(e){
             filterSingleTag(e.toElement.innerHTML);
         },
+
         "submit #tagSearchForm": function(e){
             e.preventDefault();
-            var tags;
+            var tags = e.target.filters.value.split(",");
 
-            tags = e.target.filters.value.split(",");
             for(var i = 0; i < tags.length; i++){
                 tags[i] = tags[i].toLowerCase();
             }
+
             filterMultipleTags(tags);
             e.target.filters.value = "";
         },
+
         "click #removeTag": function(e){
             var tags;
             var prevEleTag;
@@ -103,15 +108,24 @@ if (Meteor.isClient) {
                     count++;
                 }
             }
+
             Meteor.call("removeTag",text,oldTags,newTags);
         },
+
         "click #clearFilter": function(){
             clearFilter();
             $("#filters").val("");
         },
-        "click #likeButton": function(){
-            Mongo.Collection.get("cards").update({ _id: this._id},
-                { $inc: {likes: 1} });
+
+        "click #likeButton": function(eve){
+            //TODO FIX THIS SHIT!
+            if(eve.target.id === "likeButton") {
+                eve.target.disabled = true;
+            } else if(eve.target.parentNode.id === "likeButton") {
+                eve.target.parentNode.disabled = true;
+            }
+
+            Cards.update({ _id: this._id}, { $inc: {likes: 1} });
         }
     });
 }
