@@ -27,6 +27,27 @@ describe("verify user can join room with no auth", function(){
     });
 
   });
+
+  it("should navigate from the landing page, joined room", function () {
+    expect(document.title == "Retrospectre - Home").toBe(true);
+    eve = {
+      target:{
+        roomCode:{value: 1}
+      },
+      preventDefault: function(){}
+    };
+    Template.landingPage.fireEvent("submit .join-room",{event:eve});
+    expect(Router.go).toHaveBeenCalledWith("/room/1");
+    waitForElement("h1",function(){
+      $("#roomCode").val("1");
+      Template.landingPage.fireEvent("submit .join-room");
+      expect(Router.go).toHaveBeenCalledWith("/room/1");
+      expect(document.title == "Retrospectre - The Poltergeists").toBe(true);
+      expect(window.location.pathname == ("/room/1")).toBe(true);
+    });
+
+  });
+
 });
 
 function waitForElement(selector, successCallback) {

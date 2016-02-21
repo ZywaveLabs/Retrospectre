@@ -8,7 +8,11 @@ MSOE SDL project.
 [Demo](http://74.91.115.65/)
 
 ##Live Deploy
+<<<<<<< HEAD
 [[The Retrospectre]](http://src-53.nodechef.com/)
+=======
+[The Retrospectre](http://retrospectre-zywave-53.nodechef.com/)
+>>>>>>> master
 
 # Building Locally
 ## Requirements

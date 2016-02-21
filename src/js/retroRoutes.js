@@ -1,4 +1,5 @@
-"use strict";
+/* global RoomMethods */
+// "use strict";
 /**
 *@author TreJon House
 *@created 1/13/16
@@ -28,8 +29,13 @@ Router.route("/room/:_roomNumber", {
     template: "room",
     title: "The Poltergeists",
     onBeforeAction: function (){
-        Session.set("roomNumber", this.params._roomNumber);
-        this.next();
+        if(RoomMethods.RoomExists(this.params._roomNumber)){
+            Session.set("roomNumber", this.params._roomNumber);
+            this.next();
+        }else{
+            alert("Room does not exist, redirecting to home");
+            this.redirect("/");
+        }
     }
 });
 

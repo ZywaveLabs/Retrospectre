@@ -18,18 +18,13 @@ if (Meteor.isClient) {
         // session storing the room number is lost so we need to
         // ask for one and verify it
         while (Session.get("roomNumber") == null ||
-                Session.get("roomNumber") == undefined ||
-                isNaN(parseInt(Session.get("roomNumber")))) {
-
-            Session.set("roomNumber",
-                parseInt(prompt("Enter the designated room number.")));
+                Session.get("roomNumber") == undefined) {
             Router.go("/room/" + Session.get("roomNumber"));
         }
 
     });
 
     Template.room.helpers({
-
         goodCards : function() {
             var author = Session.get("author");
 
@@ -113,6 +108,10 @@ if (Meteor.isClient) {
         "click #clearFilter": function(){
             clearFilter();
             $("#filters").val("");
+        },
+        "click #likeButton": function(){
+            Mongo.Collection.get("cards").update({ _id: this._id},
+                { $inc: {likes: 1} });
         }
     });
 }
@@ -123,6 +122,12 @@ if (Meteor.isServer) {
     Meteor.publish("cards", function () {
         return Cards.find({},
           { sort: { createdAt: -1 } });
+    });
+
+    Mongo.Collection.get("cards").allow({
+        update: function (userId, doc, fields, modifier) {
+            return true;
+        }
     });
 }
 

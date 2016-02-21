@@ -1,90 +1,136 @@
+/* globals Rooms:false RoomMethods:false*/
 "use strict";
-
-var ROOMS = new Mongo.Collection("rooms");
 
 if (Meteor.isClient) {
 
-    Template.createRoom.onCreated(function () {
+    Template.createRoom.onCreated(function() {
         this.subscribe("rooms");
+        Meteor.call("generateNewRoomCode", function(error, result) {
+            if (!error) {
+                Session.set("roomCodeAvailable", true);
+                Session.set("newRoomCode", result);
+            } else {
+                console.log(error); // eslint-disable-line
+            }
+        });
     });
 
     Template.createRoom.helpers({
 
-        getNewRoomNumber: function () {
+        getNewRoomNumber: function() {
+            return Session.get("newRoomCode");
+        },
 
-            var lastRoomID = getLastRoomID();
-            var newRoomID;
+        roomNotAvailableShow: function() {
+            return (Session.get("roomCodeAvailable") ? "none" : "");
+        },
 
-            if (lastRoomID === null) {
-                lastRoomID = 0;
-            }
-
-            newRoomID = lastRoomID + 1;
-            return newRoomID;
+        createRoomDisable: function() {
+            return (Session.get("roomCodeAvailable") ? "" : "disabled");
         }
     });
 
     Template.createRoom.events({
 
-        "click #createAndJoinRoomButton": function () {
+        "click #generateNewRoomCodeButton": function() {
+            Session.set("newRoomCode", Meteor.call("generateNewRoomCode",
+                function(error, result) {
+                    if (!error) {
+                        Session.set("newRoomCode", result);
+                        Session.set("roomCodeAvailable", true);
+                    } else {
+                        /* Error state */
+                    }
+                }
+            ));
+        },
 
-            var lastRoomID = getLastRoomID();
+        "submit .create-room": function(eve) {
+            eve.preventDefault();
+            var roomId = eve.target.roomcode.value;
 
-            if (lastRoomID === null) {
-                lastRoomID = 0;
+            if (roomId === null || roomId === "") {
+                return; /* Error state */
             }
 
-            var newRoomID = lastRoomID + 1;
+            Meteor.call("addRoom", roomId, function(){
+                Session.set("roomNumber", roomId);
+                Router.go("/room/" + roomId);
+            });
+        },
 
-            Meteor.call("addRoom", newRoomID);
-            Session.set("roomNumber", newRoomID);
-            Router.go("/room/" + newRoomID);
+        "keyup #newRoomCode input": function(eve) {
+            var newRoomCode = eve.target.value;
+            var show = (newRoomCode !== null && newRoomCode !== "" &&
+                !RoomMethods.RoomExists(newRoomCode));
+
+            Session.set("roomCodeAvailable", show);
+            Session.set("newRoomCode", eve.target.value);
         }
     });
 }
 
 if (Meteor.isServer) {
+    var roomGen = JSON.parse(Assets.getText("room_gen.json"));
 
-    Meteor.publish("rooms", function () {
-        return ROOMS.find({}, { sort: { id: -1 } });
+    Meteor.publish("rooms", function() {
+        return Rooms.find({}, {
+            sort: {
+                id: -1
+            }
+        });
+    });
+
+    /**
+     * generateNewRoomCode - Generates a new fun room code
+     *
+     * @return {string}  Fun Room code
+     */
+    var generateNewRoomCode = function() {
+        var roomCode = "";
+
+        while (roomCode === "" || RoomMethods.RoomExists(roomCode)) {
+            var noun = roomGen.Nouns[getRandomInt(0, roomGen.Nouns.length)];
+            var adjective = roomGen
+                .Adjectives[getRandomInt(0, roomGen.Adjectives.length)];
+            var verb = roomGen.Verbs[getRandomInt(0, roomGen.Verbs.length)];
+
+            roomCode = adjective + verb + noun;
+        }
+        return roomCode;
+    };
+
+
+    /**
+     *Adding meteor methods give methods we can
+     *call using meteor.call this mandatory
+     *when trying to handle the DB in any manner
+     *it revokes DB access to the client
+     *this is due to removing the insecure package
+     **/
+    Meteor.methods({
+        roomExists: function(roomID) {
+            return RoomMethods.RoomExists(roomID);
+        },
+
+        addRoom: function(newRoomID) {
+            RoomMethods.CreateRoom(newRoomID);
+        },
+
+        generateNewRoomCode: function() {
+            return generateNewRoomCode();
+        }
     });
 }
 
 /**
-*Adding meteor methods give methods we can
-*call using meteor.call this mandatory
-*when trying to handle the DB in any manner
-*it revokes DB access to the client
-*this is due to removing the insecure package
-**/
-Meteor.methods({
-
-    getLastRoomID: function () {
-        return getLastRoomID();
-    },
-
-    addRoom: function (newRoomID) {
-        addRoomToDatabase(newRoomID);
-    }
-});
-
-function getLastRoomID() {
-
-    var roomList = ROOMS.find({}, { sort: { id: -1 } }).fetch();
-    var lastRoom;
-
-    if (roomList.length > 0) {
-        lastRoom = roomList[0].id;
-    } else {
-        lastRoom = null;
-    }
-
-    return lastRoom;
-}
-
-function addRoomToDatabase(roomID) {
-    ROOMS.insert({
-        id: roomID,
-        dateCreated: new Date()
-    });
+ * getRandomInt - Returns a random integer between min (included) and max (excluded)
+ *  Using Math.round() will give you a non-uniform distribution!
+ *
+ * @param  {integer} min Minimum integer (Included)
+ * @param  {integer} max Maximum integer (Excluded)
+ * @return {integer}     description
+ */
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
 }

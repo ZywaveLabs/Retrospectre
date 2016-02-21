@@ -1,4 +1,5 @@
-/* global Cards: false */
+
+/* global Cards:false */
 "use strict";
 
 /**
@@ -7,13 +8,14 @@
  **/
 
 Meteor.methods({
-    submitCard: function (roomNumber, category, text, author) {
+    submitCard: function (roomNumber, category, text, author, likes, likeBtn) { // eslint-disable-line
         Cards.insert({
             roomCode: roomNumber,
             category: category,
             createdAt: new Date(),
             text: text,
             tags: [],
+            likes: likes,
             author: author,
             reveal: false
         });
@@ -25,7 +27,8 @@ Meteor.methods({
             createdAt: new Date(),
             text: cardData[2],
             tags: cardData[3],
-            author: cardData[4],
+            likes: cardData[4],
+            author: cardData[5],
             reveal: false
         });
     },
@@ -39,7 +42,7 @@ Meteor.methods({
     "removeTag": function(text,oldTags,newTags){
         var cardToUpdate;
 
-        cardToUpdate = Meteor.Collection.get("cards").findOne({
+        cardToUpdate = Cards.findOne({
             text:text,tags:oldTags
         });
         Cards.update(
