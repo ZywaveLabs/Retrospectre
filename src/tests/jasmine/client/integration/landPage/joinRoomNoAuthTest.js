@@ -39,7 +39,7 @@ describe("verify user can join room with no auth", function(){
     Template.landingPage.fireEvent("submit .join-room",{event:eve});
     expect(Router.go).toHaveBeenCalledWith("/room/SweetDepicturingAlpaca");
     waitForElement("h1",function(){
-      $("#roomCode").val("1");
+      $("#roomCode").val("SweetDepicturingAlpaca");
       Template.landingPage.fireEvent("submit .join-room");
       expect(Router.go).toHaveBeenCalledWith("/room/SweetDepicturingAlpaca");
       expect(document.title == "Retrospectre - The Poltergeists").toBe(true);
