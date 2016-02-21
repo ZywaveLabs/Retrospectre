@@ -12,6 +12,7 @@ describe("add valid cards with tags",function(){
       target: {
         thoughts : {value: "testThought"},
         tags: {value: "testTag"},
+        likes: {value:0},
         author: {value: "testAuthor"},
         goodCategoryRadio: {checked: true},
         badCategoryRadio: {checked: false}
@@ -25,13 +26,14 @@ describe("add valid cards with tags",function(){
 
     Template.card.fireEvent("submit #card");
     expect(Meteor.call).toHaveBeenCalledWith("submitCardWithTags", ["testRoom",
-              "good", "testThought",["testTag"], "testAuthor"]);
+              "good", "testThought",["testTag"], 0,"testAuthor"]);
     expect(Cards.insert).toHaveBeenCalledWith({
           roomCode: "testRoom",
           category: "good",
           createdAt: baseTime,
           text: "testThought",
           tags: ["testTag"],
+          likes: 0,
           author: "testAuthor",
           reveal: false
       });
@@ -46,6 +48,7 @@ describe("add valid cards with tags",function(){
       target: {
         thoughts : {value: "testThought"},
         tags: {value: "testTag,jasmine unit,testing"},
+        likes: {value:0},
         author: {value: "testAuthor"},
         goodCategoryRadio: {checked: true},
         badCategoryRadio: {checked: false}
@@ -59,13 +62,14 @@ describe("add valid cards with tags",function(){
 
     Template.card.fireEvent("submit #card");
     expect(Meteor.call).toHaveBeenCalledWith("submitCardWithTags", ["testRoom",
-              "good", "testThought",["testTag","jasmine unit","testing"], "testAuthor"]);
+              "good", "testThought",["testTag","jasmine unit","testing"], 0,"testAuthor"]);
     expect(Cards.insert).toHaveBeenCalledWith({
           roomCode: "testRoom",
           category: "good",
           createdAt: baseTime,
           text: "testThought",
           tags: ["testTag","jasmine unit","testing"],
+          likes:0,
           author: "testAuthor",
           reveal: false
       });
@@ -80,6 +84,7 @@ describe("add valid cards with tags",function(){
       target: {
         thoughts : {value: "testThought"},
         tags: {value: "testTag,testTag,testTag,testTag"},
+        likes: {value:0},
         author: {value: "testAuthor"},
         goodCategoryRadio: {checked: true},
         badCategoryRadio: {checked: false}
@@ -93,13 +98,14 @@ describe("add valid cards with tags",function(){
 
     Template.card.fireEvent("submit #card");
     expect(Meteor.call).toHaveBeenCalledWith("submitCardWithTags", ["testRoom",
-              "good", "testThought",["testTag"], "testAuthor"]);
+              "good", "testThought",["testTag"],0, "testAuthor"]);
     expect(Cards.insert).toHaveBeenCalledWith({
           roomCode: "testRoom",
           category: "good",
           createdAt: baseTime,
           text: "testThought",
           tags: ["testTag"],
+          likes: 0,
           author: "testAuthor",
           reveal: false
       });

@@ -35,6 +35,10 @@ if (Meteor.isClient) {
             Session.set("author", author);
             if(tags != null && tags != "" && tags != undefined){
                 tags = findUniqueTags(tags.split(","));
+                //TODO
+                /*make into object array and just have one method to
+                *submit cards not two sep
+                */
                 /* cardData []
                 *[0] - room code
                 *[1] - category

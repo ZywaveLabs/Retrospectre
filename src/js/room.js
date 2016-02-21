@@ -60,7 +60,7 @@ if (Meteor.isClient) {
             for(var i = 0; i < tags.length; i++){
                 tags[i] = tags[i].toLowerCase();
             }
-            filterMulitpleTags(tags);
+            filterMultipleTags(tags);
         },
         "click tag": function(e){
             filterSingleTag(e.toElement.innerHTML);
@@ -73,7 +73,7 @@ if (Meteor.isClient) {
             for(var i = 0; i < tags.length; i++){
                 tags[i] = tags[i].toLowerCase();
             }
-            filterMulitpleTags(tags);
+            filterMultipleTags(tags);
             e.target.filters.value = "";
         },
         "click #removeTag": function(e){
@@ -162,7 +162,7 @@ function filterSingleTag(tag){
 *@param {string[]} tags - Array of strings containing tags to filter by
 *Filters displayed cards by tags
 **/
-function filterMulitpleTags(tags){
+function filterMultipleTags(tags){
     var numCards;
 
     numCards = $(".card-panel").length;
