@@ -6,8 +6,7 @@ describe("createCard", function() {
 
         it("should not submit if the thought is empty", function() {
             // Setup
-            event = jasmine.createSpyObj("event", ["target", "preventDefault"]);
-            event = {
+            var eventObj = { event:{
                 target: {
                     thoughts: {value: ""},
                     author: {value: "testAuthor"},
@@ -15,14 +14,14 @@ describe("createCard", function() {
                     badCategoryRadio: {checked: false}
                 },
                 preventDefault: function() {}
-            };
+            }};
 
             spyOn(Session, "get").and.returnValue("testRoom");
             spyOn(Session, "set");
             spyOn(window, "alert");
 
             // Execute
-            Template.card.fireEvent("submit #card");
+            Template.card.fireEvent("submit #card", eventObj);
 
             // Verify
             expect(window.alert).toHaveBeenCalledWith("Enter a thought");
@@ -31,8 +30,7 @@ describe("createCard", function() {
 
         it("should not submit if the author is empty", function() {
             // Setup
-            event = jasmine.createSpyObj("event", ["target", "preventDefault"]);
-            event = {
+            var eventObj = { event: {
                 target: {
                     thoughts: {value: "testThought"},
                     author: {value: ""},
@@ -40,14 +38,14 @@ describe("createCard", function() {
                     badCategoryRadio: {checked: false}
                 },
                 preventDefault: function() {}
-            };
+            }};
 
             spyOn(Session, "get").and.returnValue("testRoom");
             spyOn(Session, "set");
             spyOn(window, "alert");
 
             // Execute
-            Template.card.fireEvent("submit #card");
+            Template.card.fireEvent("submit #card", eventObj);
 
             // Verify
             expect(window.alert).toHaveBeenCalledWith("Who's thought is this?");
@@ -55,8 +53,7 @@ describe("createCard", function() {
 
         it("should not submit if a category is not selected", function() {
             // Setup
-            event = jasmine.createSpyObj("event", ["target", "preventDefault"]);
-            event = {
+            var eventObj = { event: {
                 target: {
                     thoughts: {value: "testThought"},
                     author: {value: ""},
@@ -64,14 +61,14 @@ describe("createCard", function() {
                     badCategoryRadio: {checked: false}
                 },
                 preventDefault: function() {}
-            };
+            }};
 
             spyOn(Session, "get").and.returnValue("testRoom");
             spyOn(Session, "set");
             spyOn(window, "alert");
 
             // Execute
-            Template.card.fireEvent("submit #card");
+            Template.card.fireEvent("submit #card", eventObj);
 
             // Verify
             expect(window.alert).toHaveBeenCalledWith("Enter a category " +
@@ -89,8 +86,7 @@ describe("createCard", function() {
 
         it("should submit the card with good category", function() {
             // Setup
-            event = jasmine.createSpyObj("event", ["target", "preventDefault"]);
-            event = {
+            var eventObj = { event: {
                 target: {
                     thoughts: {value: "testThought"},
                     author: {value: "testAuthor"},
@@ -98,7 +94,7 @@ describe("createCard", function() {
                     badCategoryRadio: {checked: false}
                 },
                 preventDefault: function() {}
-            };
+            }};
             var baseTime = new Date();
 
             spyOn(Session, "get").and.returnValue("testRoom");
@@ -106,7 +102,7 @@ describe("createCard", function() {
             jasmine.clock().mockDate(baseTime);
 
             // Execute
-            Template.card.fireEvent("submit #card");
+            Template.card.fireEvent("submit #card", eventObj);
 
             // Verify
             expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
@@ -122,13 +118,12 @@ describe("createCard", function() {
                 reveal: false
             });
             expect(Session.set).toHaveBeenCalledWith("author", "testAuthor");
-            expect(event.target.thoughts.value).toEqual("");
+            expect(eventObj.event.target.thoughts.value).toEqual("");
         });
 
         it("should submit the card with bad category", function() {
             // Setup
-            event = jasmine.createSpyObj("event", ["target", "preventDefault"]);
-            event = {
+            var eventObj = { event: {
                 target: {
                     thoughts: {value: "testThought"},
                     author: {value: "testAuthor"},
@@ -136,7 +131,7 @@ describe("createCard", function() {
                     badCategoryRadio: {checked: true}
                 },
                 preventDefault: function() {}
-            };
+            }};
             var baseTime = new Date();
 
             spyOn(Session, "get").and.returnValue("testRoom");
@@ -144,7 +139,7 @@ describe("createCard", function() {
             jasmine.clock().mockDate(baseTime);
 
             // Execute
-            Template.card.fireEvent("submit #card");
+            Template.card.fireEvent("submit #card", eventObj);
 
             // Verify
             expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
@@ -160,7 +155,7 @@ describe("createCard", function() {
                 reveal: false
             });
             expect(Session.set).toHaveBeenCalledWith("author", "testAuthor");
-            expect(event.target.thoughts.value).toEqual("");
+            expect(eventObj.event.target.thoughts.value).toEqual("");
         });
 
     });

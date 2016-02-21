@@ -3,11 +3,11 @@
 if (Meteor.isClient) {
     Template.card.events({
 
-        "submit #card": function(){
-            event.preventDefault();
+        "submit #card": function(eve){
+            eve.preventDefault();
 
-            var author = event.target.author.value;
-            var thought = event.target.thoughts.value;
+            var author = eve.target.author.value;
+            var thought = eve.target.thoughts.value;
             var category = undefined;
 
             while(Session.get("roomNumber") == undefined) {
@@ -15,9 +15,9 @@ if (Meteor.isClient) {
                     prompt("Enter the designated room number."));
             }
 
-            if(event.target.goodCategoryRadio.checked === true) {
+            if(eve.target.goodCategoryRadio.checked === true) {
                 category = "good";
-            } else if(event.target.badCategoryRadio.checked == true) {
+            } else if(eve.target.badCategoryRadio.checked == true) {
                 category = "bad";
             } else {
                 alert("Enter a category for your thought");
@@ -37,7 +37,7 @@ if (Meteor.isClient) {
             Meteor.call("submitCard", Session.get("roomNumber"),
                 category, thought, author, 0, "Like");
 
-            event.target.thoughts.value = "";
+            eve.target.thoughts.value = "";
         }
     });
 }
