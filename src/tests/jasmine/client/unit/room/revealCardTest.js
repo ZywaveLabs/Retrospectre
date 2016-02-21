@@ -1,5 +1,5 @@
 "use strict";
-
+/* global Cards: false*/
 describe("reveal cards", function() {
 
     describe("reveal button", function() {

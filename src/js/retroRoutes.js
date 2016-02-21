@@ -58,6 +58,8 @@ Router.route("/join-room", {
 if (Meteor.isClient) {
     Template.headerFooter.helpers({
         title: function () {
+            document.title = "Retrospectre - " +
+            Router.current().route.options.title;
             return Router.current().route.options.title;
         }
     });
