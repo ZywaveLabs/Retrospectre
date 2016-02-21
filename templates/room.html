@@ -1,33 +1,75 @@
 <template name="room">
 	<div class="container-fluid">
-		<h1 class="text-info"> Sprint Retrospective</h1>
-		{{> card}}
-		<hr>
+		<form id="tagSearchForm" class="navbar-form navbar-right">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-filter"></i></span>
+				<input id="filters" type="text" class="form-control" placeholder="Filter tags...">
+				<span class="input-group-btn">
+					<button id="filterTagsButton" type="button" class="btn btn-default">Filter</button>
+					<button id="clearFilter" type="button" class="btn btn-danger">Clear Filters</button>
+				</span>
+			</div>
+		</form>
+		<h1 class="text-info"> Sprint Retrospective</h1> {{> card}}
 		<button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
 
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-6 col-sm-6">
-					<h2 class="text-info"> Good category </h2>
-					<ul class="fa-ul">
-						{{#each goodCards}}
-							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}<br><i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp;<span id="likeButton">Likes</span></li>
-						{{/each}}
-					</ul>
+					<h2> Good category </h2> {{#each goodCards}}
+					<div class="row">
+						<div id="card" class="card-panel green">
+							<span class="white-text">
+										{{text}}
+									</span>
+							<div class="card-action">
+								<div class="chip" id="deleteCardButton">
+									<i class="material-icons fa fa-trash-o"></i> Remove Card
+								</div>
+								{{#each tags}}
+								<div class="chip">
+									<tag class="tag">{{this}}</tag>
+									<i id="removeTag" class="material-icons fa fa-ban"></i>
+								</div>
+								{{/each}}
+								<div class="chip" id="likeButton">
+									<i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp;<span>Likes</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
 				</div>
 				<div class="col-xs-6 col-sm-6">
-					<h2 class="text-info"> Bad category </h2>
-					<ul class="fa-ul">
-						{{#each badCards}}
-							<li><span id="deleteCardButton"><i class="fa fa-trash-o"></i></span>&nbsp;{{text}}<br><i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp;<span id="likeButton">Likes</span></li>
-						{{/each}}
-					</ul>
+					<h2> Bad category </h2> {{#each badCards}}
+					<div class="row">
+						<div id="card" class="card-panel red  accent-4">
+							<span class="grey-text">
+											{{text}}
+										</span>
+							<div class="card-action">
+								<div class="chip" id="deleteCardButton">
+									<i class="material-icons fa fa-trash-o"></i> Remove Card
+								</div>
+								{{#each tags}}
+								<div class="chip">
+									<tag class="tag">{{this}}</tag>
+									<i id="removeTag" class="material-icons fa fa-ban"></i>
+								</div>
+								{{/each}}
+								<div class="chip" id="likeButton">
+									<i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp;<span>Likes</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
 				</div>
 			</div>
-            <div style="margin-top: 75px">
-                <h3 class="text-info">Keynotes</h3>
-                <textarea rows="5" style="width: 100%; margin-bottom: 80px; resize: none" placeholder="Take any notes you may have here..."></textarea>
-            </div>
-        </div>
-    </div>
+		</div>
+		<div style="margin-top: 75px">
+			<h3 class="text-info">Keynotes</h3>
+			<textarea rows="5" style="width: 100%; margin-bottom: 80px; resize: none" placeholder="Take any notes you may have here..."></textarea>
+		</div>
+	</div>
 </template>

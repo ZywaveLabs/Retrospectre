@@ -14,10 +14,8 @@ if (Meteor.isClient) {
                 Router.go("/room/" + String(room));
             }else{
                 alert("An invalid room number was given," +
-                    "either ask for the number or create a new room.");
+                "either ask for the number or create a new room.");
             }
         }
-
     });
-
 }
