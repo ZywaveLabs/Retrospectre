@@ -28,12 +28,15 @@ Router.route("/room/:_roomNumber", {
     path: "/room/:_roomNumber",
     template: "room",
     title: "The Poltergeists",
+    waitOn: function() {
+        return Meteor.subscribe("roomCodes");
+    },
     onBeforeAction: function (){
         if(RoomMethods.RoomExists(this.params._roomNumber)){
             Session.set("roomNumber", this.params._roomNumber);
             this.next();
         }else{
-            alert("Room does not exist, redirecting to home");
+            console.log("Room does not exist, redirecting to home"); // eslint-disable-line
             this.redirect("/");
         }
     }
