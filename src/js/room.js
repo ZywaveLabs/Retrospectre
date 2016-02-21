@@ -124,7 +124,7 @@ if (Meteor.isClient) {
             } else if(eve.target.parentNode.id === "likeButton") {
                 eve.target.parentNode.disabled = true;
             }
-            
+
             Cards.update({ _id: this._id}, { $inc: {likes: 1} });
         }
     });
