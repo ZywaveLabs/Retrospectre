@@ -110,8 +110,8 @@ if (Meteor.isClient) {
             $("#filters").val("");
         },
         "click #likeButton": function(){
-            Mongo.Collection.get("cards").update({ _id: this._id},
-                { $inc: {likes: 1} });
+            event.target.disabled = true;
+            Cards.update({ _id: this._id}, { $inc: {likes: 1} });
         }
     });
 }
