@@ -108,8 +108,8 @@ if (Meteor.isClient) {
                     count++;
                 }
             }
-
-            Meteor.call("removeTag",text,oldTags,newTags);
+            Meteor.call("removeTag",text,oldTags,
+              newTags,Session.get("roomNumber"));
         },
 
         "click #clearFilter": function(){

@@ -39,12 +39,14 @@ Meteor.methods({
         Cards.update({"roomCode":roomCode},
 {$set: {reveal:true}}, {multi: true});
     },
-    "removeTag": function(text,oldTags,newTags){
+    "removeTag": function(text,oldTags,newTags,roomCode){
         var cardToUpdate;
 
         cardToUpdate = Cards.findOne({
-            text:text,tags:oldTags
+            roomCode:roomCode,text:text,tags:oldTags
         });
+        if(!cardToUpdate)
+          console.log("error find the right card to udate, sorry try again later");//eslint-disable-line
         Cards.update(
        cardToUpdate._id,
        {$set: {tags:newTags}}
