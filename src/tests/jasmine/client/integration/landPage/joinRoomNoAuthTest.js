@@ -32,16 +32,16 @@ describe("verify user can join room with no auth", function(){
     expect(document.title == "Retrospectre - Home").toBe(true);
     eve = {
       target:{
-        roomCode:{value: 1}
+        roomCode:{value: "SweetDepicturingAlpaca"}
       },
       preventDefault: function(){}
     };
     Template.landingPage.fireEvent("submit .join-room",{event:eve});
-    expect(Router.go).toHaveBeenCalledWith("/room/1");
+    expect(Router.go).toHaveBeenCalledWith("/room/SweetDepicturingAlpaca");
     waitForElement("h1",function(){
       $("#roomCode").val("1");
       Template.landingPage.fireEvent("submit .join-room");
-      expect(Router.go).toHaveBeenCalledWith("/room/1");
+      expect(Router.go).toHaveBeenCalledWith("/room/SweetDepicturingAlpaca");
       expect(document.title == "Retrospectre - The Poltergeists").toBe(true);
       expect(window.location.pathname == ("/room/1")).toBe(true);
     });
