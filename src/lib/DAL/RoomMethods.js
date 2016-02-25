@@ -1,15 +1,13 @@
 // /* eslint-disable */
-/* global Cards:true Rooms:true RoomMethods: true */
+/* global Rooms:true RoomMethods: true */
 
-
-Cards = new Mongo.Collection("cards");
 Rooms = new Mongo.Collection("rooms");
 if(Meteor.isServer){
-    Meteor.publish("roomCodes", function(){
+    Meteor.publish("rooms", function(){
         return Rooms.find({});
     });
 } else {
-    Meteor.subscribe("roomCodes");
+    Meteor.subscribe("rooms");
 }
 RoomMethods = {};
 
@@ -40,4 +38,12 @@ RoomMethods.CreateRoom = function(roomCode){
             dateCreated: new Date()
         });
     }
+};
+
+RoomMethods.DeleteRoomById = function(id){
+    Rooms.remove({_id:id});
+};
+
+RoomMethods.DeleteRoomByRoomcode = function(roomCode){
+    Rooms.remove({id:roomCode});
 };

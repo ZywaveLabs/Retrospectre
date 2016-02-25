@@ -4,7 +4,7 @@ var eslint = require("gulp-eslint");
 var shell = require("gulp-shell");
 
 gulp.task("lint", function() {
-    return gulp.src(["src/**/*.js", "!src/**/sample/**/*.js", "!src/tests/**/*.js"])
+    return gulp.src(["src/**/*.js", "!src/**/sample/**/*.js", "!src/tests/**/*.js", "!src/**/*.min.*"])
         // eslint() attaches the lint output to the "eslint" property
         // of the file object so it can be used by other modules.
         .pipe(eslint())
