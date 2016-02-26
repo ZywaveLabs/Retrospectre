@@ -23,7 +23,15 @@ ProgramUtils.ValueOrDefault = function(value, defaultValue) {
 ProgramUtils.DefaultObjectValues = function(object, defaultObject) {
     var newObject = {};
     for(var key in defaultObject){
-        newObject[key] = ProgramUtils.ValueOrDefault(object[key], defaultObject[key]);
+        if(typeof defaultObject[key] === "object"){
+            if(typeof object[key] === "undefined"){
+                newObject[key] = defaultObject[key];
+            } else {
+                newObject[key] = ProgramUtils.DefaultObjectValues(object[key]);
+            }
+        } else {
+            newObject[key] = ProgramUtils.ValueOrDefault(object[key], defaultObject[key]);
+        }
     }
     return newObject;
 };

@@ -33,6 +33,13 @@ categories - {string[]} Catergories for the room
 createdAt - {datetime} Will default to now, but can pass a time for testing
 owner - {string} Person who created the room
 reveal - {boolean} If the cards should be visible to everyone besides author
+anonymousAccess - {object}
+*/
+
+/*
+AnonymousAccess Object
+read - {boolean}
+write - {boolean}
 */
 
 /**
@@ -46,7 +53,11 @@ RoomMethods.CreateRoom = function(roomObject){
         categories: ["good", "bad"],
         createdAt: new Date(),
         owner: "",
-        reveal: false
+        reveal: false,
+        anonymousAccess: {
+            read: true,
+            write: false
+        }
     };
 
     roomObject = ProgramUtils.DefaultObjectValues(roomObject, defaultRoom);
