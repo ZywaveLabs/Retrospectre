@@ -51,7 +51,15 @@ Template.createRoom.events({
             return; /* Error state */
         }
 
-        Meteor.call("addRoom", roomId, function(){
+        var roomObject = {
+            roomCode: roomId,
+            categories: ["good", "bad"],
+            createdAt: new Date(),
+            owner: Session.get("author"),
+            reveal: false
+        };
+
+        Meteor.call("createRoom", roomObject, function(){
             Session.set("roomNumber", roomId);
             Router.go("/room/" + roomId);
         });

@@ -12,7 +12,7 @@ Meteor.methods({
         Cards.update({"roomCode":roomCode},
 {$set: {reveal:true}}, {multi: true});
     },
-    "removeTag": function(text,oldTags,newTags,roomCode){
+    removeTag: function(text,oldTags,newTags,roomCode){
         var cardToUpdate;
 
         cardToUpdate = Cards.findOne({

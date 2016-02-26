@@ -1,4 +1,4 @@
-/* global RoomMethods */
+/* global RoomMethods SnackbarMethods*/
 "use strict";
 
 if (Meteor.isClient) {
@@ -13,8 +13,9 @@ if (Meteor.isClient) {
                 Session.set("roomNumber", String(room));
                 Router.go("/room/" + String(room));
             }else{
-                alert("An invalid room number was given," +
-                "either ask for the number or create a new room.");
+                SnackbarMethods.DisplayMessage("An invalid room number was" +
+                " given, either ask for the room code or create a new room.",
+                10000);
             }
         }
     });
