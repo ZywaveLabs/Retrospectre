@@ -1,7 +1,7 @@
 /* eslint-disable */
 SnackbarMethods = {};
 
-SnackbarMethods.DisplayMessage = function(message, timeout) {
+SnackbarMethods.DisplayMessage = function(message, timeout, error) {
     var options =  {
         content: message,
         style: "snackbar",
@@ -9,4 +9,7 @@ SnackbarMethods.DisplayMessage = function(message, timeout) {
     };
 
     $.snackbar(options);
+    if(error){
+        console.log(error);
+    }
 }

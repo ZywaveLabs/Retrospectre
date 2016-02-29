@@ -21,6 +21,14 @@ tags - {string[]} Tags that the card should have to start with
 likes - {int} Number the likes a card has
 author - {string} Author of the card
 reveal - {boolean} If the card should be visible to everyone besides author
+comments - {object[]} Comments added to card after creation as notes
+*/
+
+/*
+CommentObject
+author - {string} - UserId
+text - {string} - Comment
+createdAt - {datetime} - Created at time
 */
 
 CardMethods.SubmitCard = function(cardObject) {
@@ -31,8 +39,9 @@ CardMethods.SubmitCard = function(cardObject) {
         text: "",
         tags: [],
         likes: 0,
-        author: "",
-        reveal: false
+        author: "Anonymous",
+        reveal: false,
+        comments: []
     };
 
     Cards.insert(ProgramUtils.DefaultObjectValues(cardObject, defaultCard));

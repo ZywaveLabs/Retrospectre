@@ -1,4 +1,4 @@
-/* globals Rooms:false RoomMethods:false*/
+/* globals Rooms:false RoomMethods:false SnackbarMethods:false*/
 "use strict";
 
 Template.createRoom.onCreated(function() {
@@ -37,7 +37,13 @@ Template.createRoom.events({
                     Session.set("newRoomCode", result);
                     Session.set("roomCodeAvailable", true);
                 } else {
-                    /* Error state */
+                    SnackbarMethods.DisplayMessage(
+                        "Error generating room code," +
+                        " please check console for details",
+                        5000,
+                        error
+                    );
+
                 }
             }
         ));
@@ -48,7 +54,8 @@ Template.createRoom.events({
         var roomId = eve.target.roomcode.value;
 
         if (roomId === null || roomId === "") {
-            return; /* Error state */
+            SnackbarMethods.DisplayMessage("Please enter a room code", 5000);
+            return;
         }
 
         var roomObject = {

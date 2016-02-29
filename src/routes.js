@@ -17,10 +17,12 @@ Router.route("/room/:_roomNumber", {
     template: "room",
     title: "The Poltergeists",
     waitOn: function() {
-        return Meteor.subscribe("roomCodes");
+        console.log("subscribing");
+        return Meteor.subscribe("rooms");
     },
     onBeforeAction: function (){
         if(RoomMethods.RoomExists(this.params._roomNumber)){
+            console.log("routing");
             Session.set("roomNumber", this.params._roomNumber);
             this.next();
         }else{

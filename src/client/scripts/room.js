@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false */
+/* global Cards:false Rooms:false*/
 /**
 *@author THouse
 *@purpose To provide the room template with data to display
@@ -9,27 +9,57 @@ Template.room.onCreated(function () {
     this.subscribe("cards");
 });
 
+
+/*
+CardObject
+roomCode - {string} Room that the card is in
+category - {string} Category for card
+createdAt - {datetime} Will default to now, but can pass a time for testing
+text - {string} Text displayed on card
+tags - {string[]} Tags that the card should have to start with
+likes - {int} Number the likes a card has
+author - {string} Author of the card
+reveal - {boolean} If the card should be visible to everyone besides author
+comments - {object[]} Comments added to card after creation as notes
+*/
 Template.room.helpers({
-    goodCards : function() {
-        // var author = Session.get("author");
-        //
-        // return Cards.find({
-        //     "roomCode": Session.get("roomNumber"),
-        //     "category": "good",
-        //     $or: [{"reveal": true}, {"author": author}]
-        // });
-        return {};
+    categories: function() {
+        return Rooms.findOne(
+            {"roomCode": Session.get("roomNumber")}
+        ).categories;
     },
 
-    badCards : function() {
-        // var author = Session.get("author");
-        //
-        // return Cards.find({
-        //     "roomCode": Session.get("roomNumber"),
-        //     "category": "bad",
-        //     $or: [{"reveal": true}, {"author": author}]
-        // });
-        return {};
+    cards : function(category) {
+        var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
+        var cards = [];
+        var user = Meteor.userId();
+
+        console.log(category);
+
+        if(!roomData.anonymousAccess.read && user === null)
+            return cards;
+
+
+        if(roomData.reveal){
+            cards = Cards.find({
+                "roomCode": Session.get("roomNumber"),
+                "category": category
+            });
+        } else if(user){
+            cards = Cards.find({
+                "roomCode": Session.get("roomNumber"),
+                "category": category,
+                $or: [{"reveal": true}, {"author": user}]
+            });
+        } else {
+            cards = Cards.find({
+                "roomCode": Session.get("roomNumber"),
+                "category": category,
+                $or: [{"reveal": true}, {"author": "Anonymous"}]
+            });
+        }
+
+        return cards;
     }
 });
 

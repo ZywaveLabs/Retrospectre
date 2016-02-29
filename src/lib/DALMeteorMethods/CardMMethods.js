@@ -19,7 +19,8 @@ Meteor.methods({
             roomCode:roomCode,text:text,tags:oldTags
         });
         if(!cardToUpdate)
-          console.log("error find the right card to udate, sorry try again later");//eslint-disable-line
+            throw new Meteor.Error("update-failed",
+            "Couldn't find card to update");
         Cards.update(
        cardToUpdate._id,
        {$set: {tags:newTags}}
