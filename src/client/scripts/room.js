@@ -34,8 +34,6 @@ Template.room.helpers({
         var cards = [];
         var user = Meteor.userId();
 
-        console.log(category);
-
         if(!roomData.anonymousAccess.read && user === null)
             return cards;
 

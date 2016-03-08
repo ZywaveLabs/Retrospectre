@@ -13,9 +13,9 @@ if (Meteor.isClient) {
                 Session.set("roomNumber", String(room));
                 Router.go("/room/" + String(room));
             }else{
-                SnackbarMethods.DisplayMessage("An invalid room number was" +
-                " given, either ask for the room code or create a new room.",
-                10000);
+                SnackbarMethods.DisplayMessage("An invalid room number was " +
+                "given, either ask for the room code or create a new room.",
+                5000);
             }
         }
     });

@@ -1,4 +1,4 @@
-/* global RoomMethods */
+/* global RoomMethods SnackbarMethods*/
 "use strict";
 
 Router.configure({
@@ -17,16 +17,15 @@ Router.route("/room/:_roomNumber", {
     template: "room",
     title: "The Poltergeists",
     waitOn: function() {
-        console.log("subscribing");
         return Meteor.subscribe("rooms");
     },
     onBeforeAction: function (){
         if(RoomMethods.RoomExists(this.params._roomNumber)){
-            console.log("routing");
             Session.set("roomNumber", this.params._roomNumber);
             this.next();
         }else{
-            console.log("Room does not exist, redirecting to home"); // eslint-disable-line
+            SnackbarMethods.DisplayMessage("Room does not exist, " +
+                "redirected to home", 3000);
             this.redirect("/");
         }
     }

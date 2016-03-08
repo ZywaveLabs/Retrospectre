@@ -1,37 +1,37 @@
 <template name="room">
-	<div class="container-fluid">
-		<form id="tagSearchForm" class="navbar-form navbar-right">
-			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-filter"></i></span>
-				<input id="filters" type="text" class="form-control" placeholder="Filter tags...">
-				<span class="input-group-btn">
-					<button id="filterTagsButton" type="button" class="btn btn-default">Filter</button>
-					<button id="clearFilter" type="button" class="btn btn-danger">Clear Filters</button>
-				</span>
-			</div>
-		</form>
-		<h1 class="text-info">Sprint Retrospective</h1>
+    <div class="container-fluid">
+        <form id="tagSearchForm" class="navbar-form navbar-right">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-filter"></i></span>
+                <input id="filters" type="text" class="form-control" placeholder="Filter tags...">
+                <span class="input-group-btn">
+                    <button id="filterTagsButton" type="button" class="btn btn-default">Filter</button>
+                    <button id="clearFilter" type="button" class="btn btn-danger">Clear Filters</button>
+                </span>
+            </div>
+        </form>
+        <h1 class="text-info">Sprint Retrospective</h1>
         {{> cardSubmitArea}}
-		<button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-6 col-sm-6">
-					<h2>Good category</h2>
-                    {{#each cards "good" class="green"}}
+        <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6">
+                    <h2>Went Well</h2>
+                    {{#each cards "Went Well" class="green"}}
                         {{> card}}
-					{{/each}}
-				</div>
-				<div class="col-xs-6 col-sm-6">
-					<h2>Bad category</h2>
-                    {{#each cards "bad" class="red accent-4"}}
+                    {{/each}}
+                </div>
+                <div class="col-xs-6 col-sm-6">
+                    <h2>Went Poorly</h2>
+                    {{#each cards "Went Poorly" class="red accent-4"}}
                         {{> card}}
-					{{/each}}
-				</div>
-			</div>
-		</div>
-		<div style="margin-top: 75px">
-			<h3 class="text-info">Keynotes</h3>
-			<textarea id="keynotes-textarea" rows="5" placeholder="Take any notes you may have here..."></textarea>
-		</div>
-	</div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 75px">
+            <h3 class="text-info">Keynotes</h3>
+            <textarea id="keynotes-textarea" rows="5" placeholder="Take any notes you may have here..."></textarea>
+        </div>
+    </div>
 </template>

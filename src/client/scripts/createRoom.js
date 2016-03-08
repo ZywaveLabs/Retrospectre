@@ -5,10 +5,11 @@ Template.createRoom.onCreated(function() {
     this.subscribe("rooms");
     Meteor.call("generateNewRoomCode", function(error, result) {
         if (!error) {
-            Session.set("roomCodeAvailable", true);
             Session.set("newRoomCode", result);
+            Session.set("roomCodeAvailable", true);
         } else {
-            console.log(error); // eslint-disable-line
+            SnackbarMethods.DisplayMessage("Error generating new room code, " +
+                "please check console for details", 5000, error);
         }
     });
 });
@@ -38,8 +39,8 @@ Template.createRoom.events({
                     Session.set("roomCodeAvailable", true);
                 } else {
                     SnackbarMethods.DisplayMessage(
-                        "Error generating room code," +
-                        " please check console for details",
+                        "Error generating room code, " +
+                        "please check console for details",
                         5000,
                         error
                     );
@@ -54,13 +55,13 @@ Template.createRoom.events({
         var roomId = eve.target.roomcode.value;
 
         if (roomId === null || roomId === "") {
-            SnackbarMethods.DisplayMessage("Please enter a room code", 5000);
+            SnackbarMethods.DisplayMessage("Please enter a room code", 3000);
             return;
         }
 
         var roomObject = {
             roomCode: roomId,
-            categories: ["good", "bad"],
+            categories: ["Went Well", "Went Poorly"],
             createdAt: new Date(),
             owner: Session.get("author"),
             reveal: false
