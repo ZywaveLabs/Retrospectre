@@ -17,21 +17,21 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-6">
                     <h2>Went Well</h2>
-                    {{#each cards "Went Well" class="green"}}
-                        {{> card}}
+                    {{#each cards "Went Well"}}
+                        {{> card class="green"}}
                     {{/each}}
                 </div>
                 <div class="col-xs-6 col-sm-6">
                     <h2>Went Poorly</h2>
-                    {{#each cards "Went Poorly" class="red accent-4"}}
-                        {{> card}}
+                    {{#each cards "Went Poorly"}}
+                        {{> card class="red accent-4"}}
                     {{/each}}
                 </div>
             </div>
         </div>
-        <div style="margin-top: 75px">
-            <h3 class="text-info">Keynotes</h3>
-            <textarea id="keynotes-textarea" rows="5" placeholder="Take any notes you may have here..."></textarea>
+        <div class="form-group" style="margin-top: 75px">
+            <label for="notes-textarea">Notes</label>
+            <textarea id="notes-textarea" class="form-control" rows="5" placeholder="Take any notes you may have here..." style="resize:vertical;"></textarea>
         </div>
     </div>
 </template>
