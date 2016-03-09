@@ -29,6 +29,8 @@ Template.room.helpers({
             cards = Cards.find({
                 "roomCode": Session.get("roomNumber"),
                 "category": category,
+                // TODO: $or: [{roomData.reveal}, {"reveal": true}, {"author": Session.get("author")}]
+                // Will that work?
                 $or: [{"reveal": true}, {"author": Session.get("author")}]
             });
         }

@@ -32,7 +32,8 @@ CardMethods.IncrementLikes = function(id) {
 };
 
 CardMethods.ToggleReveal = function(id) {
-    var show = Cards.findOne({_id: id}, {reveal: true});
+    // TODO: Test... also, actually use this
+    var show = Cards.findOne({_id: id}).reveal;
 
     Cards.update({_id: id}, {$set: {reveal: !show}});
 };
