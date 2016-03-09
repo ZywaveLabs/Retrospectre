@@ -1,4 +1,4 @@
-/* globals Rooms:false RoomMethods:false SnackbarMethods:false*/
+/* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false*/
 "use strict";
 
 Template.createRoom.onCreated(function() {
@@ -58,16 +58,13 @@ Template.createRoom.events({
             SnackbarMethods.DisplayMessage("Please enter a room code", 3000);
             return;
         }
+        var room = new Room()
+                .withRoomCode(roomId)
+                .withCategories(["Went Well", "Went Poorly"])
+                .createdBy(Session.get("author"))
+                .withRevealStatusSetTo(false);
 
-        var roomObject = {
-            roomCode: roomId,
-            categories: ["Went Well", "Went Poorly"],
-            createdAt: new Date(),
-            owner: Session.get("author"),
-            reveal: false
-        };
-
-        Meteor.call("createRoom", roomObject, function(){
+        Meteor.call("createRoom", room, function(){
             Session.set("roomNumber", roomId);
             Router.go("/room/" + roomId);
         });

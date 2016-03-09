@@ -18,13 +18,13 @@
                 <div class="col-xs-6 col-sm-6">
                     <h2>Went Well</h2>
                     {{#each cards "Went Well"}}
-                        {{> card class="green"}}
+                        {{> card id=_id class="green"}}
                     {{/each}}
                 </div>
                 <div class="col-xs-6 col-sm-6">
                     <h2>Went Poorly</h2>
                     {{#each cards "Went Poorly"}}
-                        {{> card class="red accent-4"}}
+                        {{> card id=_id class="red accent-4"}}
                     {{/each}}
                 </div>
             </div>
