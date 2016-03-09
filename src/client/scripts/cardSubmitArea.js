@@ -12,9 +12,9 @@ Template.cardSubmitArea.events({
 
         var category = undefined;
 
-        if(eve.target.goodCategoryRadio.checked === true) {
+        if(eve.target.categoryDropdown.value === "Went Well") {
             category = "Went Well";
-        } else if(eve.target.badCategoryRadio.checked == true) {
+        } else if(eve.target.categoryDropdown.value === "Went Poorly") {
             category = "Went Poorly";
         } else {
             SnackbarMethods
