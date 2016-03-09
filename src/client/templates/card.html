@@ -1,23 +1,30 @@
 <template name="card">
-    <div class="row">
-        <div id="card" class="card-panel {{class}}">
-            {{#with cardInfo this.id}}
-            <span class="white-text">{{text}}</span>
-            <div class="card-action">
-                <div class="chip" id="deleteCardButton">
-                    <i class="material-icons fa fa-trash-o"></i> Remove Card
-                </div>
-                {{#each tags}}
-                    <div class="chip">
-                        <tag class="tag">{{this}}</tag>
-                        <i id="removeTag" class="material-icons fa fa-ban"></i>
-                    </div>
-                {{/each}}
-                <div class="chip" id="likeButton">
-                    <i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp; Likes
-                </div>
-            </div>
-            {{/with}}
+  <div class="row">
+    <div id="card" class="card {{class}}">
+      <div class="card-image activator">
+        <img id="cardImage" class="activator" src="{{randomCardImage}}">
+      </div>
+      {{#with cardInfo this.id}}
+      <div class="card-content">
+        <span class="card-title activator">{{author}}</span>
+        <p class="white-text">{{text}}</p>
+      </div>
+      <div class="card-reveal blue-grey darken-4">
+        <span class="card-title activator blue-text lighten-1">{{author}} <i id="deleteCardButton" class="fa fa-times right"></i></span>
+        <hr>
+        <div class="card-action">
+          {{#each tags}}
+          <div class="chip">
+            <tag class="tag">{{this}}</tag>
+            <i id="removeTag" class="material-icons fa fa-ban"></i>
+          </div>
+          {{/each}}
+          <div class="chip" id="likeButton">
+            <i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp; Likes
+          </div>
         </div>
+      </div>
+      {{/with}}
     </div>
+  </div>
 </template>
