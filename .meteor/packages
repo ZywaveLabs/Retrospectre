@@ -16,10 +16,7 @@ standard-minifiers      # JS/CSS minifiers run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-reactjs:react
 iron:router
-accounts-ui
-accounts-password
 dburles:mongo-collection-instances
 sanjo:jasmine
 velocity:core
@@ -29,3 +26,10 @@ velocity:console-reporter
 sanjo:karma
 xolvio:template-isolator
 check
+ecwyne:mathjs
+underscorestring:underscore.string
+emojione:emojione
+accounts-google
+accounts-ui
+msavin:mongol
+msavin:jetsetter
