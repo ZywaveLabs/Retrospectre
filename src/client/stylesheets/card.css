@@ -10,3 +10,18 @@
 i.right{
   float: right;
 }
+
+.img-responsive{
+  max-width: 50px !important;
+  float: left;
+  max-height: 39px;
+}
+
+div.collapsible-header p{
+  float: none;
+}
+
+ul.collapsible{
+  list-style-type: none;
+  list-style-image: none;
+}

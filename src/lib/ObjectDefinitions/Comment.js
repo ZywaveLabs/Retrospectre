@@ -5,11 +5,13 @@ CommentObject
 author - {string} - UserId
 text - {string} - Comment
 createdAt - {datetime} - Created at time
+image - {string} - profileImage
 */
 Comment = function(){
     this.author = "";
     this.text = "";
     this.createdAt = new Date();
+    this.image = "";
 };
 
 Comment.prototype.createdBy = function(author){
@@ -24,5 +26,10 @@ Comment.prototype.withText = function(text){
 
 Comment.prototype.createdAtTime = function(createdAt){
     this.createdAt = createdAt;
+    return this;
+};
+
+Comment.prototype.withProfile = function(image) {
+    this.image = image;
     return this;
 };

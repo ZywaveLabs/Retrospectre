@@ -19,6 +19,15 @@ CardMethods.DeleteCard = function(id) {
     Cards.remove(id);
 };
 
+CardMethods.SubmitComment = function(id,comment) {
+    var card = Cards.findOne({_id:id});
+    var oldComments = card.comments;
+
+    oldComments.push(comment);
+    oldComments.reverse();
+    Cards.update({_id:id}, {$set:{comments:oldComments}});
+};
+
 CardMethods.AddTagToCard = function(id, text) {
 
 };
