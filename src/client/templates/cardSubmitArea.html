@@ -25,9 +25,10 @@
             <label class="col-sm-2 control-label text-success">Category:</label>
             <div class="col-sm-2">
               <select class="form-control" id="categoryDropdown">
-                <option>Select a Category</option>
-                <option>Went Well</option>
-                <option>Went Poorly</option>
+                <option selected disabled style="display: none;">Select a Category</option>
+                {{#each categories}}
+                    <option>{{this}}</option>
+                {{/each}}
               </select>
             </div>
           </div>

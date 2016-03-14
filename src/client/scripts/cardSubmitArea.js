@@ -1,5 +1,13 @@
 "use strict";
-/* global SnackbarMethods:false Card:false*/
+/* global SnackbarMethods:false Card:false Rooms:false*/
+
+Template.cardSubmitArea.helpers({
+    categories: function() {
+        return Rooms.findOne(
+            {"roomCode": Session.get("roomNumber")}
+        ).categories;
+    }
+});
 
 Template.cardSubmitArea.events({
 
