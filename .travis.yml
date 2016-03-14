@@ -1,7 +1,7 @@
 language: node_js
 sudo: required
 notifications:
-  slack: retrospectre:DT9bWKb0zenFvq6umddlg0ko
+  slack: retrospectre:$SLACK_TOKEN
 node_js:
     - '0.12'
 env:
