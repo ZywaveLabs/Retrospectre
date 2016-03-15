@@ -32,7 +32,7 @@ Template.room.helpers({
                 // TODO: $or: [{roomData.reveal}, {"reveal": true}, {"author": Session.get("author")}]
                 // Will that work?
                 $or: [{"reveal": true}, {"author": Session.get("author")}]
-            });
+            },{sort: {createdAt: -1}});
         }
 
         return cards;
@@ -52,13 +52,14 @@ Template.room.events({
         var tags = event.target.form[0].value.split(",");
 
         for(var i = 0; i < tags.length; i++){
-            tags[i] = tags[i].toLowerCase();
+            tags[i] = tags[i].trim().toLowerCase();
         }
 
         filterMultipleTags(tags);
     },
 
     "click tag": function(e){
+        e.stopPropagation();
         filterSingleTag(e.toElement.innerHTML);
     },
 
@@ -75,6 +76,7 @@ Template.room.events({
     },
 
     "click #removeTag": function(e){
+        e.stopPropagation();
         var tags;
         var prevEleTag;
         var text;
@@ -111,6 +113,7 @@ Template.room.events({
     },
 
     "click #likeButton": function(eve){
+        eve.stopPropagation();
         //TODO FIX THIS SHIT!
         if(eve.target.id === "likeButton") {
             eve.target.disabled = true;

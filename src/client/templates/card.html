@@ -1,65 +1,24 @@
 <template name="card">
   <div class="row">
-    <div id="card" class="card {{class}}">
-      <div class="card-image activator">
-        <img id="cardImage" class="activator" src="{{randomCardImage}}">
-      </div>
-      {{#with cardInfo this.id}}
-      <div class="card-content">
-        <span class="card-title activator">{{author}}</span>
-        <p class="white-text">{{text}}</p>
-      </div>
-      <div class="card-reveal blue-grey darken-4">
-        <span class="card-title activator blue-text lighten-1">{{author}} <i id="deleteCardButton" class="fa fa-times right"></i></span>
-        <hr>
-        <form id="commentFormField">
-          <div class="commentFormGroup input-group">
-            <span class="input-group-addon text-success" for="Comment">Comment</span>
-            <input class="form-control" type="text" id="comment" placeholder="Leave a comment.">
-            <span class="input-group-btn"><button class="btn btn-primary" id="submitCommentButton" type="submit">Submit</button></span>
-          </div>
-        </form>
-        <hr>
-        <div>
-          <h4>Comments</h4>
-          <span id="expand"><i class="fa fa-caret-right"></i></span>
+    {{#with cardInfo this.id}}
+    <div id="card_{{_id}}" class="card-panel" data-toggle="modal" data-target="#{{_id}}">
+      <span class="white-text">{{text}}</span>
+      <div class="card-action">
+        {{#each tags}}
+        <div class="chip">
+          <tag class="tag">{{this}}</tag>
+          <i id="removeTag" class="material-icons fa fa-ban"></i>
         </div>
-        <ul class="collapsible popout" data-collapsible="accordion">
-          {{#each comments}}
-          <li>
-            <div class="collapsible-header blue-grey darken-4">
-              {{#if this.image}}
-              <img class="img-responsive img-rounded" src="{{this.image}}" /> {{/if}}
-              <p class="white-text">&nbsp;&nbsp; {{this.author}}</p>
-            </div>
-            <div class="collapsible-body">
-              <p>{{this.text}}</p>
-            </div>
-          </li>
-          {{/each}}
-        </ul>
-        <div class="card-action">
-          {{#each tags}}
-          <div class="chip">
-            <tag class="tag">{{this}}</tag>
-            <i id="removeTag" class="material-icons fa fa-ban"></i>
-          </div>
-          {{/each}}
-          <div class="chip" id="likeButton">
-            <i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp; Likes
-          </div>
+        {{/each}}
+        <div class="chip" id="likeButton">
+          <i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp; Likes
         </div>
       </div>
-      {{/with}}
     </div>
+    {{/with}}
   </div>
+  {{>cardModal id=this.id}}
   <script>
-    $(document).ready(function() {
-      $('.collapsible').collapsible({
-        accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-      });
-
-        $("ul.collapsible li").hide();
-    });
+      $("div#card_{{this.id}}").addClass("{{class}}");
   </script>
 </template>

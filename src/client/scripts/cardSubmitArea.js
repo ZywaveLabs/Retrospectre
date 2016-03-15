@@ -5,8 +5,12 @@ Template.cardSubmitArea.events({
 
     "submit #card": function(eve){
         eve.preventDefault();
+        var author;
 
-        var author = eve.target.author.value;
+        if(!Meteor.user())
+            author = eve.target.author.value;
+        else
+            author = Meteor.user();
         var thought = eve.target.thoughts.value;
         var tags = eve.target.tags.value;
 
@@ -78,12 +82,12 @@ function findUniqueTags(tags){
     var count = 0;
 
     for(var i = 0; i < tags.length; i++){
-        if(tags[i].length !== 0){
+        if(tags[i].trim().length !== 0){
             if(i == 0){
-                uniqueTags[count] = tags[i];
+                uniqueTags[count] = tags[i].trim();
                 count++;
-            } else if(uniqueTags.indexOf(tags[i]) == -1){
-                uniqueTags[count] = tags[i];
+            } else if(uniqueTags.indexOf(tags[i].trim()) == -1){
+                uniqueTags[count] = tags[i].trim();
                 count++;
             }
         }

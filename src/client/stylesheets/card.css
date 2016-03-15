@@ -25,3 +25,12 @@ ul.collapsible{
   list-style-type: none;
   list-style-image: none;
 }
+
+#likeButton{
+  float: right;
+}
+
+div.card-panel{
+  min-height: 80px;
+  max-height: 80px;
+}
