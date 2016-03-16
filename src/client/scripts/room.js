@@ -44,7 +44,7 @@ Template.room.events({
         Meteor.call("revealCards", Session.get("roomNumber"));
     },
 
-    "click #deleteCardButton": function(){
+    "click #deleteYes": function(){
         Meteor.call("deleteCard",this._id);
     },
 
