@@ -2,7 +2,6 @@
 "use strict";
 
 Template.createRoom.onCreated(function() {
-    this.subscribe("rooms");
     Meteor.call("generateNewRoomCode", function(error, result) {
         if (!error) {
             Session.set("newRoomCode", result);

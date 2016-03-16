@@ -14,6 +14,7 @@ AnonymousAccess Object
 read - {boolean}
 write - {boolean}
 */
+
 Room = function(){
     this.roomCode = "";
     this.categories = ["Went Well", "Went Poorly"];

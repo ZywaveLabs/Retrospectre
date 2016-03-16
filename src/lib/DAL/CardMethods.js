@@ -3,11 +3,13 @@
 
 Cards = new Mongo.Collection("cards");
 if(Meteor.isServer){
-    Meteor.publish("cards", function() {
-        return Cards.find({});
+    Meteor.publish("cards", function(roomCode) {
+        return Cards.find({"roomCode": roomCode});
     });
 } else {
-    Meteor.subscribe("cards");
+    Meteor.autorun(function() {
+        Meteor.subscribe("cards", Session.get("roomNumber"));
+    });
 }
 CardMethods = {};
 

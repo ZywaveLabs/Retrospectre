@@ -1,41 +1,44 @@
 "use strict";
 /* global Cards:false Rooms:false*/
 /**
-*@author THouse
 *@purpose To provide the room template with data to display
 **/
 
 Template.room.onCreated(function () {
-    this.subscribe("cards");
+    Meteor.autorun(function() {
+        Meteor.subscribe("cards", Session.get("roomNumber"));
+    });
 });
 
 Template.room.helpers({
     categories: function() {
-        return Rooms.findOne(
-            {"roomCode": Session.get("roomNumber")}
-        ).categories;
+        var room = Rooms.findOne({"roomCode" : Session.get("roomNumber")});
+
+        return room.categories;
     },
 
+    //TODO have this call another mentod
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
-        var cards = [];
+        var mongoQuery;
 
         if(roomData.reveal){
-            cards = Cards.find({
+            mongoQuery = {
                 "roomCode": Session.get("roomNumber"),
                 "category": category
-            });
+            };
         } else {
-            cards = Cards.find({
+            mongoQuery = {
                 "roomCode": Session.get("roomNumber"),
                 "category": category,
                 // TODO: $or: [{roomData.reveal}, {"reveal": true}, {"author": Session.get("author")}]
                 // Will that work?
                 $or: [{"reveal": true}, {"author": Session.get("author")}]
-            });
+            };
         }
 
-        return cards;
+        return Meteor.apply("getCardCollectionByQuery",
+                [mongoQuery], {returnStubValue: true});
     }
 });
 
@@ -45,7 +48,7 @@ Template.room.events({
     },
 
     "click #deleteCardButton": function(){
-        Meteor.call("deleteCard",this._id);
+        Meteor.call("deleteCard", this._id);
     },
 
     "click #filterTagsButton": function(event){// eslint-disable-line
@@ -110,6 +113,13 @@ Template.room.events({
         $("#filters").val("");
     },
 
+    "click #exportButton": function(eve) {
+        var roomCode = Session.get("roomNumber");
+
+        Router.go("/room/" + roomCode + "/export");
+    },
+
+    // TODO this should probably be a card event not a room event
     "click #likeButton": function(eve){
         //TODO FIX THIS SHIT!
         if(eve.target.id === "likeButton") {
