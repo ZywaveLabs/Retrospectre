@@ -4,7 +4,7 @@
             {{#with cardInfo this.id}}
             <span class="white-text">{{text}}</span>
             <div class="card-action">
-                <div class="chip" id="deleteCardButton">
+                <div class="chip" id="deleteCardButton" data-toggle="modal" data-target="#{{_id}}DeleteModal">
                     <i class="material-icons fa fa-trash-o"></i> Remove Card
                 </div>
                 {{#each tags}}
@@ -16,6 +16,23 @@
                 <div class="chip" id="likeButton">
                     <i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp; Likes
                 </div>
+            </div>
+            <div class="modal fade" id="{{_id}}DeleteModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Delete Card Confirmation</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete this card?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" id="deleteYes" data-dismiss="modal">Yes</button>
+                                <button type="button" class="btn btn-default" id="deleteNo" data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                    </div>
             </div>
             {{/with}}
         </div>
