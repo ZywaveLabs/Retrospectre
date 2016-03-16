@@ -17,7 +17,7 @@ describe("add comments to cards",function(){
             Template.cardModal.fireEvent("click #submitCommentButton",eventObj);
 
             //Verify
-            expect(SnackbarMethods.DisplayMessage).toHaveBeenCalledWith("Enter a more valuable comment",500);
+            expect(SnackbarMethods.DisplayMessage).toHaveBeenCalledWith("Enter a more valuable comment",3000);
             expect(eventObj.event.target.form[0].value).toEqual("bad");
         });
     });
