@@ -26,7 +26,6 @@ describe("export room", function() {
                     categories: ["testCategoryOne", "testCategoryTwo"]
                 };
 
-                spyOn(Session, "set");
                 spyOn(Session, "get").and.returnValue("testRoom");
                 spyOn(Rooms, "findOne").and.returnValue(testRoom);
 

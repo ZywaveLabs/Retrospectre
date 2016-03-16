@@ -14,11 +14,6 @@ Template.exportRoom.helpers({
     },
 
     getCategories : function() {
-        // Sets room number based on url so if page is directly navigated too or refeshed
-        // session variable will be reset.
-        var urlParams = window.location.pathname.split("/");
-
-        Session.set("roomNumber", urlParams[2]);
         var room = Rooms.findOne({"roomCode" : Session.get("roomNumber")});
 
         return room.categories;

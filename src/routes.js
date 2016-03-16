@@ -15,7 +15,11 @@ Router.route("/room/:_roomNumber/export", {
     name:"Export",
     path:"/room/:_roomNumber/export",
     template: "exportRoom",
-    title: "Export"
+    title: "Export",
+    onBeforeAction: function() {
+        Session.set("roomNumber", this.params._roomNumber);
+        this.next();
+    }
 });
 
 Router.route("/room/:_roomNumber", {

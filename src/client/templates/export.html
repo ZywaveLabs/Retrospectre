@@ -1,9 +1,10 @@
 <template name="exportRoom">
-    <div>
+    <body>
+    <div class="plainText">
         {{#each getCategories}}
             <p> {{this}} </p>
             {{#each getCards this}}
-                    Thought: &nbsp; {{text}} <br>
+                     Thought: &nbsp; {{text}} <br>
                     Tags: &nbsp; {{tags}} <br>
                     Author: &nbsp; {{author}} <br>
                     Comments: &nbsp; {{comments}} <br>
@@ -12,4 +13,5 @@
             {{/each}}
         {{/each}}
     </div>
+</body>
 </template>
