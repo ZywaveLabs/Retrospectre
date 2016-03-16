@@ -1,3 +1,4 @@
+/* global RandomGenerate: true*/
 "use strict";
 
 Meteor.methods({
