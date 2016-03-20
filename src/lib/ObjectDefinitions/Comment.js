@@ -29,7 +29,7 @@ Comment.prototype.createdAtTime = function(createdAt){
     return this;
 };
 
-Comment.prototype.withProfile = function(image) {
+Comment.prototype.withAvatar = function(image) {
     this.image = image;
     return this;
 };

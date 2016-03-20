@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false */
+/* global Cards:false */
 
 Template.card.helpers({
     cardInfo: function(_id) {

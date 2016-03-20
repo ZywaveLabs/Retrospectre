@@ -18,7 +18,7 @@
             <div class="commentFormGroup input-group">
               <span class="input-group-addon text-success" for="Comment">Comment</span>
               <input class="form-control" type="text" id="comment" placeholder="Leave a comment.">
-              <span class="input-group-btn"><button class="btn btn-primary" id="submitCommentButton" type="submit">Submit</button></span>
+              <span class="input-group-btn"><input class="btn btn-primary" id="submitCommentButton" type="submit">Submit</span>
             </div>
           </form>
           <hr>
@@ -31,7 +31,8 @@
             <li>
               <div class="collapsible-header blue-grey darken-4">
                 {{#if this.image}}
-                <img class="img-responsive img-rounded" src="{{this.image}}" /> {{/if}}
+                <img class="img-responsive img-rounded" src="{{this.image}}" />
+                {{/if}}
                 <p class="white-text">&nbsp;&nbsp; {{this.text}}</p>
               </div>
               <div class="collapsible-body">

@@ -14,7 +14,8 @@ Template.cardModal.events({
         var image = null;
 
         if(!comment || comment.length <= 4)
-            SnackbarMethods.DisplayMessage("Enter a more valuable comment",3000);//eslint-disable-line
+            SnackbarMethods.DisplayMessage("Enter a more valuable comment",
+              3000);
         else{
             var author;
 
@@ -23,9 +24,11 @@ Template.cardModal.events({
             else{
                 author = Meteor.user().profile.name;
                 image = UserMethods.getUserImage(Meteor.user()._id);
+                console.log(image);
             }
+            console.log(image);
             var commentToAdd = new Comment().createdBy(author)
-              .withText(comment).createdAtTime(new Date()).withProfile(image);
+              .withText(comment).createdAtTime(new Date()).withAvatar(image);
 
             Meteor.call("submitComment",this._id,commentToAdd);
             eve.target.form[0].value = "";
@@ -34,32 +37,6 @@ Template.cardModal.events({
             $("i.fa-caret-right").removeClass("fa-caret-right");
         }
     },
-
-    "submit #submitCommentButton": function(eve){
-        eve.preventDefault();
-        var comment = eve.target.form[0].value;
-        var image = null;
-
-        if(!comment || comment.length <= 4)
-            SnackbarMethods.DisplayMessage("Enter a more valuable comment",3000);//eslint-disable-line
-        else{
-            var author;
-
-            if(!Meteor.user())
-                author = Session.get("author");
-            else{
-                author = Meteor.user().profile.name;
-                image = UserMethods.getUserImage(Meteor.user()._id);
-            }
-            var commentToAdd = new Comment().createdBy(author)
-              .withText(comment).createdAtTime(new Date()).withProfile(image);
-
-            Meteor.call("submitComment",this._id,commentToAdd);
-            eve.target.form[0].value = "";
-            $("ul.collapsible li").show();
-        }
-    },
-
     "click span i.fa-caret-right": function(eve){
         eve.toElement.className = "fa fa-caret-down";
         $("ul.collapsible li").show();

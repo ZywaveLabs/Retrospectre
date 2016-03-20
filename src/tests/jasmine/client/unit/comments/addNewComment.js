@@ -41,7 +41,7 @@ describe("add comments to cards",function(){
             spyOn(Meteor, "call").and.callThrough();
             var mockedTime = new Date();
             var comment = new Comment().createdBy("test author")
-              .withText("this is a valid comment").createdAtTime(mockedTime).withProfile(null);
+              .withText("this is a valid comment").createdAtTime(mockedTime).withAvatar(null);
             jasmine.clock().mockDate(mockedTime);
             //Execute
             Template.cardModal.fireEvent("click #submitCommentButton",eventObj);
@@ -74,7 +74,7 @@ describe("add comments to cards",function(){
             spyOn(Meteor, "call").and.callThrough();
             var mockedTime = new Date();
             var comment = new Comment().createdBy("Google User")
-              .withText("this is a valid comment").createdAtTime(mockedTime).withProfile("some image");
+              .withText("this is a valid comment").createdAtTime(mockedTime).withAvatar("some image");
             jasmine.clock().mockDate(mockedTime);
             //Execute
             Template.cardModal.fireEvent("click #submitCommentButton",eventObj);

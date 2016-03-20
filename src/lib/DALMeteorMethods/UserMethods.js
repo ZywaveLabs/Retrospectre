@@ -3,7 +3,7 @@ Users = new Mongo.Collection.get("users");
 
 if(Meteor.isServer){
     Meteor.publish("users", function(){
-        return Users.find({});
+        return Users.find({_id:this.userId});
     });
 } else {
     Meteor.subscribe("users");
@@ -12,12 +12,6 @@ if(Meteor.isServer){
 UserMethods = {};
 
 UserMethods.getUserImage = function(user){
-  var users = Mongo.Collection.get("users");
-  var userImage = users.findOne({_id:user}).services.google.picture;
+  var userImage = Users.findOne({_id:user}).services.google.picture;
   return userImage;
 };
-Meteor.methods({
-  getUserImage: function(user){
-    return UserMethods.getUserImage(user);
-  }
-});

@@ -48,16 +48,6 @@ Template.room.events({
         Meteor.call("deleteCard",this._id);
     },
 
-    "click #filterTagsButton": function(event){// eslint-disable-line
-        var tags = event.target.form[0].value.split(",");
-
-        for(var i = 0; i < tags.length; i++){
-            tags[i] = tags[i].trim().toLowerCase();
-        }
-
-        filterMultipleTags(tags);
-    },
-
     "click tag": function(e){
         e.stopPropagation();
         filterSingleTag(e.toElement.innerHTML);
@@ -67,12 +57,10 @@ Template.room.events({
         e.preventDefault();
         var tags = e.target.filters.value.split(",");
 
-        for(var i = 0; i < tags.length; i++){
-            tags[i] = tags[i].toLowerCase();
-        }
-
+        tags = tags.map(function(element){
+            return element.toLowerCase().trim();
+        });
         filterMultipleTags(tags);
-        e.target.filters.value = "";
     },
 
     "click #removeTag": function(e){

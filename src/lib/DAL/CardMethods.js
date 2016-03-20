@@ -23,6 +23,7 @@ CardMethods.SubmitComment = function(id,comment) {
     var card = Cards.findOne({_id:id});
     var oldComments = card.comments;
 
+    oldComments.reverse();
     oldComments.push(comment);
     oldComments.reverse();
     Cards.update({_id:id}, {$set:{comments:oldComments}});
