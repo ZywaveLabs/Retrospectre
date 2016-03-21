@@ -1,17 +1,17 @@
 <template name="exportRoom">
     <body>
-        <div class="plainText">
-            {{#each getCategories}}
-                <p> {{this}} </p>
-                {{#each getCards this}}
-                         Thought: &nbsp; {{text}} <br>
-                        Tags: &nbsp; {{tags}} <br>
-                        Author: &nbsp; {{author}} <br>
-                        Comments: &nbsp; {{comments}} <br>
-                        Likes: &nbsp; {{likes}} <br>
-                        <br>
-                {{/each}}
-            {{/each}}
-        </div>
+       <textarea rows="50" cols="200" style="margin: 10px 10px 10px 10px" readonly>
+{{#each getCategories}}
+{{this}}
+{{#each getCards this}}
+Thought: {{text}}
+Tags: {{tags}}
+Author: {{author}}
+Comments: {{getComments this}}
+Likes: {{likes}}
+
+{{/each}}
+{{/each}}
+        </textarea>
     </body>
 </template>

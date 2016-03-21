@@ -33,10 +33,6 @@ Meteor.methods({
         Cards.update(
             cardToUpdate._id,
             {$set: {tags:newTags}});
-    },
-
-    getCardCollectionByQuery: function(query) {
-        return Cards.find(query);
     }
 
 });

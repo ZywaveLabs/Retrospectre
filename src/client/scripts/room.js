@@ -20,25 +20,24 @@ Template.room.helpers({
     //TODO have this call another mentod
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
-        var mongoQuery;
+        var cards = [];
 
         if(roomData.reveal){
-            mongoQuery = {
+            cards = Cards.find({
                 "roomCode": Session.get("roomNumber"),
                 "category": category
-            };
+            });
         } else {
-            mongoQuery = {
+            cards = Cards.find({
                 "roomCode": Session.get("roomNumber"),
                 "category": category,
                 // TODO: $or: [{roomData.reveal}, {"reveal": true}, {"author": Session.get("author")}]
                 // Will that work?
                 $or: [{"reveal": true}, {"author": Session.get("author")}]
-            };
+            });
         }
 
-        return Meteor.apply("getCardCollectionByQuery",
-                [mongoQuery], {returnStubValue: true});
+        return cards;
     }
 });
 

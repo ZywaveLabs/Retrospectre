@@ -1,7 +1,11 @@
 /* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false*/
 "use strict";
 
+// default categories
+var categories = ["Went Well", "Went Poorly"];
+
 Template.createRoom.onCreated(function() {
+    this.subscribe("rooms");
     Meteor.call("generateNewRoomCode", function(error, result) {
         if (!error) {
             Session.set("newRoomCode", result);
@@ -25,6 +29,10 @@ Template.createRoom.helpers({
 
     createRoomDisable: function() {
         return (Session.get("roomCodeAvailable") ? "" : "disabled");
+    },
+
+    getCategories: function() {
+        return categories;
     }
 });
 
@@ -59,6 +67,7 @@ Template.createRoom.events({
         }
         var room = new Room()
                 .withRoomCode(roomId)
+                //TODO categories
                 .withCategories(["Went Well", "Went Poorly"])
                 .createdBy(Session.get("author"))
                 .withRevealStatusSetTo(false);
@@ -76,5 +85,10 @@ Template.createRoom.events({
 
         Session.set("roomCodeAvailable", show);
         Session.set("newRoomCode", eve.target.value);
+    },
+
+    "click #addCustomCategory": function(eve) {
+        console.log(eve);
+        console.log()
     }
 });
