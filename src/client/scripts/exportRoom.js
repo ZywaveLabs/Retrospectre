@@ -6,8 +6,8 @@ Template.exportRoom.events({
     "click #copyToClipboardButton": function(eve) {
         eve.preventDefault();
         var txtArea = document.querySelector("#textArea");
-        txtArea.select();
 
+        txtArea.select();
         document.execCommand("copy");
     }
 });
