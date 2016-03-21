@@ -13,6 +13,40 @@
                 </div>
             </span>
         </h3>
+
+        <span>
+            <label class="text-info center">Categories</label>
+            <div class="input-group center"> <!--TODO bootstrap dis-->
+                <input type="text" class="form-control" name="addCustomCategory" size="35" maxLength="35" autocomplete="off">
+                    <div id="customCategories" class="input-group-btn">
+                        <button id="addCustomCategory" type="button" class="btn btn-default">
+                            <i class="fa fa-plus text-info"></i>
+                        </button>
+                    </div>
+            </div>
+            <div class="center">
+
+                <table class="table">
+                    <thread>
+                        <tr>
+                            <th> Current Categories </th>
+                            <th> </th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                        {{#each getCategories}}
+                            <tr>
+                                <td> {{this}} </td>
+                                <td> <button id="removeCategory" type="button" class="btn btn-default btn-xs">
+                                        <i class="fa fa-minus text-info"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </span>
         <!--<h3 class="center text-info">Alias:
             <input type="text" name="alias" value="Moderator" size="20" maxlength="20" autocomplete="off">
         </h3>-->
