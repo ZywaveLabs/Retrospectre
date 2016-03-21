@@ -1,6 +1,17 @@
 "use strict";
 /* global Cards:false Rooms:true*/
 
+Template.exportRoom.events({
+
+    "click #copyToClipboardButton": function(eve) {
+        eve.preventDefault();
+        var txtArea = document.querySelector("#textArea");
+        txtArea.select();
+
+        document.execCommand("copy");
+    }
+});
+
 Template.exportRoom.helpers({
 
     getCards : function(category) {
@@ -19,12 +30,17 @@ Template.exportRoom.helpers({
     },
 
     getComments : function(card) {
-        var comments = ""
+        var comments = "";
 
         for(var i = 0; i < card.comments.length; i++) {
-            comments += "\n\t" + card.comments[i].text + " --" + card.comments[i].author;
+            comments += "\n\t" + card.comments[i].text +
+                " --" + card.comments[i].author;
         }
 
         return comments;
     }
 });
+
+
+
+
