@@ -11,11 +11,13 @@ Comment = function(){
     this.author = "";
     this.text = "";
     this.createdAt = new Date();
-    this.image = "";
+    this.avatar = "";
 };
 
 Comment.prototype.createdBy = function(author){
     this.author = author;
+    if(author.services)
+        this.hasImage = true;
     return this;
 };
 
@@ -29,7 +31,7 @@ Comment.prototype.createdAtTime = function(createdAt){
     return this;
 };
 
-Comment.prototype.withAvatar = function(image) {
-    this.image = image;
+Comment.prototype.withAvatar = function(avatar){
+    this.avatar = avatar;
     return this;
 };

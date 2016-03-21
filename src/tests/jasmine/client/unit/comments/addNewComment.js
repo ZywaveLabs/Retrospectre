@@ -73,6 +73,7 @@ describe("add comments to cards",function(){
             spyOn(UserMethods,"getUserImage").and.returnValue("some image");
             spyOn(Meteor, "call").and.callThrough();
             var mockedTime = new Date();
+            //var author =  Object({ profile: Object({ name: 'Google User' }) });
             var comment = new Comment().createdBy("Google User")
               .withText("this is a valid comment").createdAtTime(mockedTime).withAvatar("some image");
             jasmine.clock().mockDate(mockedTime);

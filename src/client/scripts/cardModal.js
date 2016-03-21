@@ -4,6 +4,12 @@
 Template.cardModal.helpers({
     cardModalInfo: function(_id) {
         return Cards.findOne({"_id": _id});
+    },
+    cardTags: function(_id){
+        var card = Cards.findOne({"_id": _id});
+        var cardTags = card.tags;
+
+        return cardTags.toString();
     }
 });
 
@@ -24,9 +30,7 @@ Template.cardModal.events({
             else{
                 author = Meteor.user().profile.name;
                 image = UserMethods.getUserImage(Meteor.user()._id);
-                console.log(image);
             }
-            console.log(image);
             var commentToAdd = new Comment().createdBy(author)
               .withText(comment).createdAtTime(new Date()).withAvatar(image);
 

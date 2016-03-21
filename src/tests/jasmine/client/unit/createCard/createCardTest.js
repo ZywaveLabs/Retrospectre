@@ -29,15 +29,16 @@ describe("createCard", function() {
 
             spyOn(Session, "get").and.returnValue("testRoom");
             spyOn(Session, "set");
-            spyOn(window, "alert");
+            spyOn(SnackbarMethods, "DisplayMessage");
 
             // Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
             // Verify
-            expect(window.alert).toHaveBeenCalledWith("Enter a thought");
+            expect(SnackbarMethods.DisplayMessage).toHaveBeenCalledWith("Enter a thought",3000);
 
         });
+alert
 
         it("should not submit if the author is empty", function() {
             //Setup
@@ -66,13 +67,13 @@ describe("createCard", function() {
 
             spyOn(Session, "get").and.returnValue("testRoom");
             spyOn(Session, "set");
-            spyOn(window, "alert");
+            spyOn(SnackbarMethods, "DisplayMessage");
 
-            //Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            // Execute
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
-            //Verify
-            expect(window.alert).toHaveBeenCalledWith("Who's thought is this?");
+            // Verify
+            expect(SnackbarMethods.DisplayMessage).toHaveBeenCalledWith("Whose thought is this?",3000);
         });
 
         it("should not submit if a category is not selected", function() {
@@ -102,13 +103,13 @@ describe("createCard", function() {
 
             spyOn(Session, "get").and.returnValue("testRoom");
             spyOn(Session, "set");
-            spyOn(window, "alert");
+            spyOn(SnackbarMethods, "DisplayMessage");
 
-            //Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            // Execute
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
-            //Verify
-            expect(window.alert).toHaveBeenCalledWith("Enter a category for your thought");
+            // Verify
+            expect(SnackbarMethods.DisplayMessage).toHaveBeenCalledWith("Enter a category for your thought",3000);
         });
     });
 
@@ -150,20 +151,21 @@ describe("createCard", function() {
             jasmine.clock().mockDate(baseTime);
 
             //Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
             //Verify
             expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
-                "good", "testThought", "testAuthor", 0);
+                "Went Well", baseTime, "testThought", [], 0, "testAuthor", false,[]);
             expect(Cards.insert).toHaveBeenCalledWith({
                 roomCode: "testRoom",
-                category: "good",
+                category: "Went Well",
                 createdAt: baseTime,
                 text: "testThought",
                 tags: [],
                 likes: 0,
                 author: "testAuthor",
-                reveal: false
+                reveal: false,
+                comments: []
             });
             expect(Session.set).toHaveBeenCalledWith("author", "testAuthor");
             expect(eventObj.event.target.thoughts.value).toEqual("");
@@ -204,7 +206,7 @@ describe("createCard", function() {
             jasmine.clock().mockDate(baseTime);
 
             //Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
             //Verify
             expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
@@ -217,7 +219,8 @@ describe("createCard", function() {
                 tags: [],
                 likes: 0,
                 author: "testAuthor",
-                reveal: false
+                reveal: false,
+                comments: []
             });
             expect(Session.set).toHaveBeenCalledWith("author", "testAuthor");
             expect(eventObj.event.target.thoughts.value).toEqual("");
