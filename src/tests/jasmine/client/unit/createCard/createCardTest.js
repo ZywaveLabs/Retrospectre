@@ -149,24 +149,31 @@ alert
             spyOn(Session, "set");
             var baseTime = new Date();
             jasmine.clock().mockDate(baseTime);
+            var card = new Card()
+                .inRoom("testRoom")
+                .withCategory("Went Well")
+                .withText("testThought")
+                .createdBy("testAuthor");
+
+            var testObj = Object({
+                roomCode: 'testRoom',
+                category: 'Went Well',
+                createdAt: baseTime,
+                text: 'testThought',
+                tags: [ ],
+                likes: 0,
+                author: 'testAuthor',
+                reveal: false,
+                comments: [ ]
+              }) ;
+
 
             //Execute
             Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
             //Verify
-            expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
-                "Went Well", baseTime, "testThought", [], 0, "testAuthor", false,[]);
-            expect(Cards.insert).toHaveBeenCalledWith({
-                roomCode: "testRoom",
-                category: "Went Well",
-                createdAt: baseTime,
-                text: "testThought",
-                tags: [],
-                likes: 0,
-                author: "testAuthor",
-                reveal: false,
-                comments: []
-            });
+            expect(Meteor.call).toHaveBeenCalledWith("submitCard", card);
+            expect(Cards.insert).toHaveBeenCalledWith(testObj);
             expect(Session.set).toHaveBeenCalledWith("author", "testAuthor");
             expect(eventObj.event.target.thoughts.value).toEqual("");
         });
@@ -204,24 +211,29 @@ alert
             spyOn(Session, "set");
             var baseTime = new Date();
             jasmine.clock().mockDate(baseTime);
+            var card = new Card()
+                .inRoom("testRoom")
+                .withCategory("Went Poorly")
+                .withText("testThought")
+                .createdBy("testAuthor");
 
+            var testObj = Object({
+                roomCode: 'testRoom',
+                category: 'Went Poorly',
+                createdAt: baseTime,
+                text: 'testThought',
+                tags: [ ],
+                likes: 0,
+                author:'testAuthor',
+                reveal: false,
+                comments: [ ]
+              }) ;
             //Execute
             Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
             //Verify
-            expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
-                "bad", "testThought", "testAuthor", 0);
-            expect(Cards.insert).toHaveBeenCalledWith({
-                roomCode: "testRoom",
-                category: "bad",
-                createdAt: baseTime,
-                text: "testThought",
-                tags: [],
-                likes: 0,
-                author: "testAuthor",
-                reveal: false,
-                comments: []
-            });
+            expect(Meteor.call).toHaveBeenCalledWith("submitCard", card);
+            expect(Cards.insert).toHaveBeenCalledWith(testObj);
             expect(Session.set).toHaveBeenCalledWith("author", "testAuthor");
             expect(eventObj.event.target.thoughts.value).toEqual("");
         });
