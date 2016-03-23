@@ -40,7 +40,3 @@ Template.exportRoom.helpers({
         return comments;
     }
 });
-
-
-
-
