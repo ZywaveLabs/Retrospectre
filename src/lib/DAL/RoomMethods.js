@@ -59,18 +59,6 @@ RoomMethods.DeleteRoomByRoomcode = function(roomCode){
     Rooms.remove({roomCode:roomCode});
 };
 
-RoomMethods.SaveNotes = function(notes,roomCode){
-    var keynote = KeyNotes.findOne({roomCode:roomCode});
-
-    KeyNotes.update(keynote._id,{$set: {text:notes}});
-};
-
-RoomMethods.getKeynotes = function(roomCode){
-    var keynote = KeyNotes.findOne({roomCode:roomCode});
-
-    return keynote.text;
-};
-
 RoomMethods.getKeynoteID = function(roomCode){
     var keynote = KeyNotes.findOne({roomCode:roomCode});
 

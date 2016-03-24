@@ -119,20 +119,6 @@ Template.room.events({
 });
 
 /**
-*@param {array} textarea - array of childNodes that contains
-*lines of text to be saved
-*@return {string} text - concatenated string of inputted text
-**/
-function getSharedText(textarea) {
-    var text = "";
-
-    for (var i = 0; i < textarea.childNodes.length; i++){
-        text += textarea.childNodes[i].innerText + "\n";
-    }
-    return text;
-}
-
-/**
 *@param {string} tag - tag to filter cards by
 *Filters cards by the tag given
 **/
