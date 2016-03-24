@@ -18,5 +18,11 @@ Template.room.helpers({
                 editor.setValue(prevSavedText);
             }
         };
+    },
+
+    docid: function(){
+        var id = RoomMethods.getKeynoteID(Session.get("roomNumber"));
+
+        return id;
     }
 });
