@@ -64,9 +64,11 @@ Template.createRoom.events({
                 .createdBy(Session.get("author"))
                 .withRevealStatusSetTo(false);
 
-        Meteor.call("createRoom", room, function(){
+        Meteor.call("createRoom", room, function(err,result){
             Session.set("roomNumber", roomId);
             Router.go("/room/" + roomId);
+            if(!err)
+                Session.set("docId",result);
         });
     },
 

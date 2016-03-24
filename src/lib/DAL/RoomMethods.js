@@ -36,6 +36,7 @@ RoomMethods.RoomExists = function(roomCode){
  * CreateRoom - Adds a room to the database
  *
  * @param  {RoomObject} roomObject Room to add to the database
+ * @return {string} - id of keynote added to db
  */
 RoomMethods.CreateRoom = function(roomObject){
     if(!RoomMethods.RoomExists(roomObject.roomCode)){
@@ -48,7 +49,9 @@ RoomMethods.CreateRoom = function(roomObject){
           .withRoomCode(roomObject.roomCode)
           .createdBy(roomObject.owner);
 
-        KeyNotes.insert(notes);
+        var docId = KeyNotes.insert(notes);
+
+        return docId;
     }
 };
 
@@ -70,4 +73,10 @@ RoomMethods.getKeynotes = function(roomCode){
     var keynote = KeyNotes.findOne({roomCode:roomCode});
 
     return keynote.text;
+};
+
+RoomMethods.getKeynoteID = function(roomCode){
+    var keynote = KeyNotes.findOne({roomCode:roomCode});
+
+    return keynote._id;
 };
