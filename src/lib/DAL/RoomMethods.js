@@ -1,13 +1,19 @@
 // /* eslint-disable */
-/* global Rooms:true RoomMethods:true ProgramUtils:true RandomGenerate:true */
+/* global Rooms:true RoomMethods:true KeyNotes:true
+Keynotes:true ProgramUtils:true RandomGenerate:true */
 
 Rooms = new Mongo.Collection("rooms");
+KeyNotes = new Mongo.Collection("keynotes");
 if(Meteor.isServer){
     Meteor.publish("rooms", function(){
         return Rooms.find({});
     });
+    Meteor.publish("keynotes", function(){
+        return KeyNotes.find({});
+    });
 } else {
     Meteor.subscribe("rooms");
+    Meteor.subscribe("keynotes");
 }
 RoomMethods = {};
 
@@ -34,6 +40,11 @@ RoomMethods.RoomExists = function(roomCode){
 RoomMethods.CreateRoom = function(roomObject){
     if(!RoomMethods.RoomExists(roomObject.roomCode)){
         Rooms.insert(roomObject);
+        var notes = new Keynotes()
+          .withRoomCode(roomObject.roomCode)
+          .createdBy(roomObject.owner);
+
+        KeyNotes.insert(notes);
     }
 };
 
@@ -43,4 +54,16 @@ RoomMethods.DeleteRoomById = function(id){
 
 RoomMethods.DeleteRoomByRoomcode = function(roomCode){
     Rooms.remove({roomCode:roomCode});
+};
+
+RoomMethods.SaveNotes = function(notes,roomCode){
+    var keynote = KeyNotes.findOne({roomCode:roomCode});
+
+    KeyNotes.update(keynote._id,{$set: {text:notes}});
+};
+
+RoomMethods.getKeynotes = function(roomCode){
+    var keynote = KeyNotes.findOne({roomCode:roomCode});
+
+    return keynote.text;
 };

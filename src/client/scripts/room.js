@@ -1,9 +1,5 @@
 "use strict";
 /* global Cards:false Rooms:false*/
-/**
-*@author THouse
-*@purpose To provide the room template with data to display
-**/
 
 Template.room.onCreated(function () {
     this.subscribe("cards");
@@ -119,8 +115,43 @@ Template.room.events({
         }
 
         Cards.update({ _id: this._id}, { $inc: {likes: 1} });
+    },
+
+    "keydown #editor": function(keyPressed){
+        var pressed = keyPressed.which || keyPressed.keyCode;
+
+        if(keyPressed.ctrlKey && pressed == 83){
+            keyPressed.preventDefault();
+            var textarea = keyPressed.target.parentNode.childNodes[2]
+              .childNodes[0].childNodes[2];
+            var text = getSharedText(textarea);
+
+            Meteor.call("saveNotes",text,Session.get("roomNumber"));
+        }
+    },
+
+    "click #keyNoteSaveButton": function(eve){
+        var textarea = eve.target.previousElementSibling
+          .childNodes[2].childNodes[0].childNodes[2];
+        var text = getSharedText(textarea);
+
+        Meteor.call("saveNotes",text,Session.get("roomNumber"));
     }
 });
+
+/**
+*@param {array} textarea - array of childNodes that contains
+*lines of text to be saved
+*@return {string} text - concatenated string of inputted text
+**/
+function getSharedText(textarea) {
+    var text = "";
+
+    for (var i = 0; i < textarea.childNodes.length; i++){
+        text += textarea.childNodes[i].innerText + "\n";
+    }
+    return text;
+}
 
 /**
 *@param {string} tag - tag to filter cards by
