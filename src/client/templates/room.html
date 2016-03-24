@@ -14,8 +14,45 @@
         {{> cardSubmitArea}}
         <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
         <div class="container-fluid">
+        <div class="col-xl-12 col-xl-12">
+            <!-- {{> reactiveTable settings=getAllCards}} -->
+
+            <table class="table">
+                <tr>
+                    {{#each getCategories}}
+                        <th align="center"><h2>{{this}}</h2></th>
+                    {{/each}}
+                </tr>    
+                <tr valign="top">
+                    {{#each getCategories}}
+                    <td>
+                        <table class="table">
+                            <tbody>
+                                {{#each cards this}}
+                                <tr>
+                                    <td>
+                                        {{>card id=_id class="green"}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </td>
+                    {{/each}}
+                </tr>
+            </table>
+        </div>
             <div class="row">
-                <div class="col-xs-6 col-sm-6">
+               <!--  {{#each getCategories}}
+                  TODO make this size dymaically somehow
+                <div>
+                    <h2> {{this}} </h2>
+                    {{#each cards this}}
+                        {{> card id=_id class="green"}}
+                    {{/each}}
+                </div>
+                {{/each}} 
+ -->               <!--  <div class="col-xs-6 col-sm-6">
                     <h2>Went Well</h2>
                     {{#each cards "Went Well"}}
                         {{> card id=_id class="green"}}
@@ -26,7 +63,7 @@
                     {{#each cards "Went Poorly"}}
                         {{> card id=_id class="red accent-4"}}
                     {{/each}}
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="form-group" style="margin-top: 75px">

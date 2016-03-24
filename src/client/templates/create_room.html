@@ -13,43 +13,47 @@
                 </div>
             </span>
         </h3>
+    </form>
 
-        <span>
-            <label class="text-info center">Categories</label>
-            <div class="input-group center"> <!--TODO bootstrap dis-->
-                <input type="text" class="form-control" name="addCustomCategory" size="35" maxLength="35" autocomplete="off">
-                    <div id="customCategories" class="input-group-btn">
-                        <button id="addCustomCategory" type="button" class="btn btn-default">
-                            <i class="fa fa-plus text-info"></i>
-                        </button>
-                    </div>
-            </div>
-            <div class="center">
-
-                <table class="table">
-                    <thread>
-                        <tr>
-                            <th> Current Categories </th>
-                            <th> </th>
-                        </tr>
-                    </thread>
-                    <tbody>
-                        {{#each getCategories}}
+        <form class="customCategory">
+            <span>
+                <label class="text-info center">Add Categories</label>
+                <div id="addCategory" class="input-group center"> <!--TODO bootstrap dis-->
+                    <input type="text" class="form-control" name="addCustomCategory" size="35" maxLength="35" autocomplete="off">
+                        <div id="customCategories" class="input-group-btn">
+                            <button id="addCustomCategoryButton" type="submit" class="btn btn-default">
+                                <i class="fa fa-plus text-info"></i>
+                            </button>
+                        </div>
+                </div>
+                <div class="center">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td> {{this}} </td>
-                                <td> <button id="removeCategory" type="button" class="btn btn-default btn-xs">
-                                        <i class="fa fa-minus text-info"></i>
-                                    </button>
-                                </td>
+                                <th> Current Categories </th>
+                                <th> Background Color</th>
+                                <th> </th>
                             </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        </span>
+                        </thead>
+                        <tbody>
+                            {{#each getCategories}}
+                                <tr>
+                                    <td> {{this}} </td>
+                                    <td> <input id="cardBackgroundColor" type="color"/> </td>
+                                    <td> <button id="removeCategory" type="button" class="btn btn-default btn-xs">
+                                            <i class="fa fa-minus text-info"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </span>
+        </form>
         <!--<h3 class="center text-info">Alias:
             <input type="text" name="alias" value="Moderator" size="20" maxlength="20" autocomplete="off">
         </h3>-->
-        <input class="center btn btn-primary {{createRoomDisable}}" id="createAndJoinRoomButton" name="joinRoom" type="submit" value="CREATE AND JOIN ROOM" {{createRoomDisable}}>
-    </form>
+        <input class="center btn btn-primary {{createRoomDisable}}" id="createAndJoinRoomButton" name="joinRoom" type="button" value="CREATE AND JOIN ROOM" {{createRoomDisable}}>
+    <!-- </form> -->
 </template>

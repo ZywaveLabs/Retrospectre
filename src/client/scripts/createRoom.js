@@ -3,6 +3,7 @@
 
 // default categories
 var categories = ["Went Well", "Went Poorly"];
+var categoriesDep = new Tracker.Dependency();
 
 Template.createRoom.onCreated(function() {
     this.subscribe("rooms");
@@ -32,6 +33,7 @@ Template.createRoom.helpers({
     },
 
     getCategories: function() {
+        categoriesDep.depend();
         return categories;
     }
 });
@@ -57,17 +59,18 @@ Template.createRoom.events({
         ));
     },
 
-    "submit .create-room": function(eve) {
+    "submit .create-room, click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
-        var roomId = eve.target.roomcode.value;
+        var roomId = Session.get("newRoomCode");
 
         if (roomId === null || roomId === "") {
             SnackbarMethods.DisplayMessage("Please enter a room code", 3000);
             return;
         }
+
         var room = new Room()
                 .withRoomCode(roomId)
-                .withCategories(["Went Well", "Went Poorly"])
+                .withCategories(categories)
                 .createdBy(Session.get("author"))
                 .withRevealStatusSetTo(false);
 
@@ -86,7 +89,25 @@ Template.createRoom.events({
         Session.set("newRoomCode", eve.target.value);
     },
 
-    "click #addCustomCategory": function(eve) {
-        console.log(eve);
+    "keyup #addCategory": function(eve) {
+        var customCategory = eve.target.value;
+        Session.set("categoryToAdd", customCategory);
+    },
+
+    "submit .customCategory": function(eve) {
+        eve.preventDefault();
+        var customCategory = Session.get("categoryToAdd");
+
+        if(customCategory != undefined && customCategory.length > 0 && categories.indexOf(customCategory) == -1) {
+            categories.push(Session.get("categoryToAdd"));
+            categoriesDep.changed();
+            eve.target.addCustomCategory.value = "";
+        }
+
+    },
+
+    "click #removeCategory": function(eve) {
+        categories.splice(categories.indexOf(this), 1);
+        categoriesDep.changed();
     }
 });
