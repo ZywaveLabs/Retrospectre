@@ -11,23 +11,9 @@ Template.room.onCreated(function () {
 
 Template.room.helpers({
     getCategories: function() {
-        console.log(Rooms.findOne({"roomCode": Session.get("roomNumber")}))
         return Rooms.findOne(
             {"roomCode": Session.get("roomNumber")}
         ).categories;
-    },
-
-    getAllCards: function(test) {
-        // console.log("WORK!!")
-        // console.log(test);
-        // return Cards;
-        return {
-            collection: Cards,
-            rowsPerPage: 10,
-            showFilter: true,
-            fields: [{key: 'card', label:'card', tmpl: Template.card, labelData: {id:_id}}]
-        };
-
     },
 
     cards : function(category) {

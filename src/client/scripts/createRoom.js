@@ -2,7 +2,8 @@
 "use strict";
 
 // default categories
-var categories = [{category:"Went Well", color:"#00ff00"}, {category:"Went Poorly", color:"#ff0000"}];
+var categories = [{category:"Went Well", color:"#00ff00"},
+                {category:"Went Poorly", color:"#ff0000"}];
 var categoriesDep = new Tracker.Dependency();
 
 
@@ -36,7 +37,7 @@ Template.createRoom.helpers({
     getCategories: function() {
         categoriesDep.depend();
         return categories;
-    }, 
+    },
 
     colorPicker: function(color) {
         return {
@@ -100,6 +101,7 @@ Template.createRoom.events({
 
     "keyup #addCategory": function(eve) {
         var customCategory = eve.target.value;
+
         Session.set("categoryToAdd", customCategory);
     },
 
@@ -107,6 +109,8 @@ Template.createRoom.events({
         eve.preventDefault();
         var customCategory = Session.get("categoryToAdd");
 
+        // TODO get autoscrolling or another way to make more categories
+        // look good on room page we dont have to limit number of categories
         if(categories.length > 6) {
             SnackbarMethods.DisplayMessage("Limit of 6 categories", 3000);
             return ;
@@ -115,7 +119,8 @@ Template.createRoom.events({
         // prevents dupicates
         for(var i = 0; i < categories.length; i++) {
             if(categories[i].category === customCategory){
-                SnackbarMethods.DisplayMessage("Please enter a unique category", 3000);
+                SnackbarMethods.DisplayMessage(
+                    "Please enter a unique category", 3000);
                 return ;
             }
         }
@@ -125,9 +130,11 @@ Template.createRoom.events({
             var r = Math.floor(Math.random() * (256));
             var g = Math.floor(Math.random() * (256));
             var b = Math.floor(Math.random() * (256));
-            var colorValue = "#" + r.toString(16) + g.toString(16) + b.toString(16);
+            var colorValue = "#" + r.toString(16) +
+                    g.toString(16) + b.toString(16);
 
-            categories.push({category:Session.get("categoryToAdd"), color:colorValue});
+            categories.push({category:Session.get("categoryToAdd"),
+                color:colorValue});
             categoriesDep.changed();
             eve.target.addCustomCategory.value = "";
         }
@@ -137,5 +144,9 @@ Template.createRoom.events({
     "click #removeCategory": function(eve) {
         categories.splice(categories.indexOf(this), 1);
         categoriesDep.changed();
+    },
+
+    "change #cardBackgroundColor": function(eve) {
+        this.color = eve.target.value;
     }
 });
