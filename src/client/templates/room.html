@@ -13,13 +13,11 @@
         <h1 class="text-info">Sprint Retrospective</h1>
         {{> cardSubmitArea}}
         <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
-    </div>
-        <!-- <div class="container-fluid"> -->
         <div class="somethingelse">
             <table class="table">
                 <tr>
                     {{#each getCategories}}
-                        <th align="center" width="700"><h2>{{this.category}}</h2></th>
+                        <th><h2>{{this.category}}</h2></th>
                     {{/each}}
                 </tr>    
                 <tr valign="top">
@@ -41,34 +39,9 @@
                 </tr>
             </table>
         </div>
-    <!-- </div> -->
-            <!-- <div class="row"> -->
-               <!--  {{#each getCategories}}
-                  TODO make this size dymaically somehow
-                <div>
-                    <h2> {{this}} </h2>
-                    {{#each cards this}}
-                        {{> card id=_id class="green"}}
-                    {{/each}}
-                </div>
-                {{/each}} 
- -->               <!--  <div class="col-xs-6 col-sm-6">
-                    <h2>Went Well</h2>
-                    {{#each cards "Went Well"}}
-                        {{> card id=_id class="green"}}
-                    {{/each}}
-                </div>
-                <div class="col-xs-6 col-sm-6">
-                    <h2>Went Poorly</h2>
-                    {{#each cards "Went Poorly"}}
-                        {{> card id=_id class="red accent-4"}}
-                    {{/each}}
-                </div> -->
-            <!-- </div> -->
-        <!-- </div> -->
         <div class="form-group" style="margin-top: 75px">
             <label for="notes-textarea">Notes</label>
             <textarea id="notes-textarea" class="form-control" rows="5" placeholder="Take any notes you may have here..." style="resize:vertical;"></textarea>
         </div>
-    <!-- </div> -->
+    </div>
 </template>
