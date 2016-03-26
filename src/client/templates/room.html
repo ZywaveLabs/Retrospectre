@@ -13,14 +13,13 @@
         <h1 class="text-info">Sprint Retrospective</h1>
         {{> cardSubmitArea}}
         <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
-        <div class="container-fluid">
-        <div class="col-xl-12 col-xl-12">
-            <!-- {{> reactiveTable settings=getAllCards}} -->
-
+    </div>
+        <!-- <div class="container-fluid"> -->
+        <div class="somethingelse">
             <table class="table">
                 <tr>
                     {{#each getCategories}}
-                        <th align="center"><h2>{{this}}</h2></th>
+                        <th align="center" width="700"><h2>{{this.category}}</h2></th>
                     {{/each}}
                 </tr>    
                 <tr valign="top">
@@ -28,10 +27,10 @@
                     <td>
                         <table class="table">
                             <tbody>
-                                {{#each cards this}}
+                                {{#each cards this.category}}
                                 <tr>
                                     <td>
-                                        {{>card id=_id class="green"}}
+                                        {{>card id=_id color= ../color}}
                                     </td>
                                 </tr>
                                 {{/each}}
@@ -42,7 +41,8 @@
                 </tr>
             </table>
         </div>
-            <div class="row">
+    <!-- </div> -->
+            <!-- <div class="row"> -->
                <!--  {{#each getCategories}}
                   TODO make this size dymaically somehow
                 <div>
@@ -64,11 +64,11 @@
                         {{> card id=_id class="red accent-4"}}
                     {{/each}}
                 </div> -->
-            </div>
-        </div>
+            <!-- </div> -->
+        <!-- </div> -->
         <div class="form-group" style="margin-top: 75px">
             <label for="notes-textarea">Notes</label>
             <textarea id="notes-textarea" class="form-control" rows="5" placeholder="Take any notes you may have here..." style="resize:vertical;"></textarea>
         </div>
-    </div>
+    <!-- </div> -->
 </template>

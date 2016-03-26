@@ -38,8 +38,8 @@
                         <tbody>
                             {{#each getCategories}}
                                 <tr>
-                                    <td> {{this}} </td>
-                                    <td> <input id="cardBackgroundColor" type="color"/> </td>
+                                    <td> {{this.category}} </td>
+                                    <td> <input {{colorPicker this.color}}/> </td>
                                     <td> <button id="removeCategory" type="button" class="btn btn-default btn-xs">
                                             <i class="fa fa-minus text-info"></i>
                                         </button>
