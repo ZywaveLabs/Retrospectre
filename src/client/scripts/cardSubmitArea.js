@@ -33,7 +33,7 @@ Template.cardSubmitArea.events({
             return ;
         }
         if(!Session.get("author")) {
-            SnackbarMethods.DisplayMessage("Please set alias", 3000);
+            SnackbarMethods.DisplayMessage("Please set alias or sign in", 3000);
             return;
         }
 
