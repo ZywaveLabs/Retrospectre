@@ -1,5 +1,10 @@
-#keynotes-textarea{
+#editor{
     width: 100%;
-    margin-bottom: 80px;
+    height: 200px;
+    margin-bottom: 15px;
     resize: none
+}
+
+#keyNoteSaveButton{
+  float: right;
 }

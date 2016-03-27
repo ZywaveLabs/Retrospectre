@@ -29,9 +29,8 @@
                 </div>
             </div>
         </div>
-        <div class="form-group" style="margin-top: 75px">
-            <label for="notes-textarea">Notes</label>
-            <textarea id="notes-textarea" class="form-control" rows="5" placeholder="Take any notes you may have here..." style="resize:vertical;"></textarea>
-        </div>
+        {{#with docid}}
+          {{> sharejsAce docid=this onRender=config id="editor"}}
+        {{/with}}
     </div>
 </template>
