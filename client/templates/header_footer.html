@@ -1,59 +1,56 @@
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/lib/snackbar.min.css">
-    <link rel="stylesheet" href="/lib/materialize.css">
-    <link rel="stylesheet" href="/lib/material.css">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <script src="/lib/snackbar.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/snackbar.min.css">
+  <link rel="stylesheet" href="/lib/materialize.css">
+  <link rel="stylesheet" href="/lib/material.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <script src="/lib/snackbar.min.js"></script>
+  <script src="/lib/materialize.min.js"></script>
 </head>
 <template name="headerFooter">
-    <link rel="stylesheet" href="https://bootswatch.com/{{getTheme}}/bootstrap.min.css">
-    <!--beginning of nav-->
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">
-                    <p class="text-info">Retrospectre</p>
-                </a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="https://github.com/Zywave/Retrospectre/issues"><i class="fa fa-bug text-info" style="font-size: 0.8em;"> Report Bug</i></a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right" style="margin-top: 10px">
-                    <li>{{> loginButtons}}</li>
-                    <li style="visibility: {{showAlias}}">
-                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#LogInModal">
-                            <i class="fa fa-sign-in"> Set Alias </i>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <!--end of nav-->
-    <!-- render other templates here-->
-    <div class="containter-fluid content">
-        {{>yield}}
+  <link rel="stylesheet" href="https://bootswatch.com/{{getTheme}}/bootstrap.min.css">
+  <!--beginning of nav-->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">
+          <p class="text-info">Retrospectre</p>
+        </a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="https://github.com/Zywave/Retrospectre/issues"><i class="fa fa-bug text-info" style="font-size: 0.8em;"> Report Bug</i></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" style="margin-top: 10px">
+          <li>{{> loginButtons}}</li>
+          <li style="visibility: {{showAlias}}">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#LogInModal">
+              <i class="fa fa-sign-in"> Set Alias </i>
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
-    <!-- <hr /> -->
-    <!--start of footer-->
-    <div class="footor navbar navbar-fixed-bottom container-fluid">
-        <p class="text-muted text-center">&#169;2016 Zywave &amp; MSOE SDL HyperWave</p>
-    </div>
-    <!-- </footer> -->
-    <!--end of footer-->
-    <script>
-        document.title = "Retrospectre - {{title}}"
-    </script>
-    <style>
-        body {
-            padding-bottom: 70px;
-        }
-    </style>
-    {{> loginModal}}
+  </nav>
+  <!--end of nav-->
+  <!-- render other templates here-->
+  <div class="containter-fluid content">
+    {{>yield}}
+  </div>
+  <div class="footor navbar navbar-static-bottom container-fluid">
+    <p class="text-muted text-center">&#169;2016 Zywave &amp; MSOE SDL HyperWave</p>
+  </div>
+  <script>
+    document.title = "Retrospectre - {{title}}"
+  </script>
+  <style>
+    body {
+      padding-bottom: 70px;
+    }
+  </style>
+  {{> loginModal}}
 </template>

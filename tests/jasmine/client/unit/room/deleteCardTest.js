@@ -1,5 +1,4 @@
-"use strict";
-
+/*eslint-disable*/
 describe("deleteCard", function() {
 
     it("should delete the card", function() {

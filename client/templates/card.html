@@ -1,23 +1,21 @@
 <template name="card">
-    <div class="row">
-        <div id="card" class="card-panel {{class}}">
-            {{#with cardInfo this.id}}
-            <span class="white-text">{{text}}</span>
-            <div class="card-action">
-                <div class="chip" id="deleteCardButton">
-                    <i class="material-icons fa fa-trash-o"></i> Remove Card
-                </div>
-                {{#each tags}}
-                    <div class="chip">
-                        <tag class="tag">{{this}}</tag>
-                        <i id="removeTag" class="material-icons fa fa-ban"></i>
-                    </div>
-                {{/each}}
-                <div class="chip" id="likeButton">
-                    <i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp; Likes
-                </div>
-            </div>
-            {{/with}}
+  <div class="row">
+    {{#with cardInfo this.id}}
+    <div id="card_{{_id}}" class="card-panel" data-toggle="modal" data-target="#{{_id}}">
+      <span class="white-text">{{text}}</span>
+      <div class="card-action">
+        {{#each tags}}
+        <div class="chip">
+          <tag class="tag">{{this}}</tag>
+          <i id="removeTag" class="material-icons fa fa-ban"></i>
         </div>
+        {{/each}}
+        <div class="chip" id="likeButton">
+          <i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp; Likes
+        </div>
+      </div>
     </div>
+    {{/with}}
+  </div>
+  {{>cardModal id=this.id}}
 </template>
