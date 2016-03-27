@@ -10,7 +10,7 @@ Template.headerFooter.helpers({
     },
 
     showAlias: function() {
-        if(Meteor.userId() || Session.get("author")){
+        if(Meteor.userId()){
             return "hidden";
         } else {
             return "visible";
