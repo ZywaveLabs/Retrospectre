@@ -14,7 +14,6 @@ Template.cardSubmitArea.events({
     "submit #card": function(eve){
         eve.preventDefault();
 
-        var author = eve.target.author.value;
         var thought = eve.target.thoughts.value;
         var tags = eve.target.tags.value;
 
@@ -33,18 +32,16 @@ Template.cardSubmitArea.events({
             SnackbarMethods.DisplayMessage("Enter a thought", 3000);
             return ;
         }
-        if(author.length == 0) {
-            SnackbarMethods.DisplayMessage("Whose thought is this?", 3000);
-            return ;
+        if(!Session.get("author")) {
+            SnackbarMethods.DisplayMessage("Please set alias or sign in", 3000);
+            return;
         }
-
-        Session.set("author", author);
 
         var card = new Card()
                     .inRoom(Session.get("roomNumber"))
                     .withCategory(category)
                     .withText(thought)
-                    .createdBy(author);
+                    .createdBy(Session.get("author"));
 
         if(tags != null && tags != "" && tags != undefined){
             tags = findUniqueTags(tags.split(","));
