@@ -1,9 +1,5 @@
 "use strict";
 /* global Cards:false Rooms:false*/
-/**
-*@author THouse
-*@purpose To provide the room template with data to display
-**/
 
 Template.room.onCreated(function () {
     this.subscribe("cards");

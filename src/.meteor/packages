@@ -33,3 +33,4 @@ accounts-google
 accounts-ui
 msavin:mongol
 msavin:jetsetter
+mizzao:sharejs-ace@=1.1.9
