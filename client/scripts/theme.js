@@ -7,5 +7,13 @@ Template.headerFooter.onCreated(function() {
 Template.headerFooter.helpers({
     getTheme: function() {
         return Session.get("theme");
+    },
+
+    showAlias: function() {
+        if(Meteor.userId()){
+            return "hidden";
+        } else {
+            return "visible";
+        }
     }
 });
