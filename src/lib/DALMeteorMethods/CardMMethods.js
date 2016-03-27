@@ -25,5 +25,8 @@ Meteor.methods({
        cardToUpdate._id,
        {$set: {tags:newTags}}
      );
+    },
+    submitComment : function(id,commentToAdd) {
+        CardMethods.SubmitComment(id,commentToAdd);
     }
 });

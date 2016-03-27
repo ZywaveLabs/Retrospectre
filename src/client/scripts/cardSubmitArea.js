@@ -13,7 +13,7 @@ Template.cardSubmitArea.events({
 
     "submit #card": function(eve){
         eve.preventDefault();
-
+        //ar author = Meteor.user() ? Meteor.user() : eve.target.author.value;
         var thought = eve.target.thoughts.value;
         var tags = eve.target.tags.value;
 
@@ -83,6 +83,7 @@ function findUniqueTags(tags){
     var count = 0;
 
     for(var i = 0; i < tags.length; i++){
+        tags[i] = tags[i].trim();
         if(tags[i].length !== 0){
             if(i == 0){
                 uniqueTags[count] = tags[i];
