@@ -1,14 +1,12 @@
 /*eslint-disable*/
 Users = new Mongo.Collection.get("users");
-
-if(Meteor.isServer){
+if (Meteor.isServer) {
     Meteor.publish("users", function(){
-        return Users.find({_id:this.userId});
+      return Users.find({_id:this.userId});
     });
-} else {
-    Meteor.subscribe("users");
+}else {
+  Meteor.subscribe("users");
 }
-
 UserMethods = {};
 
 UserMethods.getUserImage = function(user){

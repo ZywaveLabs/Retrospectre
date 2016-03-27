@@ -16,7 +16,7 @@ Template.cardModal.helpers({
 Template.cardModal.events({
     "click #submitCommentButton": function(eve){
         eve.preventDefault();
-        var comment = eve.target.form[0].value;
+        var comment = eve.target.parentNode.previousElementSibling.value;
         var image = null;
 
         if(!comment || comment.length <= 4)
@@ -35,7 +35,7 @@ Template.cardModal.events({
               .withText(comment).createdAtTime(new Date()).withAvatar(image);
 
             Meteor.call("submitComment",this._id,commentToAdd);
-            eve.target.form[0].value = "";
+            eve.target.parentNode.previousElementSibling.value;
             $("ul.collapsible li").show();
             $("i.fa-caret-right").addClass("fa-caret-down");
             $("i.fa-caret-right").removeClass("fa-caret-right");
