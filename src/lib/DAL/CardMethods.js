@@ -1,7 +1,6 @@
-// /* eslint-disable */
 /* global Cards:true CardMethods:true */
 
-Cards = new Mongo.Collection("cards");
+Cards = new Mongo.Collection("cards"); // eslint-disable-line
 if(Meteor.isServer){
     Meteor.publish("cards", function() {
         return Cards.find({});

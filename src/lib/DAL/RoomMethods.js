@@ -1,7 +1,6 @@
-// /* eslint-disable */
-/* global Rooms:true RoomMethods:true ProgramUtils:true RandomGenerate:true */
+/* global Rooms:true RoomMethods:true Logger:false */
 
-Rooms = new Mongo.Collection("rooms");
+Rooms = new Mongo.Collection("rooms"); // eslint-disable-line
 if(Meteor.isServer){
     Meteor.publish("rooms", function(){
         return Rooms.find({});
@@ -33,6 +32,10 @@ RoomMethods.RoomExists = function(roomCode){
  */
 RoomMethods.CreateRoom = function(roomObject){
     if(!RoomMethods.RoomExists(roomObject.roomCode)){
+        Logger.Log(new Log("Room Created")
+                        .withInfo({
+                            RoomCode: roomObject.roomCode
+                        }));
         Rooms.insert(roomObject);
     }
 };
