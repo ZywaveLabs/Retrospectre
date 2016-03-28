@@ -15,7 +15,13 @@ Template.room.helpers({
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
         var cards = [];
+        var author;
 
+        if(Meteor.user()){
+            author = Meteor.user().profile.name;
+        } else {
+            author = Session.get("author");
+        }
         if(roomData.reveal){
             cards = Cards.find({
                 "roomCode": Session.get("roomNumber"),
@@ -25,9 +31,7 @@ Template.room.helpers({
             cards = Cards.find({
                 "roomCode": Session.get("roomNumber"),
                 "category": category,
-                // TODO: $or: [{roomData.reveal}, {"reveal": true}, {"author": Session.get("author")}]
-                // Will that work?
-                $or: [{"reveal": true}, {"author": Session.get("author")}]
+                $or: [{"reveal": true}, {"author": author}]
             },{sort: {createdAt: -1}});
         }
 

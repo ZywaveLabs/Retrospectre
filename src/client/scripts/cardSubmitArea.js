@@ -13,7 +13,9 @@ Template.cardSubmitArea.events({
 
     "submit #card": function(eve){
         eve.preventDefault();
-        //ar author = Meteor.user() ? Meteor.user() : eve.target.author.value;
+        var author = Meteor.user() ?
+                        Meteor.user().profile.name :
+                        Session.get("author");
         var thought = eve.target.thoughts.value;
         var tags = eve.target.tags.value;
 
@@ -32,7 +34,7 @@ Template.cardSubmitArea.events({
             SnackbarMethods.DisplayMessage("Enter a thought", 3000);
             return ;
         }
-        if(!Session.get("author")) {
+        if(!author) {
             SnackbarMethods.DisplayMessage("Please set alias or sign in", 3000);
             return;
         }
@@ -41,7 +43,7 @@ Template.cardSubmitArea.events({
                     .inRoom(Session.get("roomNumber"))
                     .withCategory(category)
                     .withText(thought)
-                    .createdBy(Session.get("author"));
+                    .createdBy(author);
 
         if(tags != null && tags != "" && tags != undefined){
             tags = findUniqueTags(tags.split(","));
