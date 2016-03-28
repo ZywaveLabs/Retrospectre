@@ -5,13 +5,13 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
-          <h4 class="modal-title">{{author.profile.name}}</h4>
+          <h4 class="modal-title">{{author}}</h4>
         </div>
         <div class="modal-body">
           <p>Thought: {{text}}</p>
           <p>Category: {{category}}</p>
           <p>Tags: {{#with cardTags _id}}&nbsp;&nbsp;{{this}}{{/with}}</p>
-          <p>Author: {{author.profile.name}}</p>
+          <p>Author: {{author}}</p>
           <p>Created at: {{createdAt}}</p>
           <hr>
           <form id="commentFormField">
