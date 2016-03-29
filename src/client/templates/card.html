@@ -1,7 +1,7 @@
 <template name="card">
   <div class="row">
     {{#with cardInfo this.id}}
-    <div id="card_{{_id}}" class="card-panel {{class}}" data-toggle="modal" data-target="#{{_id}}">
+    <div id="card_{{_id}}" class="card-panel {{../class}}" data-toggle="modal" data-target="#{{_id}}">
       <span class="white-text">{{text}}</span>
       <div class="card-action">
         {{#each tags}}
