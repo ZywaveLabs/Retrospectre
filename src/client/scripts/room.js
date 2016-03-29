@@ -1,11 +1,8 @@
 "use strict";
 /* global Cards:false Rooms:false*/
-<<<<<<< HEAD
 /**
 *@purpose To provide the room template with data to display
 **/
-=======
->>>>>>> master
 
 Template.room.onCreated(function () {
     Meteor.autorun(function() {
