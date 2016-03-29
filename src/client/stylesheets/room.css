@@ -4,12 +4,17 @@
     resize: none
 }
 
+.test{
+	overflow-x: auto;
+}
 table, th, td {
 	border: 0;
+	width: 500px;
+	/*padding: 10px 10px;*/
 }
 
-th, td {
+/*th, td {
 	text-align: center;
-	width: 1000;
+	width: 500px;
 	padding: 10em 10em;
-}
+}*/

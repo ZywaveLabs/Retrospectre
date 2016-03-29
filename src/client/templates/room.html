@@ -13,8 +13,8 @@
         <h1 class="text-info">Sprint Retrospective</h1>
         {{> cardSubmitArea}}
         <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
-        <div>
-            <table class="table">
+        <div class="test">
+            <table >
                 <tr>
                     {{#each getCategories}}
                         <th><h2>{{this.category}}</h2></th>
@@ -23,7 +23,7 @@
                 <tr valign="top">
                     {{#each getCategories}}
                     <td>
-                        <table class="table">
+                        <table >
                             <tbody>
                                 {{#each cards this.category}}
                                 <tr>
