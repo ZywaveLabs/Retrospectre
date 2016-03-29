@@ -1,7 +1,6 @@
-// /* eslint-disable */
 /* global Cards:true CardMethods:true */
 
-Cards = new Mongo.Collection("cards");
+Cards = new Mongo.Collection("cards"); // eslint-disable-line
 if(Meteor.isServer){
     Meteor.publish("cards", function(roomCode) {
         return Cards.find({"roomCode": roomCode});
@@ -19,6 +18,14 @@ CardMethods.SubmitCard = function(cardObject) {
 
 CardMethods.DeleteCard = function(id) {
     Cards.remove(id);
+};
+
+CardMethods.SubmitComment = function(id,comment) {
+    var card = Cards.findOne({_id:id});
+    var oldComments = card.comments;
+
+    oldComments.push(comment);
+    Cards.update({_id:id}, {$set:{comments:oldComments}});
 };
 
 CardMethods.AddTagToCard = function(id, text) {

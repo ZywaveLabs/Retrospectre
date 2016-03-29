@@ -13,8 +13,9 @@ Template.cardSubmitArea.events({
 
     "submit #card": function(eve){
         eve.preventDefault();
-
-        var author = eve.target.author.value;
+        var author = Meteor.user() ?
+                        Meteor.user().profile.name :
+                        Session.get("author");
         var thought = eve.target.thoughts.value;
         var tags = eve.target.tags.value;
 
@@ -33,12 +34,10 @@ Template.cardSubmitArea.events({
             SnackbarMethods.DisplayMessage("Enter a thought", 3000);
             return ;
         }
-        if(author.length == 0) {
-            SnackbarMethods.DisplayMessage("Whose thought is this?", 3000);
-            return ;
+        if(!author) {
+            SnackbarMethods.DisplayMessage("Please set alias or sign in", 3000);
+            return;
         }
-
-        Session.set("author", author);
 
         var card = new Card()
                     .inRoom(Session.get("roomNumber"))
@@ -86,6 +85,7 @@ function findUniqueTags(tags){
     var count = 0;
 
     for(var i = 0; i < tags.length; i++){
+        tags[i] = tags[i].trim();
         if(tags[i].length !== 0){
             if(i == 0){
                 uniqueTags[count] = tags[i];

@@ -1,4 +1,4 @@
-/* global RoomMethods SnackbarMethods*/
+/* global RoomMethods SnackbarMethods Logs*/
 "use strict";
 
 Router.configure({
@@ -46,6 +46,30 @@ Router.route("/create-room", {
     name: "Create Room",
     template: "createRoom",
     title: "Create Room"
+});
+
+Router.map(function () {
+    this.route("logdump", {
+        path: "/logdump",
+        where: "server",
+        action: function () {
+            var query = this.params.query.query;
+            var json = {};
+
+            try {
+                if(query){
+                    query = JSON.parse(query);
+                } else {
+                    query = {};
+                }
+                json = Logs.find(query).fetch();
+                this.response.setHeader("Content-Type", "application/json");
+            } catch (e) {
+                json = {error: "Error parsing query"};
+            }
+            this.response.end(JSON.stringify(json));
+        }
+    });
 });
 
 //  If current session is on the client side then return the title of the current route taken

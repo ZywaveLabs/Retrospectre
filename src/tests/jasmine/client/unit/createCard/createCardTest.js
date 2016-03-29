@@ -29,15 +29,16 @@ describe("createCard", function() {
 
             spyOn(Session, "get").and.returnValue("testRoom");
             spyOn(Session, "set");
-            spyOn(window, "alert");
+            spyOn(SnackbarMethods, "DisplayMessage");
 
             // Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
             // Verify
-            expect(window.alert).toHaveBeenCalledWith("Enter a thought");
+            expect(SnackbarMethods.DisplayMessage).toHaveBeenCalledWith("Enter a thought",3000);
 
         });
+alert
 
         it("should not submit if the author is empty", function() {
             //Setup
@@ -66,13 +67,13 @@ describe("createCard", function() {
 
             spyOn(Session, "get").and.returnValue("testRoom");
             spyOn(Session, "set");
-            spyOn(window, "alert");
+            spyOn(SnackbarMethods, "DisplayMessage");
 
-            //Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            // Execute
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
-            //Verify
-            expect(window.alert).toHaveBeenCalledWith("Who's thought is this?");
+            // Verify
+            expect(SnackbarMethods.DisplayMessage).toHaveBeenCalledWith("Whose thought is this?",3000);
         });
 
         it("should not submit if a category is not selected", function() {
@@ -102,13 +103,13 @@ describe("createCard", function() {
 
             spyOn(Session, "get").and.returnValue("testRoom");
             spyOn(Session, "set");
-            spyOn(window, "alert");
+            spyOn(SnackbarMethods, "DisplayMessage");
 
-            //Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            // Execute
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
-            //Verify
-            expect(window.alert).toHaveBeenCalledWith("Enter a category for your thought");
+            // Verify
+            expect(SnackbarMethods.DisplayMessage).toHaveBeenCalledWith("Enter a category for your thought",3000);
         });
     });
 
@@ -148,23 +149,31 @@ describe("createCard", function() {
             spyOn(Session, "set");
             var baseTime = new Date();
             jasmine.clock().mockDate(baseTime);
+            var card = new Card()
+                .inRoom("testRoom")
+                .withCategory("Went Well")
+                .withText("testThought")
+                .createdBy("testAuthor");
+
+            var testObj = Object({
+                roomCode: 'testRoom',
+                category: 'Went Well',
+                createdAt: baseTime,
+                text: 'testThought',
+                tags: [ ],
+                likes: 0,
+                author: 'testAuthor',
+                reveal: false,
+                comments: [ ]
+              }) ;
+
 
             //Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
             //Verify
-            expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
-                "good", "testThought", "testAuthor", 0);
-            expect(Cards.insert).toHaveBeenCalledWith({
-                roomCode: "testRoom",
-                category: "good",
-                createdAt: baseTime,
-                text: "testThought",
-                tags: [],
-                likes: 0,
-                author: "testAuthor",
-                reveal: false
-            });
+            expect(Meteor.call).toHaveBeenCalledWith("submitCard", card);
+            expect(Cards.insert).toHaveBeenCalledWith(testObj);
             expect(Session.set).toHaveBeenCalledWith("author", "testAuthor");
             expect(eventObj.event.target.thoughts.value).toEqual("");
         });
@@ -202,23 +211,29 @@ describe("createCard", function() {
             spyOn(Session, "set");
             var baseTime = new Date();
             jasmine.clock().mockDate(baseTime);
+            var card = new Card()
+                .inRoom("testRoom")
+                .withCategory("Went Poorly")
+                .withText("testThought")
+                .createdBy("testAuthor");
 
+            var testObj = Object({
+                roomCode: 'testRoom',
+                category: 'Went Poorly',
+                createdAt: baseTime,
+                text: 'testThought',
+                tags: [ ],
+                likes: 0,
+                author:'testAuthor',
+                reveal: false,
+                comments: [ ]
+              }) ;
             //Execute
-            Template.card.fireEvent("submit #card", eventObj);
+            Template.cardSubmitArea.fireEvent("submit #card", eventObj);
 
             //Verify
-            expect(Meteor.call).toHaveBeenCalledWith("submitCard", "testRoom",
-                "bad", "testThought", "testAuthor", 0);
-            expect(Cards.insert).toHaveBeenCalledWith({
-                roomCode: "testRoom",
-                category: "bad",
-                createdAt: baseTime,
-                text: "testThought",
-                tags: [],
-                likes: 0,
-                author: "testAuthor",
-                reveal: false
-            });
+            expect(Meteor.call).toHaveBeenCalledWith("submitCard", card);
+            expect(Cards.insert).toHaveBeenCalledWith(testObj);
             expect(Session.set).toHaveBeenCalledWith("author", "testAuthor");
             expect(eventObj.event.target.thoughts.value).toEqual("");
         });
