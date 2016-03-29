@@ -11,13 +11,24 @@ Router.route("/", {
     title: "Home"
 });
 
+Router.route("/room/:_roomNumber/export", {
+    name:"Export",
+    path:"/room/:_roomNumber/export",
+    template: "exportRoom",
+    title: "Export",
+    onBeforeAction: function() {
+        Session.set("roomNumber", this.params._roomNumber);
+        this.next();
+    }
+});
+
 Router.route("/room/:_roomNumber", {
     name: "Room",
     path: "/room/:_roomNumber",
     template: "room",
     title: "The Poltergeists",
     waitOn: function() {
-        return Meteor.subscribe("rooms");
+        return Meteor.subscribe("rooms", this.params._roomNumber);
     },
     onBeforeAction: function (){
         if(RoomMethods.RoomExists(this.params._roomNumber)){

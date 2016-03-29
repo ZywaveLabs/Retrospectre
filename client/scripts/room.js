@@ -1,17 +1,23 @@
 "use strict";
 /* global Cards:false Rooms:false*/
+/**
+*@purpose To provide the room template with data to display
+**/
 
 Template.room.onCreated(function () {
-    this.subscribe("cards");
+    Meteor.autorun(function() {
+        Meteor.subscribe("cards", Session.get("roomNumber"));
+    });
 });
 
 Template.room.helpers({
     categories: function() {
-        return Rooms.findOne(
-            {"roomCode": Session.get("roomNumber")}
-        ).categories;
+        var room = Rooms.findOne({"roomCode" : Session.get("roomNumber")});
+
+        return room.categories;
     },
 
+    //TODO have this call another mentod
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
         var cards = [];
@@ -45,7 +51,7 @@ Template.room.events({
     },
 
     "click #deleteCardButton": function(){
-        Meteor.call("deleteCard",this._id);
+        Meteor.call("deleteCard", this._id);
     },
 
     "click tag": function(e){
@@ -100,6 +106,13 @@ Template.room.events({
         $("#filters").val("");
     },
 
+    "click #exportButton": function(eve) {
+        var roomCode = Session.get("roomNumber");
+
+        Router.go("/room/" + roomCode + "/export");
+    },
+
+    // TODO this should probably be a card event not a room event
     "click #likeButton": function(eve){
         eve.stopPropagation();
         //TODO FIX THIS SHIT!
