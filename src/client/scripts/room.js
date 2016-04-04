@@ -11,7 +11,7 @@ Template.room.onCreated(function () {
 });
 
 Template.room.helpers({
-    
+
     getCategories: function() {
         return Rooms.findOne(
             {"roomCode": Session.get("roomNumber")}
