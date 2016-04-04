@@ -1,5 +1,5 @@
 // "use strict";
-/*global RoomMethods:false ShareJS: false */
+/* global RoomMethods:false */
 Template.room.helpers({
     config: function() {
         return function(editor) {
@@ -16,16 +16,16 @@ Template.room.helpers({
 });
 
 // create sync method
-ShareJS.prototype.getSnapshotSync = function (docid) {
-    return Meteor.wrapAsync(ShareJS.model.getSnapshot, docid);
-};
+// ShareJS.prototype.getSnapshotSync = function (docid) {
+//     return Meteor.wrapAsync(ShareJS.model.getSnapshot, docid);
+// };
 
-Meteor.methods({
-
-    getDocumentText: function(docid) {
-        var result = ShareJS.getSnapshotSync(docid);
-
-        return result.snapshot;
-    }
-
-});
+// Meteor.methods({
+//
+//     getDocumentText: function(docid) {
+//         var result = ShareJS.getSnapshotSync(docid);
+//
+//         return result.snapshot;
+//     }
+//
+// });
