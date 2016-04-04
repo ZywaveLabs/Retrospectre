@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false Rooms:true*/
+/* global Cards:false Rooms:false KeyNotes:false */
 
 Template.exportRoom.events({
 
@@ -38,5 +38,13 @@ Template.exportRoom.helpers({
         }
 
         return comments;
+    },
+
+    getKeynotes : function() {
+        var keynotes = KeyNotes.findOne({
+            "roomCode" : Session.get("roomNumber")
+        });
+
+        return "Found notes \"" + keynotes.text + "\"";
     }
 });

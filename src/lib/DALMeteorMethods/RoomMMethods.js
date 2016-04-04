@@ -1,11 +1,13 @@
-// /* eslint-disable */
-/* global Rooms:true RoomMethods: true */
+/* global RoomMethods: true */
 
-Meteor.methods({
+Meteor.methods({ // eslint-disable-line
     createRoom: function (roomObject) {
         return RoomMethods.CreateRoom(roomObject);
     },
     getKeynoteID : function(roomCode){
         return RoomMethods.findKeynoteID(roomCode);
+    },
+    revealCards: function(roomCode) {
+        RoomMethods.RevealCards(roomCode);
     }
 });

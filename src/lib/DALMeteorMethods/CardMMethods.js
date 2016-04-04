@@ -13,11 +13,6 @@ Meteor.methods({
         CardMethods.DeleteCard(id);
     },
 
-    revealCards: function(roomCode) {
-        Cards.update({"roomCode":roomCode},
-            {$set: {reveal:true}}, {multi: true});
-    },
-
     removeTag: function(text,oldTags,newTags,roomCode){
         var cardToUpdate;
 

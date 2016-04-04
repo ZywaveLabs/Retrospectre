@@ -68,3 +68,9 @@ RoomMethods.getKeynoteID = function(roomCode){
 
     return keynote._id;
 };
+
+RoomMethods.RevealCards = function(roomCode){
+    Rooms.update({roomCode: roomCode}, {$set:{
+        reveal: true
+    }});
+};
