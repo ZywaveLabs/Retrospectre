@@ -109,13 +109,6 @@ Template.createRoom.events({
         eve.preventDefault();
         var customCategory = Session.get("categoryToAdd");
 
-        // TODO get autoscrolling or another way to make more categories
-        // look good on room page we dont have to limit number of categories
-        if(categories.length >= 6) {
-            SnackbarMethods.DisplayMessage("Limit of 6 categories", 3000);
-            return ;
-        }
-
         // prevents dupicates
         for(var i = 0; i < categories.length; i++) {
             if(categories[i].category === customCategory){
