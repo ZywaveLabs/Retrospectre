@@ -1,6 +1,12 @@
 /* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false*/
 "use strict";
 
+// default categories
+var categories = [{category:"Went Well", color:"#00ff00"},
+                {category:"Went Poorly", color:"#ff0000"}];
+var categoriesDep = new Tracker.Dependency();
+
+
 Template.createRoom.onCreated(function() {
     this.subscribe("rooms");
     Meteor.call("generateNewRoomCode", function(error, result) {
@@ -26,6 +32,19 @@ Template.createRoom.helpers({
 
     createRoomDisable: function() {
         return (Session.get("roomCodeAvailable") ? "" : "disabled");
+    },
+
+    getCategories: function() {
+        categoriesDep.depend();
+        return categories;
+    },
+
+    colorPicker: function(color) {
+        return {
+            id: "cardBackgroundColor",
+            type: "color",
+            value: color
+        };
     }
 });
 
@@ -50,17 +69,18 @@ Template.createRoom.events({
         ));
     },
 
-    "submit .create-room": function(eve) {
+    "submit .create-room, click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
-        var roomId = eve.target.roomcode.value;
+        var roomId = Session.get("newRoomCode");
 
         if (roomId === null || roomId === "") {
             SnackbarMethods.DisplayMessage("Please enter a room code", 3000);
             return;
         }
+
         var room = new Room()
                 .withRoomCode(roomId)
-                .withCategories(["Went Well", "Went Poorly"])
+                .withCategories(categories)
                 .createdBy(Session.get("author"))
                 .withRevealStatusSetTo(false);
 
@@ -79,5 +99,49 @@ Template.createRoom.events({
 
         Session.set("roomCodeAvailable", show);
         Session.set("newRoomCode", eve.target.value);
+    },
+
+    "keyup #addCategory": function(eve) {
+        var customCategory = eve.target.value;
+
+        Session.set("categoryToAdd", customCategory);
+    },
+
+    "submit .customCategory": function(eve) {
+        eve.preventDefault();
+        var customCategory = Session.get("categoryToAdd");
+
+        // prevents dupicates
+        for(var i = 0; i < categories.length; i++) {
+            if(categories[i].category === customCategory){
+                SnackbarMethods.DisplayMessage(
+                    "Please enter a unique category", 3000);
+                return ;
+            }
+        }
+
+        if(customCategory != undefined && customCategory.length > 0) {
+            // generate a random color for the added category
+            var r = Math.floor(Math.random() * (256));
+            var g = Math.floor(Math.random() * (256));
+            var b = Math.floor(Math.random() * (256));
+            var colorValue = "#" + r.toString(16) +
+                    g.toString(16) + b.toString(16);
+
+            categories.push({category:Session.get("categoryToAdd"),
+                color:colorValue});
+            categoriesDep.changed();
+            eve.target.addCustomCategory.value = "";
+        }
+
+    },
+
+    "click #removeCategory": function(eve) {
+        categories.splice(categories.indexOf(this), 1);
+        categoriesDep.changed();
+    },
+
+    "change #cardBackgroundColor": function(eve) {
+        this.color = eve.target.value;
     }
 });

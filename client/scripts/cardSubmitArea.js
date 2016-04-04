@@ -19,13 +19,9 @@ Template.cardSubmitArea.events({
         var thought = eve.target.thoughts.value;
         var tags = eve.target.tags.value;
 
-        var category = undefined;
+        var category = eve.target.categoryDropdown.value;
 
-        if(eve.target.categoryDropdown.value === "Went Well") {
-            category = "Went Well";
-        } else if(eve.target.categoryDropdown.value === "Went Poorly") {
-            category = "Went Poorly";
-        } else {
+        if(category === "Select a Category") {
             SnackbarMethods
                 .DisplayMessage("Enter a category for your thought", 3000);
             return ;
@@ -54,25 +50,6 @@ Template.cardSubmitArea.events({
 
         eve.target.thoughts.value = "";
         eve.target.tags.value = "";
-    },
-    "change #goodCategoryRadio": function() {
-        var category;
-
-        if($("#goodCategoryRadio").prop("checked", true)) {
-            category = "good";
-        }
-
-        Session.set("category", category);
-    },
-
-    "change #badCategoryRadio": function() {
-        var category;
-
-        if($("#badCategoryRadio").prop("checked", true)) {
-            category = "bad";
-        }
-
-        Session.set("category", category);
     }
 });
 
