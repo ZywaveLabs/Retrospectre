@@ -4,8 +4,8 @@
 
        <textarea id="textArea" rows="50" cols="200" style="margin: 10px 10px 10px 10px" readonly>
 {{#each getCategories}}
-{{this}}
-{{#each getCards this}}
+{{this.category}}
+{{#each getCards this.category}}
 Thought: {{text}}
 Tags: {{tags}}
 Author: {{author}}

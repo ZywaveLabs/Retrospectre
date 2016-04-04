@@ -13,22 +13,32 @@
         <h1 class="text-info">Sprint Retrospective</h1>
         {{> cardSubmitArea}}
         <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
-        <button class="btn btn-info" id="exportButton" type="button">Export</button>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-6 col-sm-6">
-                    <h2>Went Well</h2>
-                    {{#each cards "Went Well"}}
-                        {{> card id=_id class="green"}}
+         <button class="btn btn-info" id="exportButton" type="button">Export</button>
+        <div class="horizontalScrolling">
+            <table >
+                <tr>
+                    {{#each getCategories}}
+                        <th><h2>{{this.category}}</h2></th>
                     {{/each}}
-                </div>
-                <div class="col-xs-6 col-sm-6">
-                    <h2>Went Poorly</h2>
-                    {{#each cards "Went Poorly"}}
-                        {{> card id=_id class="red accent-4"}}
+                </tr>    
+                <tr valign="top">
+                    {{#each getCategories}}
+                    <td>
+                        <table >
+                            <tbody>
+                                {{#each cards this.category}}
+                                <tr>
+                                    <td class="testCard">
+                                        {{>card id=_id color= ../color}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </td>
                     {{/each}}
-                </div>
-            </div>
+                </tr>
+            </table>
         </div>
         {{#with docid}}
           {{> sharejsAce docid=this onRender=config id="editor"}}
