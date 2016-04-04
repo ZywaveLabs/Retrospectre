@@ -11,10 +11,11 @@ Template.room.onCreated(function () {
 });
 
 Template.room.helpers({
-    categories: function() {
-        var room = Rooms.findOne({"roomCode" : Session.get("roomNumber")});
 
-        return room.categories;
+    getCategories: function() {
+        return Rooms.findOne(
+            {"roomCode": Session.get("roomNumber")}
+        ).categories;
     },
 
     //TODO have this call another mentod

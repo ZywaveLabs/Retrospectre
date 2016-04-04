@@ -1,8 +1,8 @@
 <template name="card">
-  <div class="row">
+  <div class="row cardWidth">
     {{#with cardInfo this.id}}
-    <div id="card_{{_id}}" class="card-panel {{../class}}" data-toggle="modal" data-target="#{{_id}}">
-      <span class="white-text">{{text}}</span>
+    <div id="card_{{_id}}" class="card-panel" style="background-color:{{../color}}" data-toggle="modal" data-target="#{{_id}}">
+      <span class="card-text">{{text}}</span>
       <div class="card-action">
         {{#each tags}}
         <div class="chip">
