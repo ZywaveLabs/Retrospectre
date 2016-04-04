@@ -1,25 +1,34 @@
 "use strict";
 /* global Cards:false Rooms:false*/
 /**
-*@author THouse
 *@purpose To provide the room template with data to display
 **/
 
 Template.room.onCreated(function () {
-    this.subscribe("cards");
+    Meteor.autorun(function() {
+        Meteor.subscribe("cards", Session.get("roomNumber"));
+    });
 });
 
 Template.room.helpers({
+    
     getCategories: function() {
         return Rooms.findOne(
             {"roomCode": Session.get("roomNumber")}
         ).categories;
     },
 
+    //TODO have this call another mentod
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
         var cards = [];
+        var author;
 
+        if(Meteor.user()){
+            author = Meteor.user().profile.name;
+        } else {
+            author = Session.get("author");
+        }
         if(roomData.reveal){
             cards = Cards.find({
                 "roomCode": Session.get("roomNumber"),
@@ -29,10 +38,8 @@ Template.room.helpers({
             cards = Cards.find({
                 "roomCode": Session.get("roomNumber"),
                 "category": category,
-                // TODO: $or: [{roomData.reveal}, {"reveal": true}, {"author": Session.get("author")}]
-                // Will that work?
-                $or: [{"reveal": true}, {"author": Session.get("author")}]
-            });
+                $or: [{"reveal": true}, {"author": author}]
+            },{sort: {createdAt: -1}});
         }
 
         return cards;
@@ -45,20 +52,11 @@ Template.room.events({
     },
 
     "click #deleteCardButton": function(){
-        Meteor.call("deleteCard",this._id);
-    },
-
-    "click #filterTagsButton": function(event){// eslint-disable-line
-        var tags = event.target.form[0].value.split(",");
-
-        for(var i = 0; i < tags.length; i++){
-            tags[i] = tags[i].toLowerCase();
-        }
-
-        filterMultipleTags(tags);
+        Meteor.call("deleteCard", this._id);
     },
 
     "click tag": function(e){
+        e.stopPropagation();
         filterSingleTag(e.toElement.innerHTML);
     },
 
@@ -66,15 +64,14 @@ Template.room.events({
         e.preventDefault();
         var tags = e.target.filters.value.split(",");
 
-        for(var i = 0; i < tags.length; i++){
-            tags[i] = tags[i].toLowerCase();
-        }
-
+        tags = tags.map(function(element){
+            return element.toLowerCase().trim();
+        });
         filterMultipleTags(tags);
-        e.target.filters.value = "";
     },
 
     "click #removeTag": function(e){
+        e.stopPropagation();
         var tags;
         var prevEleTag;
         var text;
@@ -110,7 +107,15 @@ Template.room.events({
         $("#filters").val("");
     },
 
+    "click #exportButton": function(eve) {
+        var roomCode = Session.get("roomNumber");
+
+        Router.go("/room/" + roomCode + "/export");
+    },
+
+    // TODO this should probably be a card event not a room event
     "click #likeButton": function(eve){
+        eve.stopPropagation();
         //TODO FIX THIS SHIT!
         if(eve.target.id === "likeButton") {
             eve.target.disabled = true;

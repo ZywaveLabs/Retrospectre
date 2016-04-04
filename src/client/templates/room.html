@@ -5,7 +5,7 @@
                 <span class="input-group-addon"><i class="fa fa-filter"></i></span>
                 <input id="filters" type="text" class="form-control" placeholder="Filter tags...">
                 <span class="input-group-btn">
-                    <button id="filterTagsButton" type="button" class="btn btn-default">Filter</button>
+                    <button id="filterTagsButton" type="submit" class="btn btn-default">Filter</button>
                     <button id="clearFilter" type="button" class="btn btn-danger">Clear Filters</button>
                 </span>
             </div>
@@ -13,7 +13,8 @@
         <h1 class="text-info">Sprint Retrospective</h1>
         {{> cardSubmitArea}}
         <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
-        <div class="test">
+         <button class="btn btn-info" id="exportButton" type="button">Export</button>
+        <div class="horizontalScrolling">
             <table >
                 <tr>
                     {{#each getCategories}}
@@ -39,9 +40,8 @@
                 </tr>
             </table>
         </div>
-        <div class="form-group" style="margin-top: 75px">
-            <label for="notes-textarea">Notes</label>
-            <textarea id="notes-textarea" class="form-control" rows="5" placeholder="Take any notes you may have here..." style="resize:vertical;"></textarea>
-        </div>
+        {{#with docid}}
+          {{> sharejsAce docid=this onRender=config id="editor"}}
+        {{/with}}
     </div>
 </template>

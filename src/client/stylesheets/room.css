@@ -1,13 +1,18 @@
-#keynotes-textarea{
+#editor{
     width: 100%;
-    margin-bottom: 80px;
+    height: 200px;
+    margin-bottom: 15px;
     resize: none
 }
 
-.test{
+.horizontalScrolling{
 	overflow-x: auto;
 }
 table, th ,td{
 	border: 0;
 	width: 450px;
+}
+
+#keyNoteSaveButton{
+  float: right;
 }

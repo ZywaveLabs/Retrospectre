@@ -36,7 +36,7 @@ describe("card category", function() {
             // Verify
             expect(Session.get).toHaveBeenCalledWith("author");
             expect(Session.get).toHaveBeenCalledWith("roomNumber");
-             expect(Cards.find).toHaveBeenCalledWith({"roomCode": "testRoom",
+            expect(Cards.find).toHaveBeenCalledWith({"roomCode": "testRoom",
                 "category": "bad",
                 $or: [{"reveal": true}, {"author": "testAuthor"}]});
 

@@ -1,0 +1,62 @@
+<template name="cardModal">
+  {{#with cardModalInfo this.id}}
+  <div class="modal" id="{{_id}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
+          <h4 class="modal-title">{{author}}</h4>
+        </div>
+        <div class="modal-body">
+          <p>Thought: {{text}}</p>
+          <p>Category: {{category}}</p>
+          <p>Tags: {{#with cardTags _id}}&nbsp;&nbsp;{{this}}{{/with}}</p>
+          <p>Author: {{author}}</p>
+          <p>Created at: {{createdAt}}</p>
+          <hr>
+          <form id="commentFormField">
+            <div class="commentFormGroup input-group">
+              <span class="input-group-addon text-success" for="Comment">Comment</span>
+              <input class="form-control" type="text" id="comment" placeholder="Leave a comment.">
+              <span class="input-group-btn"><input class="btn btn-primary" id="submitCommentButton" type="submit">Submit</span>
+            </div>
+          </form>
+          <hr>
+          <div>
+            <h4>Comments</h4>
+            <span id="expand"><i class="fa fa-caret-right"></i></span>
+          </div>
+          <ul class="collapsible popout" data-collapsible="accordion">
+            {{#each comments}}
+            <li>
+              <div class="collapsible-header blue-grey darken-4">
+                {{#if this.avatar}}
+                <img class="img-responsive img-rounded" src="{{this.avatar}}" />
+                {{/if}}
+                <p class="white-text">&nbsp;&nbsp; {{this.text}}</p>
+              </div>
+              <div class="collapsible-body">
+                <p>Author: {{this.author}}</p>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button id="cardModalClose" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/with}}
+  <script>
+    $(document).ready(function() {
+      $('.collapsible').collapsible({
+        accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+      });
+
+      $("ul.collapsible li").hide();
+    });
+  </script>
+</template>

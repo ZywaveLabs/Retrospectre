@@ -30,7 +30,7 @@ describe("remove tags from cards", function () {
     jasmine.clock().mockDate(baseTime);
     spyOn(Session, "get").and.returnValue("testRoom");
     spyOn(Session, "set");
-    Template.card.fireEvent("submit #card");
+    Template.cardSubmitArea.fireEvent("submit #card",{event:event});
         var callBack = function(){
         removeTagEvent = jasmine.createSpyObj("e",["target","toElement"]);
         removeTagEvent = {
@@ -64,7 +64,7 @@ describe("remove tags from cards", function () {
     jasmine.clock().mockDate(baseTime);
     spyOn(Session, "get").and.returnValue("testRoom");
     spyOn(Session, "set");
-    Template.card.fireEvent("submit #card");
+    Template.cardSubmitArea.fireEvent("submit #card",{event:event});
         var callBack = function(){
         removeTagEvent = jasmine.createSpyObj("e",["target","toElement"]);
         removeTagEvent = {

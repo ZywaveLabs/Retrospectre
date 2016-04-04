@@ -4,6 +4,7 @@
 describe("submit .create-room", function() {
     it("should create a room normally if roomId given is not null\
         or empty", function() {
+        // setup
         var expectedId = "myId";
         var mockEvent = {
             event: {
@@ -16,7 +17,7 @@ describe("submit .create-room", function() {
 
         Template.createRoom.fireEvent("submit .create-room", mockEvent);
 
-        expect(Meteor.call).toHaveBeenCalledWith("addRoom", expectedId,
+        expect(Meteor.call).toHaveBeenCalledWith("createRoom", expectedId,
             jasmine.any(Function));
     });
 
