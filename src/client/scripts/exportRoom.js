@@ -1,14 +1,28 @@
 "use strict";
 /* global Cards:false Rooms:false KeyNotes:false */
 
+Template.exportRoom.rendered = function () {
+    Session.set("isSummaryView", true);
+};
+
 Template.exportRoom.events({
 
-    "click #copyToClipboardButton": function(eve) {
+    "click #copyToClipboardButton" : function(eve) {
         eve.preventDefault();
         var txtArea = document.querySelector("#textArea");
 
         txtArea.select();
         document.execCommand("copy");
+    },
+
+    "click #exportSummaryButton" : function(eve) {
+        eve.preventDefault();
+        Session.set("isSummaryView", true);
+    },
+
+    "click #exportAllButton" : function(eve) {
+        eve.preventDefault();
+        Session.set("isSummaryView", false);
     }
 });
 
@@ -46,5 +60,9 @@ Template.exportRoom.helpers({
         });
 
         return "Found notes \"" + keynotes.text + "\"";
+    },
+
+    getSummaryView : function() {
+        return Session.get("isSummaryView");
     }
 });
