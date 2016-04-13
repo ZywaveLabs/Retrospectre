@@ -21,3 +21,11 @@
  div.panel-body{
    text-align: center;
  }
+
+ @media only screen and (min-width: 768px) and (max-width: 1024px){
+   .card-form form div.form-group{
+     padding-left: 0px;
+     padding-right: 0px;
+     padding-top: 15px;
+   }
+ }
