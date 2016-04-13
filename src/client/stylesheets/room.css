@@ -6,7 +6,7 @@
 }
 
 .horizontalScrolling{
-	overflow-x: auto;
+	/* overflow-x: auto; */
 }
 table, th ,td{
 	border: 0;
