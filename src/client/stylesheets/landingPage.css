@@ -1,14 +1,26 @@
-div.content{
-	margin-top:100px;
+div.center-block.container{
+	padding-top: 70px;
 }
-h1.center{
-margin-bottom:0 !important;
+
+h1#welcomeHeader{
+	text-align: center;
 }
-.center {
-    margin-left: 25% !important;
-	margin-right:25%;
-	margin-bottom:10px;
-	text-align:center;
-    width: 30%;
-    padding: 10px;
+
+input#joinRoom{
+		padding: 5px;
 }
+
+input#createRoomButton{
+	padding: 5px;
+}
+
+input#roomCode{
+	padding: 5px;
+}
+  nav #navbar ul{
+		list-style: none;
+	}
+
+	div#login-buttons{
+		margin-top: 10px;
+	}
