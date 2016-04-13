@@ -5,14 +5,19 @@
     resize: none
 }
 
-.horizontalScrolling{
-	overflow-x: auto;
-}
-table, th ,td{
-	border: 0;
-	width: 450px;
+.card-form form div.form-group{
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-#keyNoteSaveButton{
-  float: right;
+.card-form form label{
+  font-size: 20px;
 }
+ i.fa-plus-circle{
+   line-height: inherit !important;
+   color: aqua;
+ }
+
+ div.panel-body{
+   text-align: center;
+ }
