@@ -1,11 +1,10 @@
 <template name="card">
-  <div class="row cardWidth">
     {{#with cardInfo this.id}}
     <div id="card_{{_id}}" class="card-panel" style="background-color:{{../color}}" data-toggle="modal" data-target="#{{_id}}">
       <span class="card-text">{{text}}</span>
       <div class="card-action">
         {{#each tags}}
-        <div class="chip">
+        <div class="chip hidden-xs visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
           <tag class="tag">{{this}}</tag>
           <i id="removeTag" class="material-icons fa fa-ban"></i>
         </div>
@@ -16,6 +15,5 @@
       </div>
     </div>
     {{/with}}
-  </div>
-  {{>cardModal id=this.id}}
+      {{>cardModal id=this.id}}
 </template>
