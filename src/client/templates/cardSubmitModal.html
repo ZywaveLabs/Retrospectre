@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Submit a(n) {{this.category}} Card</h4>
+          <h4 class="modal-title">Submit a Card</h4>
         </div>
         <div class="modal-body">
           <form class="form-inline" role="form" id="card">
@@ -20,6 +20,9 @@
               <label class="control-label text-success">Category:</label>
               <select class="form-control" id="categoryDropdown">
                 <option selected disabled style="display: none;">{{this.category}}</option>
+                {{#each categories}}
+                <option>{{this.category}}</option>
+                {{/each}}
               </select>
             </div>
             <div class="form-group">

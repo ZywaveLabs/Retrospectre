@@ -24,3 +24,11 @@ input#roomCode{
 	div#login-buttons{
 		margin-top: 10px;
 	}
+
+	div.col-xs-2{
+		margin-top: 12px;
+	}
+
+	h1.text-primary{
+	  margin-top: 75px;
+	}

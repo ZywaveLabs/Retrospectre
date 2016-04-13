@@ -1,5 +1,5 @@
 "use strict";
-/* global SnackbarMethods:false Card:false*/
+/* global SnackbarMethods:false Card:false Rooms:false*/
 
 var ModalCategory = function(abbrv,category){
     this.abbrv = abbrv;
@@ -9,6 +9,12 @@ var ModalCategory = function(abbrv,category){
 Template.cardSubmitModal.helpers({
     getUniqueID: function(category){
         return new ModalCategory(category.replace(/\s/g, ""),category);
+    },
+
+    categories: function() {
+        return Rooms.findOne(
+            {"roomCode": Session.get("roomNumber")}
+        ).categories;
     }
 });
 
