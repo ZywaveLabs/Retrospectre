@@ -10,6 +10,14 @@ Template.cardModal.helpers({
         var cardTags = card.tags;
 
         return cardTags.toString();
+    },
+    showEditButton: function(_id){
+        return (isOwner(_id) && Session.get("editCardMode") !== true)
+        ? "visible"
+        : "hidden";
+    },
+    inEditMode: function(){
+        return Session.get("editCardMode") === true;
     }
 });
 
@@ -88,5 +96,22 @@ Template.cardModal.events({
         if($(window).width() <= 768){
             $("#" + this._id).modal("hide");
         }
+    },
+    "click .edit-card-button": function(eve){
+        eve.preventDefault();
+        Session.set("editCardMode", true);
     }
 });
+
+function isOwner(_id){
+    var card = Cards.findOne({"_id": _id});
+
+    if (Meteor.user()) {
+        if(Meteor.user().profile.name == card.author){
+            return true;
+        }
+    } else if(Session.get("author") == card.author){
+        return true;
+    }
+    return false;
+}
