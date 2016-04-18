@@ -17,15 +17,6 @@ Template.room.helpers({
             {"roomCode": Session.get("roomNumber")}
         ).categories;
     },
-
-    getNumCategories: function(){
-        var numOfCat =  Rooms.findOne(
-          {"roomCode": Session.get("roomNumber")}
-      ).categories.length;
-
-        return Math.floor(12 / numOfCat) + 1;
-    },
-
     //TODO have this call another mentod
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});

@@ -11,7 +11,7 @@
       </div>
       {{#each cards this.category}}
       <div class="row visible-xs-block hidden-sm hidden-md hidden-lg">
-        <div class="col-sxs-12 testcard">
+        <div class="col-sxs-12">
           {{>card id=_id color= ../color}}
         </div>
       </div>
@@ -29,7 +29,7 @@
         <div class="col-sm-3">
             {{#each cards this.category}}
             <div class="row">
-              <div class="col-sm-12 testcard">
+              <div class="col-sm-12">
                 {{>card id=_id color= ../color}}
               </div>
             </div>
@@ -41,7 +41,7 @@
     {{else}}
     <div class="row hidden-xs visible-block">
       {{#each getCategories}}
-      <div class="col-sm-{{getNumCategories}}">
+      <div class="col-sm-{{getColSpacing}}">
         <h2>{{this.category}}</h2>
       </div>
       {{/each}}
@@ -53,11 +53,11 @@
     {{else}}
     <div class="row hidden-xs visible-sm-block visible-md-block visible-lg-block">
       {{#each getCategories}}
-      <div class="col-sm-{{getNumCategories}}">
+      <div class="col-sm-{{getColSpacing}}">
           {{#each cards this.category}}
           <div class="row">
             <div class="container-fluid">
-            <div class="col-sm-12 testcard">
+            <div class="col-sm-12">
               {{>card id=_id color= ../color}}
             </div>
           </div>

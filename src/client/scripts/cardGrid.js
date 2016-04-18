@@ -1,5 +1,6 @@
 "use strict";
 /*global Cards:false Rooms:false */
+var MAX_COL_PER_ROW = 4;
 
 Template.cardGrid.onRendered(function(){
     Session.set("getUniqueID_CallCount",0);
@@ -14,7 +15,7 @@ Template.cardGrid.helpers({
       ).categories;
         var len = categories.length;
 
-        return len > 4;
+        return len > MAX_COL_PER_ROW;
     },
 
     getRow: function(){
@@ -23,9 +24,9 @@ Template.cardGrid.helpers({
           {"roomCode": Session.get("roomNumber")}
       ).categories;
         var index = 0;
-        var numInnerArrays = Math.floor(4 / categories.length);
+        var numInnerArrays = Math.floor(MAX_COL_PER_ROW / categories.length);
 
-        numInnerArrays += 4 % categories.length;
+        numInnerArrays += MAX_COL_PER_ROW % categories.length;
         /* creates an array of subarray
         *  each subarray holds category
         *  im using this technique to creates
@@ -35,7 +36,7 @@ Template.cardGrid.helpers({
             rowOfCategories[i] = new Array();
         }
         for (var j = 0; j < categories.length; index++) {
-            for (var k = 0; k < 4 && j < categories.length; k++) {
+            for (var k = 0; k < MAX_COL_PER_ROW && j < categories.length; k++) {
                 rowOfCategories[index][k] = categories[j];
                 j++;
             }
@@ -49,7 +50,7 @@ Template.cardGrid.helpers({
       ).categories;
     },
 
-    getNumCategories: function(){
+    getColSpacing: function(){
         var cat = Rooms.findOne(
           {"roomCode": Session.get("roomNumber")}
       ).categories;
