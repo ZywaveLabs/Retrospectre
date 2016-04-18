@@ -70,9 +70,6 @@ Template.cardModal.events({
                 count++;
             }
         }
-        console.log(text);
-        console.log(oldTags);
-        console.log(newTags);
         Meteor.call("removeTag",text,oldTags,
           newTags,Session.get("roomNumber"));
     },
