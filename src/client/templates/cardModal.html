@@ -8,9 +8,9 @@
           <h4 class="modal-title">{{author}}</h4>
         </div>
         <div class="modal-body">
-          <p>Thought: {{text}}</p>
+          <p>Thought: <thought class="thought">{{text}}</thought></p>
           <p>Category: {{category}}</p>
-          <p>Tags: {{#with cardTags _id}}&nbsp;&nbsp;{{this}}{{/with}}</p>
+          <p>Tags: {{#each tags}} <tag class="tag">{{this}}</tag>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban"></i>&nbsp;&nbsp; {{/each}}</p>
           <p>Author: {{author}}</p>
           <p>Created at: {{createdAt}}</p>
           <hr>

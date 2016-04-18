@@ -41,6 +41,42 @@ Template.cardModal.events({
             $("i.fa-caret-right").removeClass("fa-caret-right");
         }
     },
+    
+    "click #removeTag": function(e){
+        e.stopPropagation();
+        var tags;
+        var prevEleTag;
+        var text;
+
+        prevEleTag = e.target.previousElementSibling.innerHTML;
+        prevEleTag = prevEleTag.toLowerCase();
+        tags = $(e.toElement.parentNode.parentNode).find(".tag");
+        text = $(e.toElement.parentNode.parentNode).find(".thought");
+        text = text[0].innerText;
+        var newTags;
+        var oldTags;
+
+        newTags = [];
+        oldTags = [];
+        var count;
+
+        count = 0;
+        for(var j = 0; j < tags.length; j++){
+            oldTags[j] = tags[j].innerHTML;
+        }
+        for(var i = 0; i < oldTags.length; i++){
+            if(oldTags[i].toLowerCase() != prevEleTag){
+                newTags[count] = oldTags[i].toLowerCase();
+                count++;
+            }
+        }
+        console.log(text);
+        console.log(oldTags);
+        console.log(newTags);
+        Meteor.call("removeTag",text,oldTags,
+          newTags,Session.get("roomNumber"));
+    },
+    
     "click span i.fa-caret-right": function(eve){
         eve.toElement.className = "fa fa-caret-down";
         $("ul.collapsible li").show();
