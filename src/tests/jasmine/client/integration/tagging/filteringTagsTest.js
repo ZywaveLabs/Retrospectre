@@ -1,5 +1,5 @@
 /*eslint-disable*/
-describe("filter cards based on tags", function () {
+xdescribe("filter cards based on tags", function () {
 
   beforeEach(function (done) {
     spyOn(Router,"go");

@@ -1,5 +1,5 @@
 /*eslint-disable*/
-describe("tests to run against the landing page and iron router",function(){
+xdescribe("tests to run against the landing page and iron router",function(){
 
   beforeEach(function (done) {
     spyOn(Router,"go");

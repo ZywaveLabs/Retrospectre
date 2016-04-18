@@ -5,7 +5,7 @@
             <span>
                 <label class="text-info">Room Code</label>
                 <div id="newRoomCode" class="input-group">
-                    <input type="text" class="form-control" name="roomcode" value="{{getNewRoomNumber}}" size="35" maxlength="35" autocomplete="off">
+                    <input type="text" class="form-control" name="roomcode" value="{{getNewRoomNumber}}" size="35" maxlength="35" autocomplete="off" id="roomCodeTextField">
                     <span class="input-group-addon" title="Room name not available" id="roomNotAvailableIcon" style="display: {{roomNotAvailableShow}}"><i class="fa fa-times-circle text-warning"></i></span>
                     <div class="input-group-btn">
                         <button id="generateNewRoomCodeButton" type="button" class="btn btn-default"><i class="fa fa-refresh text-info"></i></button>
