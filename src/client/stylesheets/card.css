@@ -43,3 +43,7 @@ ul.collapsible{
 div.card-panel{
   min-height: 100px;
 }
+
+div.card-action{
+  min-height: 32px;
+}
