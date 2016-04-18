@@ -32,3 +32,13 @@ input#roomCode{
 	h1.text-primary{
 	  margin-top: 75px;
 	}
+
+	input#joinRoom{
+	  min-width: 200px;
+	}
+	input#roomCode{
+		min-width: 200px;
+	}
+	input#createRoomButton{
+		min-width: 200px;
+	}
