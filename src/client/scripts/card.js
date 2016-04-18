@@ -6,3 +6,10 @@ Template.card.helpers({
         return Cards.findOne({"_id": _id});
     }
 });
+
+
+Template.card.events({
+    "click .diseased_newt": function(){
+        Session.set("editCardMode", false);
+    }
+});
