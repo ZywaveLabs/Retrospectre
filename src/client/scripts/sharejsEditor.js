@@ -1,10 +1,13 @@
-// "use strict";
+"use strict";
 /* global RoomMethods:false */
+var AceEditor;
+
 Template.room.helpers({
     config: function() {
         return function(editor) {
-            editor.setTheme("ace/theme/pastel_on_dark");
-            editor.setShowPrintMargin(false);
+            AceEditor = editor;
+            AceEditor.setTheme("ace/theme/pastel_on_dark");
+            AceEditor.setShowPrintMargin(false);
         };
     },
 
@@ -14,18 +17,3 @@ Template.room.helpers({
         return id;
     }
 });
-
-// create sync method
-// ShareJS.prototype.getSnapshotSync = function (docid) {
-//     return Meteor.wrapAsync(ShareJS.model.getSnapshot, docid);
-// };
-
-// Meteor.methods({
-//
-//     getDocumentText: function(docid) {
-//         var result = ShareJS.getSnapshotSync(docid);
-//
-//         return result.snapshot;
-//     }
-//
-// });

@@ -12,7 +12,9 @@
         </form>
         <h1 class="text-info">Sprint Retrospective</h1>
         {{> cardSubmitArea}}
+        {{#if isModerator}}
         <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
+        {{/if}}
          <button class="btn btn-info" id="exportButton" type="button">Export</button>
         <div class="horizontalScrolling">
             <table >
@@ -20,7 +22,7 @@
                     {{#each getCategories}}
                         <th><h2>{{this.category}}</h2></th>
                     {{/each}}
-                </tr>    
+                </tr>
                 <tr valign="top">
                     {{#each getCategories}}
                     <td>

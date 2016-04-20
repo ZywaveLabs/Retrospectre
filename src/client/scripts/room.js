@@ -43,6 +43,12 @@ Template.room.helpers({
         }
 
         return cards;
+    },
+
+    isModerator: function(){
+        var room = Rooms.findOne({"roomCode": Session.get("roomNumber")});
+
+        return room.owner._id == Meteor.userId();
     }
 });
 
@@ -107,7 +113,7 @@ Template.room.events({
         $("#filters").val("");
     },
 
-    "click #exportButton": function(eve) {
+    "click #exportButton": function() {
         var roomCode = Session.get("roomNumber");
 
         Router.go("/room/" + roomCode + "/export");
