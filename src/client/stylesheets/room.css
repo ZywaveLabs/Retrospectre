@@ -33,3 +33,16 @@ form#tagSearchForm {
     margin-top: 75px;
   }
 }
+
+div.export-body{
+  margin-top: 75px;
+}
+div.card-panel{
+  min-height: 85px;
+  max-height: 85px;
+}
+
+button#lockKeynotes{
+	  float: right;
+		color: #2C2828;
+}

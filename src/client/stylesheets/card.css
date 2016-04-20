@@ -39,8 +39,3 @@ ul.collapsible{
 #likeButton{
   float: right;
 }
-
-div.card-panel{
-  min-height: 85px;
-  max-height: 85px;
-}
