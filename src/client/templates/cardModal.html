@@ -13,14 +13,12 @@
           </div>
           <div class="modal-body">
             {{#if inEditMode}}
-              <form>
-                <label for="thought">Thought</label>
-                <input type="text" name="thought" value={{text}}>
-                <!-- <label for="category">
-                <input type="text" name="category" value=""></input>
-                <label for="thought"></label>
-                <input type="text" name="thought" value=""></input> -->
-                <input type="submit" value="Change">
+              <form id="edit-form">
+                <span lass="input-group-addon text-success" for="thought">Thought</span>
+                <input class="form-control" type="text" name="thought" value={{text}}>
+                <span class="input-group-btn">
+                    <input class="btn btn-primary" type="submit" value="Update">
+                </span>
               </form>
             {{else}}
               <p>Thought:

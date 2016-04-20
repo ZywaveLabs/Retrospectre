@@ -2,7 +2,8 @@
   <div class="row cardWidth">
     {{#with cardInfo this.id}}
     <div id="card_{{_id}}" class="card-panel diseased_newt" style="background-color:{{../color}}" data-toggle="modal" data-target="#{{_id}}">
-      <span class="card-text">{{text}}</span>
+      <!-- <span class="card-text">{{text}}</span> -->
+      <span class="card-text">{{#emojione}}{{text}}{{/emojione}}</span>
       <div class="card-action">
         {{#each tags}}
         <div class="chip">

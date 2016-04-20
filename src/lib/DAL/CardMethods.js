@@ -46,3 +46,9 @@ CardMethods.ToggleReveal = function(id) {
 
     Cards.update({_id: id}, {$set: {reveal: !show}});
 };
+
+CardMethods.Update = function(id, newThought, newTags){
+    Cards.update({_id:id}, {$set:{
+        text: newThought
+    }});
+};
