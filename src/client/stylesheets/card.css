@@ -1,11 +1,13 @@
 .card-text{
 	color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-size: 20px
+}
+div h2{
+	text-align: center;
 }
 
-.cardWidth{
-	width: 425px;
-}
+
 #cardImage{
   width: auto !important;
   height: auto;
@@ -36,9 +38,4 @@ ul.collapsible{
 
 #likeButton{
   float: right;
-}
-
-div.card-panel{
-  min-height: 80px;
-  max-height: 80px;
 }

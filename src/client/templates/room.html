@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <form id="tagSearchForm" class="navbar-form navbar-right">
             <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-filter"></i></span>
+                <span class="input-group-addon hidden-xs"><i class="fa fa-filter"></i></span>
                 <input id="filters" type="text" class="form-control" placeholder="Filter tags...">
                 <span class="input-group-btn">
                     <button id="filterTagsButton" type="submit" class="btn btn-default">Filter</button>
@@ -12,34 +12,11 @@
         </form>
         <h1 class="text-info">Sprint Retrospective</h1>
         {{> cardSubmitArea}}
+        {{#if isModerator}}
         <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
+        {{/if}}
          <button class="btn btn-info" id="exportButton" type="button">Export</button>
-        <div class="horizontalScrolling">
-            <table >
-                <tr>
-                    {{#each getCategories}}
-                        <th><h2>{{this.category}}</h2></th>
-                    {{/each}}
-                </tr>    
-                <tr valign="top">
-                    {{#each getCategories}}
-                    <td>
-                        <table >
-                            <tbody>
-                                {{#each cards this.category}}
-                                <tr>
-                                    <td class="testCard">
-                                        {{>card id=_id color= ../color}}
-                                    </td>
-                                </tr>
-                                {{/each}}
-                            </tbody>
-                        </table>
-                    </td>
-                    {{/each}}
-                </tr>
-            </table>
-        </div>
+          {{> cardGrid}}
         {{#with docid}}
           {{> sharejsAce docid=this onRender=config id="editor"}}
         {{/with}}

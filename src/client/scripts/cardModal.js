@@ -49,5 +49,11 @@ Template.cardModal.events({
     "click span i.fa-caret-down": function(eve){
         eve.toElement.className = "fa fa-caret-right";
         $("ul.collapsible li").hide();
+    },
+
+    "click .close, click #cardModalClose":function(){
+        if($(window).width() <= 768){
+            $("#" + this._id).modal("hide");
+        }
     }
 });

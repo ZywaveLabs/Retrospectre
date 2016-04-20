@@ -71,6 +71,13 @@ Template.createRoom.events({
 
     "submit .create-room, click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
+        if(!Meteor.user()){
+            SnackbarMethods.DisplayMessage("Only a moderator " +
+                  "can create a room.", 3000);
+            SnackbarMethods.DisplayMessage("Please sign-in using a Google" +
+                  " account to become a moderator", 3000);
+            return;
+        }
         var roomId = Session.get("newRoomCode");
 
         if (roomId === null || roomId === "") {
@@ -81,7 +88,7 @@ Template.createRoom.events({
         var room = new Room()
                 .withRoomCode(roomId)
                 .withCategories(categories)
-                .createdBy(Session.get("author"))
+                .createdBy(Meteor.user())
                 .withRevealStatusSetTo(false);
 
         Meteor.call("createRoom", room, function(err,result){

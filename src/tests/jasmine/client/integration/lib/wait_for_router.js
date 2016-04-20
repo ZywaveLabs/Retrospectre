@@ -36,7 +36,7 @@
   });
 })(Meteor, Tracker, Router);
 
-function waitForElement(selector, successCallback) {
+waitForElement = function waitForElement(selector, successCallback) {
   var checkInterval = 50;
   var timeoutInterval = jasmine.DEFAULT_TIMEOUT_INTERVAL;
   var startTime = Date.now();

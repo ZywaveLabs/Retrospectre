@@ -17,7 +17,6 @@ Template.room.helpers({
             {"roomCode": Session.get("roomNumber")}
         ).categories;
     },
-
     //TODO have this call another mentod
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
@@ -43,6 +42,12 @@ Template.room.helpers({
         }
 
         return cards;
+    },
+
+    isModerator: function(){
+        var room = Rooms.findOne({"roomCode": Session.get("roomNumber")});
+
+        return room.owner._id == Meteor.userId();
     }
 });
 
@@ -52,6 +57,8 @@ Template.room.events({
     },
 
     "click #deleteCardButton": function(){
+        if($(window).width() <= 768)
+            $(".modal").modal("hide");
         Meteor.call("deleteCard", this._id);
     },
 
@@ -107,7 +114,7 @@ Template.room.events({
         $("#filters").val("");
     },
 
-    "click #exportButton": function(eve) {
+    "click #exportButton": function() {
         var roomCode = Session.get("roomNumber");
 
         Router.go("/room/" + roomCode + "/export");
