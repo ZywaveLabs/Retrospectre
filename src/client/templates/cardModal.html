@@ -1,11 +1,43 @@
 <template name="cardModal">
     {{#with cardModalInfo this.id}}
     <div class="modal" id="{{_id}}" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true"><i class="fa fa-times"></i></span></button>
-                    <h4 class="modal-title">{{author}}</h4>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">
+                <i class="fa fa-times"></i>
+              </span>
+            </button>
+            <h4 class="modal-title">{{author}}</h4>
+          </div>
+          <div class="modal-body">
+            {{#if inEditMode}}
+              <form id="edit-form">
+                <span lass="input-group-addon text-success" for="thought">Thought</span>
+                <input class="form-control" type="text" name="thought" value={{text}}>
+                <span class="input-group-btn">
+                    <input class="btn btn-primary" type="submit" value="Update">
+                </span>
+              </form>
+            {{else}}
+              <p>Thought:
+                {{text}}</p>
+              <p>Category:
+                {{category}}</p>
+              <p>Tags:
+                {{#with cardTags _id}}&nbsp;&nbsp;{{this}}{{/with}}
+              </p>
+              <p>Author:
+                {{author}}</p>
+              <p>Created at:
+                {{createdAt}}</p>
+              <hr>
+              <form id="commentFormField">
+                <div class="commentFormGroup input-group">
+                  <span class="input-group-addon text-success" for="Comment">Comment</span>
+                  <input class="form-control" type="text" id="comment" placeholder="Leave a comment.">
+                  <span class="input-group-btn"><input class="btn btn-primary" id="submitCommentButton" type="submit">Submit</span>
                 </div>
                 <div class="modal-body">
                     <p>Thought:

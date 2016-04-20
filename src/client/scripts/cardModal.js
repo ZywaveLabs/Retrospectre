@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false UserMethods:false */
+/* global Cards:false SnackbarMethods:false UserMethods:false s:false */
 
 Template.cardModal.helpers({
     cardModalInfo: function(_id) {
@@ -100,6 +100,20 @@ Template.cardModal.events({
     "click .edit-card-button": function(eve){
         eve.preventDefault();
         Session.set("editCardMode", true);
+    },
+
+    "submit #edit-form": function (e) {
+        e.preventDefault();
+        var id = this._id;
+        var newThought = e.target.thought.value;
+        // var newTags = e.target.tags.value;
+        // var tags = newTags.split(",");
+        // var tagSet = new Set();
+
+        // tags.forEach(v => tagSet.add(s(v).clean().capitalize()));
+        // Array.from(tagSet)
+        Meteor.call("updateCard", id, newThought);
+        Session.set("editCardMode", false);
     }
 });
 
