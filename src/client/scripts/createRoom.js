@@ -69,7 +69,7 @@ Template.createRoom.events({
         ));
     },
 
-    "submit .create-room, click #createAndJoinRoomButton": function(eve) {
+    "click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
         var roomId = Session.get("newRoomCode");
 
@@ -125,6 +125,10 @@ Template.createRoom.events({
             var r = Math.floor(Math.random() * (256));
             var g = Math.floor(Math.random() * (256));
             var b = Math.floor(Math.random() * (256));
+
+            //TODO if  r,g,b is 1 byte it does not get padded 
+            // ie if g  is 8 then g.toString(16) = "8" not "08"
+            // needs to get padded so 8 gets changed to 08
             var colorValue = "#" + r.toString(16) +
                     g.toString(16) + b.toString(16);
 
