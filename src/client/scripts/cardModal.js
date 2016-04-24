@@ -41,7 +41,7 @@ Template.cardModal.events({
             $("i.fa-caret-right").removeClass("fa-caret-right");
         }
     },
-    
+
     "click #removeTag": function(e){
         e.stopPropagation();
         var tags;
@@ -73,7 +73,7 @@ Template.cardModal.events({
         Meteor.call("removeTag",text,oldTags,
           newTags,Session.get("roomNumber"));
     },
-    
+
     "click span i.fa-caret-right": function(eve){
         eve.toElement.className = "fa fa-caret-down";
         $("ul.collapsible li").show();
