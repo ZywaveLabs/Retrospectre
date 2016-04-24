@@ -7,26 +7,25 @@
         	<button class="btn btn-info" id="exportSummaryButton" type="button">Summery View</button>
        	{{/if}}
        <textarea id="textArea" rows="50" cols="200" style="margin: 10px 10px 10px 10px" readonly>
-     	{{#if getSummaryView}}
-{{#each getCategories}}
-{{this.category}}
-{{#each getCards this.category}}
-Thought: {{text}}
-{{/each}}
-{{/each}}
-     	{{else}}
-{{#each getCategories}}
-{{this.category}}
-{{#each getCards this.category}}
-Thought: {{text}}
-Tags: {{tags}}
-Author: {{author}}
-Comments: {{getComments this}}
-Likes: {{likes}}
-{{/each}}
-{{/each}}
-		{{/if}}
+            {{#if getSummaryView}}
+{{!--        --}}{{#each getCategories}}
+{{!--            --}}{{this.category}}
+{{!--            --}}{{#each getCards this.category}}
+{{!--                --}}Thought: {{text}}
+{{!--            --}}{{/each}}
+{{!--        --}}{{/each}}
+            {{else}}
+{{!--        --}}{{#each getCategories}}
+{{!--            --}}{{this.category}}
+{{!--            --}}{{#each getCards this.category}}
+{{!--                --}}Thought: {{text}}
+{{!--                --}}Tags: {{tags}}
+{{!--                --}}Author: {{author}}
+{{!--                --}}Comments: {{getComments this}}
+{{!--                --}}Likes: {{likes}}
+{{!--            --}}{{/each}}
+{{!--        --}}{{/each}}
+            {{/if}}
         </textarea>
     </body>
 </template>
-
