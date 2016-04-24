@@ -9,16 +9,26 @@
                 <i class="fa fa-times"></i>
               </span>
             </button>
-            <h4 class="modal-title">{{author}}</h4>
+            <h4 class="modal-title">{{text}}</h4>
           </div>
           <div class="modal-body">
             {{#if inEditMode}}
               <form id="edit-form">
-                <span lass="input-group-addon text-success" for="thought">Thought</span>
-                <input class="form-control" type="text" name="thought" value={{text}}>
-                <span class="input-group-btn">
-                    <input class="btn btn-primary" type="submit" value="Update">
-                </span>
+                <span class="input-group-addon text-success" for="thought">Thought</span>
+                  <input class="form-control" type="text" name="thought" value={{text}}>
+              <span class="input-group-addon text-success" for="tags">Tags</span>
+                  <input type="text" id="tags" class="form-control tags" placeholder="Seperate tags with a comma ','" value={{cardTags _id}}>
+              <span class="input-group-addon text-success" for="categoryDropdown">Category</span>
+                <select class="form-control" id="categoryDropdown">
+                  <option selected disabled style="display: none;">Select a Category</option>
+                  {{#each categories}}
+                    {{#if equals this.category ../category}}
+                      <option selected>{{this.category}}</option>
+                    {{else}}
+                      <option>{{this.category}}</option>
+                    {{/if}}
+                  {{/each}}
+                </select>
               </form>
             {{else}}
               <p>Thought:
@@ -71,7 +81,11 @@
               <span>
                 <i class="fa fa-cog"></i>&nbsp;</span>
               Edit Card</button>
-            <button type="button" class="btn btn-danger" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
+              {{#if inEditMode}}
+                <input class="btn btn-success pull-left" type="submit" form="edit-form" value="Update">
+              {{else}}
+                <button type="button" class="btn btn-danger pull-left" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
+              {{/if}}
             <button id="cardModalClose" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div>

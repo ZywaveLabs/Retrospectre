@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false UserMethods:false s:false */
+/* global Cards:false SnackbarMethods:false UserMethods:false s:false Rooms:false*/
 
 Template.cardModal.helpers({
     cardModalInfo: function(_id) {
@@ -18,6 +18,11 @@ Template.cardModal.helpers({
     },
     inEditMode: function(){
         return Session.get("editCardMode") === true;
+    },
+    categories: function() {
+        return Rooms.findOne(
+            {"roomCode": Session.get("roomNumber")}
+        ).categories;
     }
 });
 
@@ -63,20 +68,41 @@ Template.cardModal.events({
         eve.preventDefault();
         Session.set("editCardMode", true);
     },
+    "submit .addTags": function(e){
+        e.preventDefault();
+        var newTags = e.target.tags.value;
+        var tags = newTags.split(",");
+        var tagSet = new Set();
 
+        tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
+        var thisRoom = Rooms.findOne({_id:Session.get("roomCode")});
+        var thisTags = thisRoom.tags;
+
+        thisTags.forEach(v => tagSet.add(v));
+        var tagArray = Array.from(tagSet);
+
+        Meteor.call("addTags", tagArray);
+    },
     "submit #edit-form": function (e) {
         e.preventDefault();
         var id = this._id;
-        var newThought = e.target.thought.value;
-        // var newTags = e.target.tags.value;
-        // var tags = newTags.split(",");
-        // var tagSet = new Set();
+        var thought = e.target.thought.value;
+        var category = e.target.categoryDropdown.value;
+        var newTags = e.target.tags.value;
+        var tags = newTags.split(",");
+        var tagSet = new Set();
 
-        // tags.forEach(v => tagSet.add(s(v).clean().capitalize()));
-        // Array.from(tagSet)
-        Meteor.call("updateCard", id, newThought);
+        tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
+        var tagArray = Array.from(tagSet);
+
         Session.set("editCardMode", false);
+        $("#" + id).modal("hide");
+        Meteor.call("updateCard", id, thought, category, tagArray);
     }
+});
+
+Template.registerHelper("equals", function (a, b) {
+    return a === b;
 });
 
 function isOwner(_id){

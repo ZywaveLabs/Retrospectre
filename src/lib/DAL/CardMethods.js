@@ -32,6 +32,10 @@ CardMethods.AddTagToCard = function(id, text) {
 
 };
 
+CardMethods.AddTagsToCard = function(id, arrayOfTags) {
+
+};
+
 CardMethods.RemoveTagFromCard = function(id, text) {
 
 };
@@ -47,8 +51,11 @@ CardMethods.ToggleReveal = function(id) {
     Cards.update({_id: id}, {$set: {reveal: !show}});
 };
 
-CardMethods.Update = function(id, newThought, newTags){
+CardMethods.Update = function(id, thought, category, tags){
     Cards.update({_id:id}, {$set:{
-        text: newThought
+        text: thought,
+        tags: tags,
+        category: category
+        // lastUpdated: new Date() // Will add this later, not all cards have this field, and trying to this of a better way to do this rather than just having this at every update call
     }});
 };
