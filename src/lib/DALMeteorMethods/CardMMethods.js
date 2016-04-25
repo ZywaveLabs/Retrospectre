@@ -32,6 +32,9 @@ Meteor.methods({
 
     submitComment : function(id,commentToAdd) {
         CardMethods.SubmitComment(id,commentToAdd);
+    },
+    updateCard: function(id, thought, category, tags){
+        CardMethods.Update(id, thought, category, tags);
     }
 
 });

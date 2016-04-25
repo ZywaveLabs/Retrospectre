@@ -19,6 +19,7 @@ CardObject
 roomCode - {string} Room that the card is in
 category - {string} Category for card
 createdAt - {datetime} Will default to now, but can pass a time for testing
+lastUpdated - {datetime} Last time this card was changed, has to be manually set if directly updating
 text - {string} Text displayed on card
 tags - {string[]} Tags that the card should have to start with
 likes - {int} Number the likes a card has
@@ -30,6 +31,7 @@ Card = function(){
     this.roomCode = "";
     this.category = "";
     this.createdAt = new Date();
+    this.lastUpdated = new Date();
     this.text = "";
     this.tags = [];
     this.likes = 0;
