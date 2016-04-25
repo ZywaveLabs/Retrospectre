@@ -23,5 +23,8 @@ Template.card.events({
             $(eve.target.nextElementSibling).modal("show");
             $(eve.target.nextElementSibling).show();
         }
+    },
+    "click .disable-editmode": function(){
+        Session.set("editCardMode", false);
     }
 });
