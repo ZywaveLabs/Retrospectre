@@ -1,9 +1,15 @@
-#editor {
-  width: 100%;
-  height: 200px;
-  margin-bottom: 15px;
-  resize: none
+
+#editor{
+    width: 100%;
+    height: 200px;
+    margin-bottom: 15px;
+    resize: none
 }
+table, th ,td{
+	border: 0;
+	width: 450px;
+}
+
 .card-form form div.form-group {
   padding-left: 20px;
   padding-right: 20px;

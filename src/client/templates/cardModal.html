@@ -8,16 +8,16 @@
           <h4 class="modal-title">{{author}}</h4>
         </div>
         <div class="modal-body">
-          <p>Thought: {{text}}</p>
+          <p>Thought: <thought class="thought">{{text}}</thought></p>
           <p>Category: {{category}}</p>
-          <p>Tags: {{#with cardTags _id}}&nbsp;&nbsp;{{this}}{{/with}}</p>
+          <p>Tags: {{#each tags}} <tag class="tag">{{this}}</tag>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban"></i>&nbsp;&nbsp; {{/each}}</p>
           <p>Author: {{author}}</p>
           <p>Created at: {{createdAt}}</p>
           <hr>
           <form id="commentFormField">
             <div class="commentFormGroup input-group">
               <span class="input-group-addon text-success hidden-xs" for="Comment">Comment</span>
-              <input class="form-control" type="text" id="comment" placeholder="Leave a comment.">
+              <input class="form-control" type="text" id="comment" placeholder="Leave a comment." maxlength="400">
               <span class="input-group-btn"><input class="btn btn-primary" id="submitCommentButton" type="submit">Submit</span>
             </div>
           </form>
@@ -43,8 +43,8 @@
           </ul>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-sm" id="deleteCardButton" style="float:left" data-dismiss="modal">Delete Card</button>
           <button id="cardModalClose" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
         </div>
       </div>
     </div>

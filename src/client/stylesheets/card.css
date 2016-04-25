@@ -1,12 +1,12 @@
 .card-text{
-	color: white;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-	font-size: 20px
+		color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-size: 3em;
+		line-height: 7px;
 }
 div h2{
 	text-align: center;
 }
-
 
 #cardImage{
   width: auto !important;
