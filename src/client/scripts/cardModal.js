@@ -131,6 +131,7 @@ Template.cardModal.events({
         var tagSet = new Set();
 
         tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
+        tagSet.delete(""); // Delete Empty tags from submission
         var tagArray = Array.from(tagSet);
 
         Session.set("editCardMode", false);

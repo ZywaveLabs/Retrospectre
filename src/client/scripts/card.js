@@ -24,7 +24,7 @@ Template.card.events({
             $(eve.target.nextElementSibling).show();
         }
     },
-    "click .diseased_newt": function(){
+    "click .disable-editmode": function(){
         Session.set("editCardMode", false);
     }
 });
