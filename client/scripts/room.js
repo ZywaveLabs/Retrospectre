@@ -17,7 +17,6 @@ Template.room.helpers({
             {"roomCode": Session.get("roomNumber")}
         ).categories;
     },
-
     //TODO have this call another mentod
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
@@ -52,6 +51,8 @@ Template.room.events({
     },
 
     "click #deleteCardButton": function(){
+        if($(window).width() <= 768)
+            $(".modal").modal("hide");
         Meteor.call("deleteCard", this._id);
     },
 
