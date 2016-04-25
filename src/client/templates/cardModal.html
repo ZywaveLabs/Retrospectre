@@ -57,8 +57,7 @@
                         <span><i class="fa fa-cog"></i>&nbsp;</span>Edit Card
                     </button>
                     {{#if inEditMode}}
-                    <input class="btn btn-success" type="submit" form="edit-form" value="Update"> {{else}}
-                    {{/if}}
+                    <input class="btn btn-success" type="submit" form="edit-form" value="Update"> {{else}} {{/if}}
                     <button type="button" class="btn btn-danger btn-sm pull-left" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
                     <button id="cardModalClose" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
@@ -71,7 +70,6 @@
             $('.collapsible').collapsible({
                 accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
             });
-
             $("ul.collapsible li").hide();
         });
     </script>
