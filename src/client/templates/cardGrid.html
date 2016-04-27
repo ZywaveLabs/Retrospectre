@@ -41,8 +41,12 @@
     {{else}}
     <div class="row hidden-xs visible-block">
       {{#each getCategories}}
-      <div class="col-sm-{{getColSpacing}}">
+      <div class="col-sm-{{getColSpacing true}}">
         <h2>{{this.category}}</h2>
+      </div>
+      <div class="col-sm-1 form-modal">
+        <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}"><i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i></span>
+        {{>cardSubmitModal category=this.category}}
       </div>
       {{/each}}
     </div>
@@ -53,7 +57,7 @@
     {{else}}
     <div class="row hidden-xs visible-sm-block visible-md-block visible-lg-block">
       {{#each getCategories}}
-      <div class="col-sm-{{getColSpacing}}">
+      <div class="col-sm-{{getColSpacing false}}">
           {{#each cards this.category}}
           <div class="row">
             <div class="container-fluid">

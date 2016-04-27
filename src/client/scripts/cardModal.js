@@ -82,5 +82,41 @@ Template.cardModal.events({
     "click span i.fa-caret-down": function(eve){
         eve.toElement.className = "fa fa-caret-right";
         $("ul.collapsible li").hide();
+    },
+    "click .edit-card-button": function(eve){
+        eve.preventDefault();
+        Session.set("editCardMode", true);
+    },
+    "submit .addTags": function(e){
+        e.preventDefault();
+        var newTags = e.target.tags.value;
+        var tags = newTags.split(",");
+        var tagSet = new Set();
+
+        tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
+        var thisRoom = Rooms.findOne({_id:Session.get("roomCode")});
+        var thisTags = thisRoom.tags;
+
+        thisTags.forEach(v => tagSet.add(v));
+        var tagArray = Array.from(tagSet);
+
+        Meteor.call("addTags", tagArray);
+    },
+    "submit #edit-form": function (e) {
+        e.preventDefault();
+        var id = this._id;
+        var thought = e.target.thought.value;
+        var category = e.target.categoryDropdown.value;
+        var newTags = e.target.tags.value;
+        var tags = newTags.split(",");
+        var tagSet = new Set();
+
+        tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
+        tagSet.delete(""); // Delete Empty tags from submission
+        var tagArray = Array.from(tagSet);
+
+        Session.set("editCardMode", false);
+        $("#" + id).modal("hide");
+        Meteor.call("updateCard", id, thought, category, tagArray);
     }
 });

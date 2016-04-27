@@ -1,7 +1,6 @@
-div.center-block.container{
-	padding-top: 70px;
+div.content{
+	margin-top: 75px;
 }
-
 h1#welcomeHeader{
 	text-align: center;
 }
@@ -29,10 +28,6 @@ input#roomCode{
 		margin-top: 12px;
 	}
 
-	h1.text-primary{
-	  margin-top: 75px;
-	}
-
 	input#joinRoom{
 	  min-width: 200px;
 	}
@@ -42,3 +37,6 @@ input#roomCode{
 	input#createRoomButton{
 		min-width: 200px;
 	}
+	 div.row#mobileNav{
+		 padding-bottom: 5px;
+	 }
