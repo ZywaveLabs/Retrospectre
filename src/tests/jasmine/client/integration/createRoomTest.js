@@ -66,18 +66,13 @@ describe("Create Room Test ", function() {
             beforeEach(function (done) {
                 waitForElement("h1", function() {
                     expect($("h1").text()).toEqual("CREATE A ROOM");
-                    //TODO remove old categories
-                    $("#removeCategory").click();
-                    $("#removeCategory").click();
-                    //TODO add new categories
-                    $("#addCustomCategoryText").val("customCategory1");
-                    $("#addCustomCategoryText").keyup();
 
+                    $("#removeCategory").click();
+                    $("#removeCategory").click();
+
+                    // TODO this should use button clicks instead
                     Session.set("categoryToAdd", "customCategory2");
                     $("#addCustomCategoryButton").click();
-
-                    $("#addCustomCategoryText").val("customCategory2");
-                    $("#addCustomCategoryText").keyup();
                     Session.set("categoryToAdd", "customCategory1");
                     $("#addCustomCategoryButton").click();
 
