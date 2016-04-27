@@ -38,8 +38,8 @@ Room.prototype.createdAtTime = function (createdAt) {
     return this;
 };
 
-Room.prototype.createdBy = function (author) {
-    this.author = author;
+Room.prototype.createdBy = function (moderator) {
+    this.owner = moderator;
     return this;
 };
 

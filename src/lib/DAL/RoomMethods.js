@@ -24,7 +24,7 @@ RoomMethods = {};
  * @return {boolean} Whether room codes exists
  */
 RoomMethods.RoomExists = function(roomCode){
-    if(roomCode == null || roomCode == ""){
+    if(roomCode === null || roomCode === ""){
         return false;
     }
     return Rooms.find({

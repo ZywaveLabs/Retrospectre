@@ -1,7 +1,7 @@
 /* global Log: true */
 
 Log = function(message){ // eslint-disable-line
-    if(message == undefined)
+    if(message === undefined)
         message = "";
     this.message = message;
     this.userId = Meteor.userId();

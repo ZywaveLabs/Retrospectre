@@ -1,4 +1,4 @@
-/* global RoomMethods SnackbarMethods Logs*/
+/* global RoomMethods SnackbarMethods Logs DEFAULT_SNACKBAR_TIMEOUT:true*/
 "use strict";
 
 Router.configure({
@@ -35,8 +35,7 @@ Router.route("/room/:_roomNumber", {
             Session.set("roomNumber", this.params._roomNumber);
             this.next();
         }else{
-            SnackbarMethods.DisplayMessage("Room does not exist, " +
-                "redirected to home", 3000);
+            SnackbarMethods.DisplayMessage("Room does not exist, redirected to home", DEFAULT_SNACKBAR_TIMEOUT);
             this.redirect("/");
         }
     }

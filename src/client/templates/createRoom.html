@@ -1,7 +1,8 @@
 <template name="createRoom">
-    <h1 class="center text-primary">CREATE A ROOM</h1>
+  <div class="container">
+    <h1 class="text-primary">CREATE A ROOM</h1>
     <form class="create-room">
-        <h3 class="center">
+      <h3>
             <span>
                 <label class="text-info">Room Code</label>
                 <div id="newRoomCode" class="input-group">
@@ -15,8 +16,8 @@
         </h3>
     </form>
 
-        <form class="customCategory">
-            <span>
+    <form class="customCategory">
+      <span>
                 <label class="text-info center">Add Categories</label>
                 <div id="addCategory" class="input-group center">
                     <input type="text" class="form-control" name="addCustomCategory" id="addCustomCategoryText"
@@ -51,9 +52,7 @@
                     </table>
                 </div>
             </span>
-        </form>
-        <!--<h3 class="center text-info">Alias:
-            <input type="text" name="alias" value="Moderator" size="20" maxlength="20" autocomplete="off">
-        </h3>-->
-        <input class="center btn btn-primary {{createRoomDisable}}" id="createAndJoinRoomButton" name="joinRoom" type="button" value="CREATE AND JOIN ROOM" {{createRoomDisable}}>
+    </form>
+    <input class="center btn btn-primary {{createRoomDisable}}" id="createAndJoinRoomButton" name="joinRoom" type="button" value="CREATE AND JOIN ROOM" {{createRoomDisable}}>
+  </div>
 </template>

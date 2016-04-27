@@ -1,7 +1,16 @@
 "use strict";
-/* global SnackbarMethods:false Card:false Rooms:false s:false*/
+/* global SnackbarMethods:false Card:false Rooms:false*/
 
-Template.cardSubmitArea.helpers({
+var ModalCategory = function(abbrv,category){
+    this.abbrv = abbrv;
+    this.category = category;
+};
+
+Template.cardSubmitModal.helpers({
+    getUniqueID: function(category){
+        return new ModalCategory(category.replace(/\s/g, ""),category);
+    },
+
     categories: function() {
         return Rooms.findOne(
             {"roomCode": Session.get("roomNumber")}
@@ -9,7 +18,7 @@ Template.cardSubmitArea.helpers({
     }
 });
 
-Template.cardSubmitArea.events({
+Template.cardSubmitModal.events({
 
     "submit #card": function(eve){
         eve.preventDefault();
@@ -58,9 +67,21 @@ Template.cardSubmitArea.events({
 *@return {string[] } uniqueTags - array of uniqueTags
 **/
 function findUniqueTags(tags){
-    var tagSet = new Set();
+    var uniqueTags = [];
+    var count = 0;
 
-    tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
-    tagSet.delete(""); // Delete Empty tags from submission
-    return Array.from(tagSet);
+    for(var i = 0; i < tags.length; i++){
+        tags[i] = tags[i].trim();
+        if(tags[i].length !== 0){
+            if(i == 0){
+                uniqueTags[count] = tags[i];
+                count++;
+            } else if(uniqueTags.indexOf(tags[i]) == -1){
+                uniqueTags[count] = tags[i];
+                count++;
+            }
+        }
+        delete tags[i];
+    }
+    return uniqueTags;
 }
