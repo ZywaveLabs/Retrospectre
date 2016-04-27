@@ -1,4 +1,4 @@
-/* global SnackbarMethods:false */
+/* global DEFAULT_SNACKBAR_TIMEOUT:true SnackbarMethods:false */
 "use strict";
 
 Template.loginModal.helpers({
@@ -12,6 +12,6 @@ Template.loginModal.events({
         eve.preventDefault();
         Session.set("author", eve.target.alias.value);
         $("#LogInModal").modal("hide");
-        SnackbarMethods.DisplayMessage("Alias set" , 3000);
+        SnackbarMethods.DisplayMessage("Alias set" , DEFAULT_SNACKBAR_TIMEOUT);
     }
 });

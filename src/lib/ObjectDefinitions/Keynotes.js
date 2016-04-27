@@ -1,4 +1,4 @@
-/*global Keynotes:true*/
+/* global Keynotes:true */
 /*
 Keynotes Object
 roomCode - {string} roomCode inwhich notes belong to
