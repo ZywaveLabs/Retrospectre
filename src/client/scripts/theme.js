@@ -10,6 +10,6 @@ Template.headerFooter.helpers({
     },
 
     showAlias: function() {
-        return Meteor.userID() ? "hidden" : "visible";
+        return Meteor.userId() ? "hidden" : "visible";
     }
 });

@@ -1,6 +1,11 @@
 "use strict";
+<<<<<<< HEAD
 /*global Cards:false Rooms:false */
 const MAX_COL_PER_ROW = 4;
+=======
+/* global Cards:false Rooms:false */
+var MAX_COL_PER_ROW = 4;
+>>>>>>> fixed missing syntax idk what happened to it
 var uniqueIdCount = 0;
 
 Template.cardGrid.onRendered(function(){
@@ -12,7 +17,7 @@ Template.cardGrid.helpers({
 
     validMultiRow: function(){
         var categories = Rooms.findOne(
-          {"roomCode": Session.get("roomNumber")}
+          {"roomCode": Session.get("roomCode")}
       ).categories;
         var len = categories.length;
 
@@ -33,7 +38,7 @@ Template.cardGrid.helpers({
 
     getCategories: function() {
         return Rooms.findOne(
-          {"roomCode": Session.get("roomNumber")}
+          {"roomCode": Session.get("roomCode")}
       ).categories;
     },
 
@@ -41,7 +46,7 @@ Template.cardGrid.helpers({
         var maxBootStrapColSpacing = 12;
         var spaceForForm = 1;
         var cat = Rooms.findOne(
-          {"roomCode": Session.get("roomNumber")}
+          {"roomCode": Session.get("roomCode")}
       ).categories;
 
         if(header === true)
@@ -71,7 +76,6 @@ Template.cardGrid.helpers({
                 $or: [{"reveal": true}, {"author": author}]
             },{sort: {createdAt: -1}});
         }
-
         return cards;
     },
 
