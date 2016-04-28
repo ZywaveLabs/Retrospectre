@@ -1,11 +1,6 @@
 "use strict";
-<<<<<<< HEAD
 /*global Cards:false Rooms:false */
 const MAX_COL_PER_ROW = 4;
-=======
-/* global Cards:false Rooms:false */
-var MAX_COL_PER_ROW = 4;
->>>>>>> fixed missing syntax idk what happened to it
 var uniqueIdCount = 0;
 
 Template.cardGrid.onRendered(function(){

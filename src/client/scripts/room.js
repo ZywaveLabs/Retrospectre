@@ -54,15 +54,6 @@ Template.room.helpers({
 Template.room.events({
     "click #revealCardButton": function(){
         Meteor.call("revealCards", Session.get("roomCode"));
-<<<<<<< HEAD
-=======
-    },
-
-    "click #deleteCardButton": function(){
-        if($(window).width() <= 768)
-            $(".modal").modal("hide");
-        Meteor.call("deleteCard", this._id);
->>>>>>> fixed missing syntax idk what happened to it
     },
 
     "click tag": function(e){
