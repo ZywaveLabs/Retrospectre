@@ -88,11 +88,11 @@ Template.createRoom.events({
         var room = new Room()
                 .withRoomCode(roomId)
                 .withCategories(categories)
-                .createdBy(Meteor.user())
+                .createdBy(Meteor.userId())
                 .withRevealStatusSetTo(false);
 
         Meteor.call("createRoom", room, function(err,result){
-            Session.set("roomNumber", roomId);
+            Session.set("roomCode", roomId);
             Router.go("/room/" + roomId);
             if(!err)
                 Session.set("docId",result);

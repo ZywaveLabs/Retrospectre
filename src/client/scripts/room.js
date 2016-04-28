@@ -6,7 +6,7 @@
 
 Template.room.onCreated(function () {
     Meteor.autorun(function() {
-        Meteor.subscribe("cards", Session.get("roomNumber"));
+        Meteor.subscribe("cards", Session.get("roomCode"));
     });
 });
 
@@ -14,12 +14,12 @@ Template.room.helpers({
 
     getCategories: function() {
         return Rooms.findOne(
-            {"roomCode": Session.get("roomNumber")}
+            {"roomCode": Session.get("roomCode")}
         ).categories;
     },
     //TODO have this call another mentod
     cards : function(category) {
-        var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
+        var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var cards = [];
         var author;
 
@@ -30,12 +30,12 @@ Template.room.helpers({
         }
         if(roomData.reveal){
             cards = Cards.find({
-                "roomCode": Session.get("roomNumber"),
+                "roomCode": Session.get("roomCode"),
                 "category": category
             });
         } else {
             cards = Cards.find({
-                "roomCode": Session.get("roomNumber"),
+                "roomCode": Session.get("roomCode"),
                 "category": category,
                 $or: [{"reveal": true}, {"author": author}]
             },{sort: {createdAt: -1}});
@@ -45,15 +45,15 @@ Template.room.helpers({
     },
 
     isModerator: function(){
-        var room = Rooms.findOne({"roomCode": Session.get("roomNumber")});
+        var room = Rooms.findOne({"roomCode": Session.get("roomCode")});
 
-        return room.owner._id == Meteor.userId();
+        return room.owner === Meteor.userId();
     }
 });
 
 Template.room.events({
     "click #revealCardButton": function(){
-        Meteor.call("revealCards", Session.get("roomNumber"));
+        Meteor.call("revealCards", Session.get("roomCode"));
     },
 
     "click #deleteCardButton": function(){
@@ -83,7 +83,7 @@ Template.room.events({
     },
 
     "click #exportButton": function() {
-        var roomCode = Session.get("roomNumber");
+        var roomCode = Session.get("roomCode");
 
         Router.go("/room/" + roomCode + "/export");
     },

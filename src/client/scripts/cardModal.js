@@ -10,7 +10,21 @@ Template.cardModal.helpers({
         var cardTags = card.tags;
 
         return cardTags.toString();
+    },
+    showEditButton: function(_id){
+        return (isOwner(_id) && Session.get("editCardMode") !== true)
+        ? "visible"
+        : "hidden";
+    },
+    inEditMode: function(){
+        return Session.get("editCardMode") === true;
+    },
+    categories: function() {
+        return Rooms.findOne(
+            {"roomCode": Session.get("roomCode")}
+        ).categories;
     }
+
 });
 
 Template.cardModal.events({
@@ -19,7 +33,7 @@ Template.cardModal.events({
         var commentToAdd = validComment(eve);
         if(commentToAdd){
             Meteor.call("submitComment",this._id,commentToAdd);
-            eve.target.parentNode.previousElementSibling.value;
+            eve.target.parentNode.previousElementSibling.value = "";
             $("ul.collapsible li").show();
             $("i.fa-caret-right").addClass("fa-caret-down");
             $("i.fa-caret-right").removeClass("fa-caret-right");
@@ -49,6 +63,7 @@ Template.cardModal.events({
     },
     "click .edit-card-button": function(eve){
         eve.preventDefault();
+        $(eve.toElement).hide();
         Session.set("editCardMode", true);
     },
     "submit .addTags": function(e){
@@ -69,12 +84,29 @@ Template.cardModal.events({
     "submit #edit-form": function (e) {
         e.preventDefault();
         var id = this._id;
-        var init = 0;
+        var thought = 0, cat = 1, tags = 2;
         var changes = grabEdits(e);
         $("#" + id).modal("hide");
-        Meteor.call("updateCard", id, changes[init], changes[init++], changes[init++]);
+        Session.set("editCardMode", false);
+        Meteor.call("updateCard", id, changes[thought], changes[cat], changes[tags]);
     }
 });
+Template.registerHelper("equals", function (a, b) {
+    return a === b;
+});
+
+function isOwner(_id){
+    var card = Cards.findOne({"_id": _id});
+
+    if (Meteor.user()) {
+        if(Meteor.user().profile.name === card.author){
+            return true;
+        }
+    } else if(Session.get("author") === card.author){
+        return true;
+    }
+    return false;
+}
 
 function validComment(eve){
     var comment = eve.target.parentNode.previousElementSibling.value;

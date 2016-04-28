@@ -10,7 +10,7 @@ if (Meteor.isClient) {
             var room = eve.target.roomCode.value;
 
             if(room != null && room !== "" && RoomMethods.RoomExists(room)){
-                Session.set("roomNumber", String(room));
+                Session.set("roomCode", String(room));
                 Router.go("/room/" + String(room));
             }else{
                 SnackbarMethods.DisplayMessage("An invalid room number was " +

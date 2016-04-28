@@ -25,13 +25,13 @@ Template.cardSubmitModal.events({
         eve.preventDefault();
         var cardData = getCardData(eve);
         var tags = eve.target.tags.value;
-        var init = 0;
+        var cat = 0, tex = 1, auth = 2;
 
         var card = new Card()
                     .inRoom(Session.get("roomCode"))
-                    .withCategory(cardData[init])
-                    .withText(cardData[init++])
-                    .createdBy(cardData[init++]);
+                    .withCategory(cardData[cat])
+                    .withText(cardData[tex])
+                    .createdBy(cardData[auth]);
 
         if(tags != null && tags !== "" && tags !== undefined){
             card = card.withTags(findUniqueTags(tags.split(",")));
