@@ -57,7 +57,8 @@ Template.room.events({
     },
 
     "click #deleteCardButton": function(){
-        if($(window).width() <= 768)
+        var maxWidth = 768;
+        if($(window).width() <= maxWidth)
             $(".modal").modal("hide");
         Meteor.call("deleteCard", this._id);
     },
@@ -107,26 +108,8 @@ Template.room.events({
 *Filters cards by the tag given
 **/
 function filterSingleTag(tag){
-    tag = tag.toLowerCase();
+    filterMultipleTags([tag]);
     $("#filters").val(tag);
-    var numCards;
-
-    numCards = $(".card-panel").length;
-    for(var i = 0; i < numCards;i++){
-        var compTags;
-        var found;
-
-        found = false;
-        compTags = $(".card-panel").eq(i).find(".tag");
-        for(var j = 0; j < compTags.length; j++){
-            if(compTags[j].innerHTML.toLowerCase().indexOf(tag) >= 0)
-                found = true;
-        }
-        if(!found)
-            $(".card-panel").eq(i).hide();
-        else if (found)
-            $(".card-panel").eq(i).show();
-    }
 }
 
 /**
@@ -134,9 +117,8 @@ function filterSingleTag(tag){
 *Filters displayed cards by tags
 **/
 function filterMultipleTags(tags){
-    var numCards;
-
-    numCards = $(".card-panel").length;
+    var numCards = $(".card-panel").length;
+    var indexFound = 0;
     for(var i = 0; i < numCards;i++){
         var compTags;
         var found;
@@ -144,7 +126,7 @@ function filterMultipleTags(tags){
         found = false;
         compTags = $(".card-panel").eq(i).find(".tag");
         for(var j = 0; j < compTags.length; j++){
-            if(tags.indexOf(compTags[j].innerHTML) >= 0)
+            if(tags.indexOf(compTags[j].innerHTML) >= indexFound)
                 found = true;
         }
         if(!found)

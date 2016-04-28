@@ -16,9 +16,3 @@ SnackbarMethods.DisplayMessage = function(message, timeout, error) {
         console.log(error);
     }
 }
-
-SnackbarTimeouts = {};
-
-SnackbarTimeouts.Short = 3000;
-SnackbarTimeouts.Medium = 5000;
-SnackbarTimeouts.Long = 10000;

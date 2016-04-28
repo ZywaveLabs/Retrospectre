@@ -1,4 +1,4 @@
-/* global RoomMethods SnackbarMethods*/
+/* global RoomMethods SnackbarMethods DEFAULT_SNACKBAR_TIMEOUT:true*/
 "use strict";
 
 if (Meteor.isClient) {
@@ -15,7 +15,7 @@ if (Meteor.isClient) {
             }else{
                 SnackbarMethods.DisplayMessage("An invalid room number was " +
                 "given, either ask for the room code or create a new room.",
-                5000);
+                DEFAULT_SNACKBAR_TIMEOUT);
             }
         }
     });

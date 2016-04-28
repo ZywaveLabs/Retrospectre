@@ -1,4 +1,4 @@
-/* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false*/
+/* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false DEFAULT_SNACKBAR_TIMEOUT:true*/
 "use strict";
 
 // default categories
@@ -15,7 +15,7 @@ Template.createRoom.onCreated(function() {
             Session.set("roomCodeAvailable", true);
         } else {
             SnackbarMethods.DisplayMessage("Error generating new room code, " +
-                "please check console for details", 5000, error);
+                "please check console for details", DEFAULT_SNACKBAR_TIMEOUT, error);
         }
     });
 });
@@ -60,7 +60,7 @@ Template.createRoom.events({
                     SnackbarMethods.DisplayMessage(
                         "Error generating room code, " +
                         "please check console for details",
-                        5000,
+                        DEFAULT_SNACKBAR_TIMEOUT,
                         error
                     );
 
@@ -72,16 +72,14 @@ Template.createRoom.events({
     "submit .create-room, click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
         if(!Meteor.user()){
-            SnackbarMethods.DisplayMessage("Only a moderator " +
-                  "can create a room.", 3000);
-            SnackbarMethods.DisplayMessage("Please sign-in using a Google" +
-                  " account to become a moderator", 3000);
+            SnackbarMethods.DisplayMessage("Only a moderator can create a room." +
+                  " Please sign-in", DEFAULT_SNACKBAR_TIMEOUT);
             return;
         }
         var roomId = Session.get("newRoomCode");
 
         if (roomId === null || roomId === "") {
-            SnackbarMethods.DisplayMessage("Please enter a room code", 3000);
+            SnackbarMethods.DisplayMessage("Please enter a room code", DEFAULT_SNACKBAR_TIMEOUT);
             return;
         }
 
@@ -119,21 +117,12 @@ Template.createRoom.events({
         var customCategory = Session.get("categoryToAdd");
 
         // prevents dupicates
-        for(var i = 0; i < categories.length; i++) {
-            if(categories[i].category === customCategory){
-                SnackbarMethods.DisplayMessage(
-                    "Please enter a unique category", 3000);
-                return ;
-            }
-        }
-
-        if(customCategory != undefined && customCategory.length > 0) {
+        preventDuplicates(customCategory);
+        var nullStr = 0;
+        if(customCategory !== undefined && customCategory.length > nullStr) {
             // generate a random color for the added category
-            var r = Math.floor(Math.random() * (256));
-            var g = Math.floor(Math.random() * (256));
-            var b = Math.floor(Math.random() * (256));
-            var colorValue = "#" + r.toString(16) +
-                    g.toString(16) + b.toString(16);
+            var range = 256;
+            var colorValue = genRandomColor(range);
 
             categories.push({category:Session.get("categoryToAdd"),
                 color:colorValue});
@@ -143,8 +132,9 @@ Template.createRoom.events({
 
     },
 
-    "click #removeCategory": function(eve) {
-        categories.splice(categories.indexOf(this), 1);
+    "click #removeCategory": function() {
+        var numToRemove = 1;
+        categories.splice(categories.indexOf(this), numToRemove);
         categoriesDep.changed();
     },
 
@@ -152,3 +142,23 @@ Template.createRoom.events({
         this.color = eve.target.value;
     }
 });
+
+function genRandomColor(range){
+    // generate a random color for the added category
+    var r = Math.floor(Math.random() * (range));
+    var g = Math.floor(Math.random() * (range));
+    var b = Math.floor(Math.random() * (range));
+    var base = 16;// prints to hex
+    return "#" + r.toString(base) +
+            g.toString(base) + b.toString(base);
+}
+
+function preventDuplicates(customCategory){
+    for(var i = 0; i < categories.length; i++) {
+        if(categories[i].category === customCategory){
+            SnackbarMethods.DisplayMessage(
+                "Please enter a unique category", DEFAULT_SNACKBAR_TIMEOUT);
+            return ;
+        }
+    }
+}
