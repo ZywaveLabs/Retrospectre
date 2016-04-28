@@ -84,6 +84,16 @@ Template.cardGrid.helpers({
     }
 });
 
+Template.cardGrid.events({
+    "click div.col-xs-2 span": function(eve){
+        var maxWidth = 768;
+        if($(window).width() < maxWidth){
+            var dataTarget = eve.currentTarget.dataset.target;
+            $("div.modal" + dataTarget).modal("toggle");
+        }
+    }
+});
+
 function populateRows(rowOfCategories,numInnerArrays,categories){
     var index = 0;
     /* creates an array of subarray
