@@ -50,11 +50,13 @@ Template.cardGrid.helpers({
       ).categories;
     },
 
-    getColSpacing: function(){
+    getColSpacing: function(header){
         var cat = Rooms.findOne(
           {"roomCode": Session.get("roomNumber")}
       ).categories;
 
+        if(header === true)
+            return Math.floor(12 / cat.length) - 1;
         return Math.floor(12 / cat.length);
     },
 
