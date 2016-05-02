@@ -8,7 +8,8 @@ Template.card.helpers({
 
 Template.card.events({
     "click .card-panel": function(){
-        if($(window).width() < 768){
+        var maxwidth = 768;
+        if($(window).width() < maxwidth){
             $("div.modal#" + this._id).modal("toggle");
         }
     },
