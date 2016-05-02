@@ -56,13 +56,6 @@ Template.room.events({
         Meteor.call("revealCards", Session.get("roomCode"));
     },
 
-    "click #deleteCardButton": function(){
-        var maxWidth = 768;
-        if($(window).width() <= maxWidth)
-            $(".modal").modal("hide");
-        Meteor.call("deleteCard", this._id);
-    },
-
     "click tag": function(e){
         e.stopPropagation();
         filterSingleTag(e.toElement.innerHTML);
@@ -141,10 +134,5 @@ function filterMultipleTags(tags){
 **/
 function clearFilter(){
     $("#filters").val("");
-    var numCards;
-
-    numCards = $(".card-panel").length;
-    for(var i = 0; i < numCards;i++){
-        $(".card-panel").eq(i).show();
-    }
+    $(".card-panel").show();
 }

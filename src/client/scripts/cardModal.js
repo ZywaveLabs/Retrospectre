@@ -40,16 +40,17 @@ Template.cardModal.events({
         }
     },
 
+    "click #deleteCardButton": function(){
+        var maxWidth = 768;
+        if($(window).width() <= maxWidth)
+            $(".modal").modal("hide");
+        Meteor.call("deleteCard", this._id);
+    },
+
     "click #removeTag": function(e){
-        e.stopPropagation();
-        var init = 0;
-        var tags;
-        var prevEleTag  = e.target.previousElementSibling.innerHTML;
-        var text = $(e.toElement.parentNode.parentNode).find(".thought");
-        tags = $(e.toElement.parentNode.parentNode).find(".tag");
-        text = text[init].innerText;
-        var retTags = removeTags([],[],tags,prevEleTag.toLowerCase());
-        Meteor.call("removeTag",text,retTags[init],retTags[init++],Session.get("roomCode"));
+        var cardID = e.target.offsetParent.offsetParent.offsetParent.offsetParent.id;
+        var tagToRemove  = e.target.previousElementSibling.innerHTML;
+        Meteor.call("removeTag",cardID,tagToRemove);
     },
 
     "click span i.fa-caret-right": function(eve){
@@ -129,20 +130,6 @@ function validComment(eve){
           .withText(comment).createdAtTime(new Date()).withAvatar(image);
     }
     return commentToAdd;
-}
-
-function removeTags(newTags,oldTags,tags,prevEleTag){
-    var count = 0;
-    for(var j = 0; j < tags.length; j++){
-        oldTags[j] = tags[j].innerHTML;
-    }
-    for(var i = 0; i < oldTags.length; i++){
-        if(oldTags[i].toLowerCase() !== prevEleTag){
-            newTags[count] = oldTags[i].toLowerCase();
-            count++;
-        }
-    }
-    return  [oldTags,newTags];
 }
 
 function grabEdits(e){

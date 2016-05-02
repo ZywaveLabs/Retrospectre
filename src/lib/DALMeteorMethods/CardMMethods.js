@@ -13,18 +13,21 @@ Meteor.methods({
         CardMethods.DeleteCard(id);
     },
 
-    removeTag: function(text,oldTags,newTags,roomCode){
+    removeTag: function(id,tagToRemove){
         var cardToUpdate;
 
-        cardToUpdate = Cards.findOne({
-            roomCode:roomCode,text:text,tags:oldTags
-        });
+        cardToUpdate = Cards.findOne({_id:id});
 
         if(!cardToUpdate) {
             throw new Meteor.Error("update-failed",
             "Couldn't find card to update");
         }
-
+        var tags = cardToUpdate.tags;
+        var newTags = [];
+        for(var i = 0;i < tags.length;i++){
+            if(tags[i] !== tagToRemove)
+                newTags.push(tags[i]);
+        }
         Cards.update(
             cardToUpdate._id,
             {$set: {tags:newTags}});
