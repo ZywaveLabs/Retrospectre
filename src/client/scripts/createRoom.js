@@ -115,10 +115,19 @@ Template.createRoom.events({
     "submit .customCategory": function(eve) {
         eve.preventDefault();
         var customCategory = Session.get("categoryToAdd");
+<<<<<<< HEAD
         if(!preventDuplicates(customCategory))
             return;
         var nullStr = 0;
         if(customCategory !== undefined && customCategory.length > nullStr) {
+=======
+
+        // prevents dupicates
+        preventDuplicates(customCategory);
+        var nullStr = 0;
+        if(customCategory !== undefined && customCategory.length > nullStr) {
+            // generate a random color for the added category
+>>>>>>> 564cdb1b26297baf6b3aee1b88dedc3ede0e9929
             var range = 256;
             var colorValue = genRandomColor(range);
 
@@ -142,6 +151,10 @@ Template.createRoom.events({
 });
 
 function genRandomColor(range){
+<<<<<<< HEAD
+=======
+    // generate a random color for the added category
+>>>>>>> 564cdb1b26297baf6b3aee1b88dedc3ede0e9929
     var r = Math.floor(Math.random() * (range));
     var g = Math.floor(Math.random() * (range));
     var b = Math.floor(Math.random() * (range));
@@ -155,7 +168,11 @@ function preventDuplicates(customCategory){
         if(categories[i].category === customCategory){
             SnackbarMethods.DisplayMessage(
                 "Please enter a unique category", DEFAULT_SNACKBAR_TIMEOUT);
+<<<<<<< HEAD
             return false;
+=======
+            return ;
+>>>>>>> 564cdb1b26297baf6b3aee1b88dedc3ede0e9929
         }
     }
 }
