@@ -1,5 +1,5 @@
 /*eslint-disable*/
-describe("create room as moderator", function () {
+xdescribe("create room as moderator", function () {
 
   describe("user is signed in", function () {
 

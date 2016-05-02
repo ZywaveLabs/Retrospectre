@@ -1,5 +1,5 @@
 /*eslint-disable*/
-describe("test functionality only a moderator has", function () {
+xdescribe("test functionality only a moderator has", function () {
 
   describe("user is signed in and is moderator", function () {
 
