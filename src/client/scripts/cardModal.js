@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false UserMethods:false */
+/* global Cards:false SnackbarMethods:false UserMethods:false s:false Rooms:false DEFAULT_SNACKBAR_TIMEOUT:false*/
 
 Template.cardModal.helpers({
     cardModalInfo: function(_id) {
@@ -10,6 +10,19 @@ Template.cardModal.helpers({
         var cardTags = card.tags;
 
         return cardTags.toString();
+    },
+    showEditButton: function(_id){
+        return (isOwner(_id) && Session.get("editCardMode") !== true)
+        ? "visible"
+        : "hidden";
+    },
+    inEditMode: function(){
+        return Session.get("editCardMode") === true;
+    },
+    categories: function() {
+        return Rooms.findOne(
+            {"roomCode": Session.get("roomNumber")}
+        ).categories;
     }
 });
 
@@ -18,10 +31,10 @@ Template.cardModal.events({
         eve.preventDefault();
         var comment = eve.target.parentNode.previousElementSibling.value;
         var image = null;
-
-        if(!comment || comment.length <= 4)
+        const minCommentLength = 4;
+        if(!comment || comment.length <= minCommentLength)
             SnackbarMethods.DisplayMessage("Enter a more valuable comment",
-              3000);
+              DEFAULT_SNACKBAR_TIMEOUT);
         else{
             var author;
 
@@ -65,7 +78,7 @@ Template.cardModal.events({
             oldTags[j] = tags[j].innerHTML;
         }
         for(var i = 0; i < oldTags.length; i++){
-            if(oldTags[i].toLowerCase() != prevEleTag){
+            if(oldTags[i].toLowerCase() !== prevEleTag){
                 newTags[count] = oldTags[i].toLowerCase();
                 count++;
             }
@@ -82,5 +95,66 @@ Template.cardModal.events({
     "click span i.fa-caret-down": function(eve){
         eve.toElement.className = "fa fa-caret-right";
         $("ul.collapsible li").hide();
+    },
+
+    "click .close, click #cardModalClose":function(){
+        const screenWidth = 768;
+
+        if($(window).width() <= screenWidth){
+            $("#" + this._id).modal("hide");
+        }
+    },
+    "click .edit-card-button": function(eve){
+        eve.preventDefault();
+        Session.set("editCardMode", true);
+    },
+    "submit .addTags": function(e){
+        e.preventDefault();
+        var newTags = e.target.tags.value;
+        var tags = newTags.split(",");
+        var tagSet = new Set();
+
+        tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
+        var thisRoom = Rooms.findOne({_id:Session.get("roomCode")});
+        var thisTags = thisRoom.tags;
+
+        thisTags.forEach(v => tagSet.add(v));
+        var tagArray = Array.from(tagSet);
+
+        Meteor.call("addTags", tagArray);
+    },
+    "submit #edit-form": function (e) {
+        e.preventDefault();
+        var id = this._id;
+        var thought = e.target.thought.value;
+        var category = e.target.categoryDropdown.value;
+        var newTags = e.target.tags.value;
+        var tags = newTags.split(",");
+        var tagSet = new Set();
+
+        tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
+        tagSet.delete(""); // Delete Empty tags from submission
+        var tagArray = Array.from(tagSet);
+
+        Session.set("editCardMode", false);
+        $("#" + id).modal("hide");
+        Meteor.call("updateCard", id, thought, category, tagArray);
     }
 });
+
+Template.registerHelper("equals", function (a, b) {
+    return a === b;
+});
+
+function isOwner(_id){
+    var card = Cards.findOne({"_id": _id});
+
+    if (Meteor.user()) {
+        if(Meteor.user().profile.name === card.author){
+            return true;
+        }
+    } else if(Session.get("author") === card.author){
+        return true;
+    }
+    return false;
+}
