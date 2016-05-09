@@ -1,11 +1,18 @@
 "use strict";
-/* global SnackbarMethods:false Card:false Rooms:false*/
+/* global SnackbarMethods:false Card:false Rooms:false s:false DEFAULT_SNACKBAR_TIMEOUT:false*/
 
 var ModalCategory = function(abbrv,category){
     this.abbrv = abbrv;
     this.category = category;
 };
 
+var CardData = function (cat,thought,auth){
+    this.category = cat;
+    this.text = thought;
+    this.author = auth;
+};
+
+var MinThoughtLength = 0;
 Template.cardSubmitModal.helpers({
     getUniqueID: function(category){
         return new ModalCategory(category.replace(/\s/g, ""),category);
@@ -13,7 +20,7 @@ Template.cardSubmitModal.helpers({
 
     categories: function() {
         return Rooms.findOne(
-            {"roomCode": Session.get("roomNumber")}
+            {"roomCode": Session.get("roomCode")}
         ).categories;
     }
 });
@@ -22,37 +29,18 @@ Template.cardSubmitModal.events({
 
     "submit #card": function(eve){
         eve.preventDefault();
-        var author = Meteor.user() ?
-                        Meteor.user().profile.name :
-                        Session.get("author");
-        var thought = eve.target.thoughts.value;
+        var cardData = getCardData(eve);
         var tags = eve.target.tags.value;
-
-        var category = eve.target.categoryDropdown.value;
-
-        if(category === "Select a Category") {
-            SnackbarMethods
-                .DisplayMessage("Enter a category for your thought", 3000);
-            return ;
-        }
-        if(thought.length == 0) {
-            SnackbarMethods.DisplayMessage("Enter a thought", 3000);
-            return ;
-        }
-        if(!author) {
-            SnackbarMethods.DisplayMessage("Please set alias or sign in", 3000);
+        if(cardData == null)
             return;
-        }
-
         var card = new Card()
-                    .inRoom(Session.get("roomNumber"))
-                    .withCategory(category)
-                    .withText(thought)
-                    .createdBy(author);
+                    .inRoom(Session.get("roomCode"))
+                    .withCategory(cardData.category)
+                    .withText(cardData.text)
+                    .createdBy(cardData.author);
 
-        if(tags != null && tags != "" && tags != undefined){
-            tags = findUniqueTags(tags.split(","));
-            card = card.withTags(tags);
+        if(tags != null && tags !== "" && tags !== undefined){
+            card = card.withTags(findUniqueTags(tags.split(",")));
         }
 
         Meteor.call("submitCard", card);
@@ -62,26 +50,41 @@ Template.cardSubmitModal.events({
     }
 });
 
+function getCardData(eve){
+    var author = Meteor.user() ?
+                    Meteor.user().profile.name :
+                    Session.get("author");
+    var thought = eve.target.thoughts.value;
+    var category = eve.target.categoryDropdown.value;
+    if(completeCard(category,thought,author))
+        return new CardData(category,thought,author);
+    return null;
+}
+
+function completeCard(category,thought,author){
+    if(category === "Select a Category") {
+        SnackbarMethods
+            .DisplayMessage("Enter a category for your thought", DEFAULT_SNACKBAR_TIMEOUT);
+        return false;
+    }
+    if(thought.length === MinThoughtLength) {
+        SnackbarMethods.DisplayMessage("Enter a thought",  DEFAULT_SNACKBAR_TIMEOUT);
+        return false;
+    }
+    if(!author) {
+        SnackbarMethods.DisplayMessage("Please set alias or sign in",  DEFAULT_SNACKBAR_TIMEOUT);
+        return false;
+    }
+    return true;
+}
 /**
 *@param {string[] } tags - array of strings describing the tags
 *@return {string[] } uniqueTags - array of uniqueTags
 **/
 function findUniqueTags(tags){
-    var uniqueTags = [];
-    var count = 0;
+    var tagSet = new Set();
 
-    for(var i = 0; i < tags.length; i++){
-        tags[i] = tags[i].trim();
-        if(tags[i].length !== 0){
-            if(i == 0){
-                uniqueTags[count] = tags[i];
-                count++;
-            } else if(uniqueTags.indexOf(tags[i]) == -1){
-                uniqueTags[count] = tags[i];
-                count++;
-            }
-        }
-        delete tags[i];
-    }
-    return uniqueTags;
+    tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
+    tagSet.delete(""); // Delete Empty tags from submission
+    return Array.from(tagSet);
 }
