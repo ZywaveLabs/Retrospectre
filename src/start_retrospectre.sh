@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Change to appropriate hostname
-url="http://sdlstudentvm06.msoe.edu/"
+url=$RELEASE_URL
 meteor_location="/usr/local/bin/meteor"
 
 if ps ax | grep '[m]eteor' > /dev/null
