@@ -6,7 +6,7 @@
 
 Template.room.onCreated(function () {
     Meteor.autorun(function() {
-        Meteor.subscribe("cards", Session.get("roomNumber"));
+        Meteor.subscribe("cards", Session.get("roomCode"));
     });
 });
 
@@ -14,12 +14,12 @@ Template.room.helpers({
 
     getCategories: function() {
         return Rooms.findOne(
-            {"roomCode": Session.get("roomNumber")}
+            {"roomCode": Session.get("roomCode")}
         ).categories;
     },
     //TODO have this call another mentod
     cards : function(category) {
-        var roomData = Rooms.findOne({"roomCode": Session.get("roomNumber")});
+        var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var cards = [];
         var author;
 
@@ -30,12 +30,12 @@ Template.room.helpers({
         }
         if(roomData.reveal){
             cards = Cards.find({
-                "roomCode": Session.get("roomNumber"),
+                "roomCode": Session.get("roomCode"),
                 "category": category
             });
         } else {
             cards = Cards.find({
-                "roomCode": Session.get("roomNumber"),
+                "roomCode": Session.get("roomCode"),
                 "category": category,
                 $or: [{"reveal": true}, {"author": author}]
             },{sort: {createdAt: -1}});
@@ -45,21 +45,15 @@ Template.room.helpers({
     },
 
     isModerator: function(){
-        var room = Rooms.findOne({"roomCode": Session.get("roomNumber")});
+        var room = Rooms.findOne({"roomCode": Session.get("roomCode")});
 
-        return room.owner._id == Meteor.userId();
+        return room.owner === Meteor.userId();
     }
 });
 
 Template.room.events({
     "click #revealCardButton": function(){
-        Meteor.call("revealCards", Session.get("roomNumber"));
-    },
-
-    "click #deleteCardButton": function(){
-        if($(window).width() <= 768)
-            $(".modal").modal("hide");
-        Meteor.call("deleteCard", this._id);
+        Meteor.call("revealCards", Session.get("roomCode"));
     },
 
     "click tag": function(e){
@@ -83,7 +77,7 @@ Template.room.events({
     },
 
     "click #exportButton": function() {
-        var roomCode = Session.get("roomNumber");
+        var roomCode = Session.get("roomCode");
 
         Router.go("/room/" + roomCode + "/export");
     },
@@ -107,26 +101,8 @@ Template.room.events({
 *Filters cards by the tag given
 **/
 function filterSingleTag(tag){
-    tag = tag.toLowerCase();
+    filterMultipleTags([tag]);
     $("#filters").val(tag);
-    var numCards;
-
-    numCards = $(".card-panel").length;
-    for(var i = 0; i < numCards;i++){
-        var compTags;
-        var found;
-
-        found = false;
-        compTags = $(".card-panel").eq(i).find(".tag");
-        for(var j = 0; j < compTags.length; j++){
-            if(compTags[j].innerHTML.toLowerCase().indexOf(tag) >= 0)
-                found = true;
-        }
-        if(!found)
-            $(".card-panel").eq(i).hide();
-        else if (found)
-            $(".card-panel").eq(i).show();
-    }
 }
 
 /**
@@ -134,9 +110,8 @@ function filterSingleTag(tag){
 *Filters displayed cards by tags
 **/
 function filterMultipleTags(tags){
-    var numCards;
-
-    numCards = $(".card-panel").length;
+    var numCards = $(".card-panel").length;
+    var indexFound = 0;
     for(var i = 0; i < numCards;i++){
         var compTags;
         var found;
@@ -144,7 +119,7 @@ function filterMultipleTags(tags){
         found = false;
         compTags = $(".card-panel").eq(i).find(".tag");
         for(var j = 0; j < compTags.length; j++){
-            if(tags.indexOf(compTags[j].innerHTML) >= 0)
+            if(tags.indexOf(compTags[j].innerHTML) >= indexFound)
                 found = true;
         }
         if(!found)
@@ -159,10 +134,5 @@ function filterMultipleTags(tags){
 **/
 function clearFilter(){
     $("#filters").val("");
-    var numCards;
-
-    numCards = $(".card-panel").length;
-    for(var i = 0; i < numCards;i++){
-        $(".card-panel").eq(i).show();
-    }
+    $(".card-panel").show();
 }

@@ -1,6 +1,11 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false UserMethods:false s:false Rooms:false DEFAULT_SNACKBAR_TIMEOUT:false*/
-
+/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false*/
+const MinCommentLen = 4;
+var EditedCard = function(thought,tags,category){
+    this.thought = thought;
+    this.tags = tags;
+    this.category = category;
+};
 Template.cardModal.helpers({
     cardModalInfo: function(_id) {
         return Cards.findOne({"_id": _id});
@@ -21,70 +26,36 @@ Template.cardModal.helpers({
     },
     categories: function() {
         return Rooms.findOne(
-            {"roomCode": Session.get("roomNumber")}
+            {"roomCode": Session.get("roomCode")}
         ).categories;
     }
+
 });
 
 Template.cardModal.events({
-    "click #submitCommentButton": function(eve){
+    "submit #commentFormField": function(eve){
         eve.preventDefault();
-        var comment = eve.target.parentNode.previousElementSibling.value;
-        var image = null;
-        const minCommentLength = 4;
-        if(!comment || comment.length <= minCommentLength)
-            SnackbarMethods.DisplayMessage("Enter a more valuable comment",
-              DEFAULT_SNACKBAR_TIMEOUT);
-        else{
-            var author;
-
-            if(!Meteor.user())
-                author = Session.get("author");
-            else{
-                author = Meteor.user().profile.name;
-                image = UserMethods.getUserImage(Meteor.user()._id);
-            }
-            var commentToAdd = new Comment().createdBy(author)
-              .withText(comment).createdAtTime(new Date()).withAvatar(image);
-
+        var commentToAdd = validComment(eve);
+        if(commentToAdd){
             Meteor.call("submitComment",this._id,commentToAdd);
-            eve.target.parentNode.previousElementSibling.value;
+            eve.target.comment.value = "";
             $("ul.collapsible li").show();
             $("i.fa-caret-right").addClass("fa-caret-down");
             $("i.fa-caret-right").removeClass("fa-caret-right");
         }
     },
 
+    "click #deleteCardButton": function(){
+        var maxWidth = 768;
+        if($(window).width() <= maxWidth)
+            $(".modal").modal("hide");
+        Meteor.call("deleteCard", this._id);
+    },
+
     "click #removeTag": function(e){
-        e.stopPropagation();
-        var tags;
-        var prevEleTag;
-        var text;
-
-        prevEleTag = e.target.previousElementSibling.innerHTML;
-        prevEleTag = prevEleTag.toLowerCase();
-        tags = $(e.toElement.parentNode.parentNode).find(".tag");
-        text = $(e.toElement.parentNode.parentNode).find(".thought");
-        text = text[0].innerText;
-        var newTags;
-        var oldTags;
-
-        newTags = [];
-        oldTags = [];
-        var count;
-
-        count = 0;
-        for(var j = 0; j < tags.length; j++){
-            oldTags[j] = tags[j].innerHTML;
-        }
-        for(var i = 0; i < oldTags.length; i++){
-            if(oldTags[i].toLowerCase() !== prevEleTag){
-                newTags[count] = oldTags[i].toLowerCase();
-                count++;
-            }
-        }
-        Meteor.call("removeTag",text,oldTags,
-          newTags,Session.get("roomNumber"));
+        var cardID = e.target.offsetParent.offsetParent.offsetParent.offsetParent.id;
+        var tagToRemove  = e.target.previousElementSibling.innerHTML;
+        Meteor.call("removeTag",cardID,tagToRemove);
     },
 
     "click span i.fa-caret-right": function(eve){
@@ -96,16 +67,9 @@ Template.cardModal.events({
         eve.toElement.className = "fa fa-caret-right";
         $("ul.collapsible li").hide();
     },
-
-    "click .close, click #cardModalClose":function(){
-        const screenWidth = 768;
-
-        if($(window).width() <= screenWidth){
-            $("#" + this._id).modal("hide");
-        }
-    },
     "click .edit-card-button": function(eve){
         eve.preventDefault();
+        $(eve.toElement).hide();
         Session.set("editCardMode", true);
     },
     "submit .addTags": function(e){
@@ -126,22 +90,12 @@ Template.cardModal.events({
     "submit #edit-form": function (e) {
         e.preventDefault();
         var id = this._id;
-        var thought = e.target.thought.value;
-        var category = e.target.categoryDropdown.value;
-        var newTags = e.target.tags.value;
-        var tags = newTags.split(",");
-        var tagSet = new Set();
-
-        tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
-        tagSet.delete(""); // Delete Empty tags from submission
-        var tagArray = Array.from(tagSet);
-
-        Session.set("editCardMode", false);
+        var changes = grabEdits(e);
         $("#" + id).modal("hide");
-        Meteor.call("updateCard", id, thought, category, tagArray);
+        Session.set("editCardMode", false);
+        Meteor.call("updateCard", id, changes.thought, changes.category, changes.tags);
     }
 });
-
 Template.registerHelper("equals", function (a, b) {
     return a === b;
 });
@@ -157,4 +111,33 @@ function isOwner(_id){
         return true;
     }
     return false;
+}
+
+function validComment(eve){
+    var comment = eve.target.comment.value;
+    var commentToAdd = null;
+
+    if(!comment || comment.length <= MinCommentLen)
+        SnackbarMethods.DisplayMessage("Enter a more valuable comment",
+          DEFAULT_SNACKBAR_TIMEOUT);
+    else{
+        var author = UserMethods.getAuthor();
+        var image = Meteor.userId() ? UserMethods.getUserImage(Meteor.userId()) : null;
+        commentToAdd = new Comment().createdBy(author)
+          .withText(comment).createdAtTime(new Date()).withAvatar(image);
+    }
+    return commentToAdd;
+}
+
+function grabEdits(e){
+    var thought = e.target.thought.value;
+    var category = e.target.categoryDropdown.value;
+    var newTags = e.target.tags.value;
+    var tags = newTags.split(",");
+    var tagSet = new Set();
+    tags.forEach(v => tagSet.add(s(v).clean().titleize().value()));
+    tagSet.delete(""); // Delete Empty tags from submission
+    var tagArray = Array.from(tagSet);
+    Session.set("editCardMode", false);
+    return new EditedCard(thought,tagArray,category);
 }

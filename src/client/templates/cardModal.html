@@ -33,8 +33,11 @@
                         <thought class="thought">{{text}}</thought>
                     </p>
                     <p>Category: {{category}}</p>
-                    <p>Tags: {{#each tags}}
-                        <tag class="tag">{{this}}</tag>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban"></i>&nbsp;&nbsp; {{/each}}</p>
+                    <p>Tags:
+                      {{#each tags}}
+                        <tag class="tag {{this}}">{{this}}</tag>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban {{this}}"></i>&nbsp;&nbsp; 
+                      {{/each}}
+                    </p>
                     <p>Author: {{author}}</p>
                     <p>Created at: {{createdAt}}</p>
                     <hr>
@@ -50,6 +53,21 @@
                         <h4>Comments</h4>
                         <span id="expand"><i class="fa fa-caret-right"></i></span>
                     </div>
+                    <ul class="collapsible popout" data-collapsible="accordion">
+                      {{#each comments}}
+                      <li>
+                        <div class="collapsible-header blue-grey darken-4">
+                          {{#if this.avatar}}
+                          <img class="img-responsive img-rounded" src="{{this.avatar}}" />
+                          {{/if}}
+                          <p class="white-text">&nbsp;&nbsp; {{this.text}}</p>
+                        </div>
+                        <div class="collapsible-body">
+                          <p>Author: {{this.author}}</p>
+                        </div>
+                      </li>
+                      {{/each}}
+                    </ul>
                     {{/if}}
                 </div>
                 <div class="modal-footer">

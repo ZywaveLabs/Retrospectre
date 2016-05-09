@@ -12,7 +12,7 @@ Template.room.helpers({
     },
 
     docid: function() {
-        var id = RoomMethods.getKeynoteID(Session.get("roomNumber"));
+        var id = RoomMethods.getKeynoteID(Session.get("roomCode"));
 
         return id;
     }
