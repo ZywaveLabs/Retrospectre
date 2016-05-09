@@ -3,7 +3,6 @@
 # Change to appropriate hostname
 url=$RELEASE_URL
 meteor_location="/usr/local/bin/meteor"
-
 if ps ax | grep '[m]eteor' > /dev/null
 then
     echo "Process already exists"
@@ -14,13 +13,12 @@ else
     export ROOT_URL=$url
     # -d argument will disconnect the process from terminal, making it safe to
     # disconnect from ssh
+    # I honestly don't think this is even needed anyways, but, doesn't hurt
     if [ "$1" == "-d" ]
     then
-        echo "nohup $meteor_location --production --port 80 &" >> /var/log/Retrospectre2.log 2>&1
-        eval "nohup $meteor_location --production --port 80 &"
+        eval "nohup $meteor_location --production --port 80 >> /var/log/Retrospectre.log 2>&1 &"
         disown
     else
-        echo "$meteor_location --production --port 80 >> /var/log/Retrospectre.log 2>&1" >> /var/log/Retrospectre2.log 2>&1
         eval "$meteor_location --production --port 80 >> /var/log/Retrospectre.log 2>&1"
     fi
 fi

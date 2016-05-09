@@ -12,7 +12,7 @@ then
     crontab -l > Retrospectre
 
     #echo new cron into cron file
-    echo "*/5 * * * * $PWD/start_retrospectre.sh" >> Retrospectre
+    echo "* * * * * $PWD/start_retrospectre.sh" >> Retrospectre
 
     #install new cron file
     crontab Retrospectre
