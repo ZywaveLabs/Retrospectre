@@ -6,6 +6,12 @@ var ModalCategory = function(abbrv,category){
     this.category = category;
 };
 
+var CardData = function (cat,thought,auth){
+    this.category = cat;
+    this.text = thought;
+    this.author = auth;
+};
+
 var MinThoughtLength = 0;
 Template.cardSubmitModal.helpers({
     getUniqueID: function(category){
@@ -25,13 +31,13 @@ Template.cardSubmitModal.events({
         eve.preventDefault();
         var cardData = getCardData(eve);
         var tags = eve.target.tags.value;
-        var cat = 0, tex = 1, auth = 2;
-
+        if(cardData == null)
+            return;
         var card = new Card()
                     .inRoom(Session.get("roomCode"))
-                    .withCategory(cardData[cat])
-                    .withText(cardData[tex])
-                    .createdBy(cardData[auth]);
+                    .withCategory(cardData.category)
+                    .withText(cardData.text)
+                    .createdBy(cardData.author);
 
         if(tags != null && tags !== "" && tags !== undefined){
             card = card.withTags(findUniqueTags(tags.split(",")));
@@ -51,7 +57,8 @@ function getCardData(eve){
     var thought = eve.target.thoughts.value;
     var category = eve.target.categoryDropdown.value;
     if(completeCard(category,thought,author))
-        return [category,thought,author];
+        return new CardData(category,thought,author);
+    return null;
 }
 
 function completeCard(category,thought,author){

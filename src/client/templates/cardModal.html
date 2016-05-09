@@ -33,8 +33,11 @@
                         <thought class="thought">{{text}}</thought>
                     </p>
                     <p>Category: {{category}}</p>
-                    <p>Tags: {{#each tags}}
-                        <tag class="tag">{{this}}</tag>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban"></i>&nbsp;&nbsp; {{/each}}</p>
+                    <p>Tags:
+                      {{#each tags}}
+                        <tag class="tag {{this}}">{{this}}</tag>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban {{this}}"></i>&nbsp;&nbsp; 
+                      {{/each}}
+                    </p>
                     <p>Author: {{author}}</p>
                     <p>Created at: {{createdAt}}</p>
                     <hr>

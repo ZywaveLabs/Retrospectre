@@ -1,5 +1,5 @@
 "use strict";
-/*global Cards:false Rooms:false */
+/* global Cards:false Rooms:false */
 const MAX_COL_PER_ROW = 4;
 var uniqueIdCount = 0;
 
@@ -24,10 +24,10 @@ Template.cardGrid.helpers({
         var categories = Rooms.findOne(
           {"roomCode": Session.get("roomCode")}
       ).categories;
-        var numInnerArrays = Math.floor(MAX_COL_PER_ROW / categories.length);
+        var numOfRowsOfCategories = Math.floor(MAX_COL_PER_ROW / categories.length);
 
-        numInnerArrays += MAX_COL_PER_ROW % categories.length;
-        rowOfCategories = populateRows(rowOfCategories,numInnerArrays,categories);
+        numOfRowsOfCategories += MAX_COL_PER_ROW % categories.length;
+        rowOfCategories = populateRows(rowOfCategories,numOfRowsOfCategories,categories);
         return rowOfCategories;
     },
 
@@ -37,14 +37,14 @@ Template.cardGrid.helpers({
       ).categories;
     },
 
-    getColSpacing: function(header){
+    getColSpacing: function(isCategory){
         var maxBootStrapColSpacing = 12;
         var spaceForForm = 1;
         var cat = Rooms.findOne(
           {"roomCode": Session.get("roomCode")}
       ).categories;
 
-        if(header === true)
+        if(isCategory === true)
             return Math.floor(maxBootStrapColSpacing / cat.length) - spaceForForm;
         return Math.floor(maxBootStrapColSpacing / cat.length);
     },
@@ -89,21 +89,21 @@ Template.cardGrid.events({
     }
 });
 
-function populateRows(rowOfCategories,numInnerArrays,categories){
+function populateRows(rowsOfCategories,numOfRowsOfCategories,categories){
     var index = 0;
     /* creates an array of subarray
     *  each subarray holds category
     *  im using this technique to creates
     *  a more bootstrap grid view
     */
-    for (var i = 0; i < numInnerArrays; i++) {
-        rowOfCategories[i] = new Array();
+    for (var i = 0; i < numOfRowsOfCategories; i++) {
+        rowsOfCategories[i] = new Array();
     }
     for (var j = 0; j < categories.length; index++) {
         for (var k = 0; k < MAX_COL_PER_ROW && j < categories.length; k++) {
-            rowOfCategories[index][k] = categories[j];
+            rowsOfCategories[index][k] = categories[j];
             j++;
         }
     }
-    return rowOfCategories;
+    return rowsOfCategories;
 }
