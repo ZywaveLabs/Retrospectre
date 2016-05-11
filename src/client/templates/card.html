@@ -1,12 +1,12 @@
 <template name="card">
     {{#with cardInfo this.id}}
-    <div id="card_{{_id}}" class="card-panel disable-editmode" style="background-color:{{../color}}" data-toggle="modal" data-target="#{{_id}}">
+    <div id="card_{{_id}}" class="card-panel disable-editmode" style="border-color:{{../color}}" data-toggle="modal" data-target="#{{_id}}">
       <!-- <span class="card-text">{{text}}</span> -->
       <span class="card-text">{{#emojione}}{{text}}{{/emojione}}</span>
       <div class="card-action">
         {{#each tags}}
         <div class="chip hidden-xs visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
-          <tag class="tag">{{this}}</tag>
+          <span class="tag">{{this}}</span>
         </div>
         {{/each}}
         <div class="chip" id="likeButton">
