@@ -1,8 +1,7 @@
 .card-text{
-		color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    font-size: 3em;
-		line-height: 7px;
+		color: black;
+    font-size: 2em;
+		line-height: 28px;
 }
 div h2{
 	text-align: center;
@@ -41,6 +40,11 @@ ul.collapsible{
 }
 
 div.card-panel{
-  min-height: 85px;
-  max-height: 85px;
+	border-style: solid;
+	border-width: thick;
+}
+
+div.card-action{
+  min-height: 32px;
+	margin-top: 10px;
 }
