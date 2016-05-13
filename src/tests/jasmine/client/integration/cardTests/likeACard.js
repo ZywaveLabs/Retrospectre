@@ -1,20 +1,26 @@
 /*eslint-disable*/
 describe("liking a card tests", function () {
     beforeEach(function (done) {
-        Router.go("/room/testRoom");
-        Tracker.afterFlush(function(){
-          done();
-        });
+      Meteor.loginWithGoogle(function(){
+          Router.go("/room/testRoom");
+          Tracker.afterFlush(function(){
+            done();
+          });
+        }
+      );
     });
 
     beforeEach(waitForRouter);
 
     afterEach(function(done){
-        done();
+        Meteor.logout(function () {
+          done();
+        });
     });
 
     it("should disable liking a card after initial click", function () {
         waitForElement("#clearFilter",function(){
+            expect(Meteor.user()).not.toBeNull();
             //add a card first
             $(".form-modal").eq(0).click();
             expect($(".modal").eq(0).is(":visible")).toBe(true);

@@ -66,7 +66,7 @@ Template.room.events({
         var tags = e.target.filters.value.split(",");
 
         tags = tags.map(function(element){
-            return element.toLowerCase().trim();
+            return element.trim();
         });
         filterMultipleTags(tags);
     },
