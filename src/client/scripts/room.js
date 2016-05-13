@@ -80,19 +80,6 @@ Template.room.events({
         var roomCode = Session.get("roomCode");
 
         Router.go("/room/" + roomCode + "/export");
-    },
-
-    // TODO this should probably be a card event not a room event
-    "click #likeButton": function(eve){
-        eve.stopPropagation();
-        //TODO FIX THIS SHIT!
-        if(eve.target.id === "likeButton") {
-            eve.target.disabled = true;
-        } else if(eve.target.parentNode.id === "likeButton") {
-            eve.target.parentNode.disabled = true;
-        }
-
-        Cards.update({ _id: this._id}, { $inc: {likes: 1} });
     }
 });
 

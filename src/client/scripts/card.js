@@ -15,5 +15,16 @@ Template.card.events({
     },
     "click .disable-editmode": function(){
         Session.set("editCardMode", false);
+    },
+    "click #likeButton": function(eve){
+        eve.stopPropagation();
+        //TODO FIX THIS SHIT!
+        if(eve.target.id === "likeButton") {
+            eve.target.disabled = true;
+        } else if(eve.target.parentNode.id === "likeButton") {
+            eve.target.parentNode.disabled = true;
+        }
+
+        Cards.update({ _id: this._id}, { $inc: {likes: 1} });
     }
 });
