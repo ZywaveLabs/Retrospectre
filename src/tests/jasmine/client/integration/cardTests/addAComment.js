@@ -7,7 +7,11 @@ describe("add a comment to a card tests", function () {
           });
     });
 
-    beforeEach(waitForRouter);
+    beforeEach(function(done){
+        waitForRouter(function(){
+          done();
+        });
+    });
 
     afterEach(function(done){
         done();
