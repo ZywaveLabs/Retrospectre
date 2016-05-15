@@ -17,7 +17,6 @@ Template.room.helpers({
             {"roomCode": Session.get("roomCode")}
         ).categories;
     },
-    //TODO have this call another mentod
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var cards = [];

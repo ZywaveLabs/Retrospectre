@@ -35,7 +35,7 @@
                     <p>Category: {{category}}</p>
                     <p>Tags:
                       {{#each tags}}
-                        <tag class="tag {{this}}">{{this}}</tag>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban {{this}}"></i>&nbsp;&nbsp; 
+                        <span class="tag {{this}}">{{this}}</span>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban {{this}}"></i>&nbsp;&nbsp;
                       {{/each}}
                     </p>
                     <p>Author: {{author}}</p>
@@ -44,7 +44,7 @@
                     <form id="commentFormField">
                         <div class="commentFormGroup input-group">
                             <span class="input-group-addon text-success hidden-xs" for="Comment">Comment</span>
-                            <input class="form-control" type="text" id="comment" placeholder="Leave a comment." maxlength="400">
+                            <input class="form-control" type="text" id="comment" placeholder="Leave a comment." maxlength="500">
                             <span class="input-group-btn"><input class="btn btn-primary" id="submitCommentButton" type="submit">Submit</span>
                         </div>
                     </form>

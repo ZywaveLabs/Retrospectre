@@ -16,7 +16,8 @@ write - {boolean}
 */
 Room = function(){
     this.roomCode = "";
-    this.categories = ["Went Well", "Went Poorly"];
+    this.categories = [{category:"Went Well", color:"#00ff00"},
+                       {category:"Went Poorly", color:"#ff0000"}];
     this.createdAt = new Date();
     this.owner = "";
     this.reveal = false;

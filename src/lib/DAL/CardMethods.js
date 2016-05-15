@@ -41,7 +41,7 @@ CardMethods.RemoveTagFromCard = function(id, text) {
 };
 
 CardMethods.IncrementLikes = function(id) {
-
+    Cards.update({_id: id}, {$inc: { likes: 1}});
 };
 
 CardMethods.ToggleReveal = function(id) {

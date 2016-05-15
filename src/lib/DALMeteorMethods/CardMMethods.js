@@ -39,6 +39,8 @@ Meteor.methods({
     },
     updateCard: function(id, thought, category, tags){
         CardMethods.Update(id, thought, category, tags);
+    },
+    incrementLikes: function(id){
+        CardMethods.IncrementLikes(id);
     }
-
 });
