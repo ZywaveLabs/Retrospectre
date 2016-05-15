@@ -11,7 +11,11 @@ describe("test card submission", function(){
           );
         });
 
-        beforeEach(waitForRouter);
+        beforeEach(function(done){
+            waitForRouter(function(){
+              done();
+            });
+        });
 
         afterEach(function(done){
             Meteor.logout(function () {

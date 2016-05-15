@@ -10,7 +10,11 @@ describe("liking a card tests", function () {
       );
     });
 
-    beforeEach(waitForRouter);
+    beforeEach(function(done){
+        waitForRouter(function(){
+          done();
+        });
+    });
 
     afterEach(function(done){
         Meteor.logout(function () {
