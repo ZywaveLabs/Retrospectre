@@ -1,4 +1,4 @@
-/* global DEFAULT_SNACKBAR_TIMEOUT:true SnackbarMethods:false */
+/* global DEFAULT_SNACKBAR_TIMEOUT:false SnackbarMethods:false */
 "use strict";
 
 Template.loginModal.helpers({

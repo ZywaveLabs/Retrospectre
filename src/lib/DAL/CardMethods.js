@@ -7,7 +7,7 @@ if(Meteor.isServer){
     });
 } else {
     Meteor.autorun(function() {
-        Meteor.subscribe("cards", Session.get("roomNumber"));
+        Meteor.subscribe("cards", Session.get("roomCode"));
     });
 }
 CardMethods = {};

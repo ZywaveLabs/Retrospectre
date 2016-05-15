@@ -1,5 +1,5 @@
 "use strict";
-/* globals DEFAULT_SNACKBAR_TIMEOUT:true SnackbarMethods:false */
+/* globals DEFAULT_SNACKBAR_TIMEOUT:false SnackbarMethods:false */
 
 Template.landingPage.events({
 

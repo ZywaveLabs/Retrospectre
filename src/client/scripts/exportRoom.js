@@ -30,7 +30,7 @@ Template.exportRoom.helpers({
 
     getCards : function(category) {
         var cards = Cards.find({
-            "roomCode": Session.get("roomNumber"),
+            "roomCode": Session.get("roomCode"),
             "category": category
         });
 
@@ -38,7 +38,7 @@ Template.exportRoom.helpers({
     },
 
     getCategories : function() {
-        var room = Rooms.findOne({"roomCode" : Session.get("roomNumber")});
+        var room = Rooms.findOne({"roomCode" : Session.get("roomCode")});
 
         return room.categories;
     },
@@ -56,7 +56,7 @@ Template.exportRoom.helpers({
 
     getKeynotes : function() {
         var keynotes = KeyNotes.findOne({
-            "roomCode" : Session.get("roomNumber")
+            "roomCode" : Session.get("roomCode")
         });
 
         return "Found notes \"" + keynotes.text + "\"";
