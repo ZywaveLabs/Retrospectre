@@ -71,6 +71,7 @@ Template.createRoom.events({
 
     "click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
+
         if(!Meteor.user()){
             SnackbarMethods.DisplayMessage("Only a moderator " +
                   "can create a room.", 3000);
@@ -108,15 +109,9 @@ Template.createRoom.events({
         Session.set("newRoomCode", eve.target.value);
     },
 
-    "keyup #addCategory": function(eve) {
-        var customCategory = eve.target.value;
-
-        Session.set("categoryToAdd", customCategory);
-    },
-
     "submit .customCategory": function(eve) {
         eve.preventDefault();
-        var customCategory = Session.get("categoryToAdd");
+        var customCategory = eve.target.addCustomCategory.value;
 
         // prevents dupicates
         for(var i = 0; i < categories.length; i++) {
@@ -139,7 +134,7 @@ Template.createRoom.events({
             var colorValue = "#" + r.toString(16) +
                     g.toString(16) + b.toString(16);
 
-            categories.push({category:Session.get("categoryToAdd"),
+            categories.push({category:customCategory,
                 color:colorValue});
             categoriesDep.changed();
             eve.target.addCustomCategory.value = "";

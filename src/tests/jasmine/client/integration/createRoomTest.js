@@ -5,45 +5,69 @@ describe("Create Room Test ", function() {
 
     beforeEach(function (done) {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+        spyOn(Meteor, "user").and.returnValue("Test User");
         Router.go('/');
         Tracker.afterFlush(done);
     });
 
-    beforeEach(waitForRouter);
+    
+    beforeEach(function (done) {
+        waitForRouter(function() {
+            done();
+        });
+    });
 
     
-    describe("Home page", function () {
+    describe("Home Page", function () {
 
+        // verify we are on home page and click create room button
         beforeEach(function (done) {
             expect($("h1").text()).toEqual("Welcome to the Retrospectre");
             $("#createRoomButton").click();
-            Tracker.afterFlush(done);
+            Tracker.afterFlush(function() {
+                done();
+            });
         });
 
-        beforeEach(waitForRouter);
+         beforeEach(function (done) {
+            waitForRouter(function() {
+                done();
+            });
+        });
 
         afterEach(function (done) {
             Router.go('/');
-            Tracker.afterFlush(done);
+            Tracker.afterFlush(function() {
+                done();
+            });
         });
 
-        describe("Create Room page with default categories", function () {
+        describe("Create a default room", function () {
 
             beforeEach(function (done) {
                 waitForElement("h1", function() {
-                    expect($("h1").text()).toEqual("CREATE A ROOM");
-                    $("#createAndJoinRoomButton").click();
-                    Tracker.afterFlush(done);
+                    done();
+                });
+            });
+            
+            // verify we are on create room page and click create and join room button
+            beforeEach(function (done) {
+                expect($("h1").text()).toEqual("CREATE A ROOM");
+                $("#createAndJoinRoomButton").click();
+                Tracker.afterFlush(function() {
+                    done();
                 });
             });
 
-            beforeEach(waitForRouter);
+            beforeEach(function (done) {
+                waitForRouter(function() {
+                    done();
+                });
+            });
 
             describe("New room with default categories", function() {
 
                 beforeEach(function (done) {
-                    // waits for page to load
-                    // there is probably a better way to do this
                     waitForElement("h1", function() {
                         done();
                     });
@@ -61,45 +85,51 @@ describe("Create Room Test ", function() {
             
         });
 
-        describe("Create room page with custom categories", function () {
+        describe("New room with custom categories", function () {
 
             beforeEach(function (done) {
                 waitForElement("h1", function() {
-                    expect($("h1").text()).toEqual("CREATE A ROOM");
-
-                    $("#removeCategory").click();
-                    $("#removeCategory").click();
-
-                    // TODO this should use button clicks instead
-                    Session.set("categoryToAdd", "customCategory2");
-                    $("#addCustomCategoryButton").click();
-                    Session.set("categoryToAdd", "customCategory1");
-                    $("#addCustomCategoryButton").click();
-
-                    $("#createAndJoinRoomButton").click();
-                    Tracker.afterFlush(done);
+                    done();
                 });
             });
 
-            beforeEach(waitForRouter);
+            beforeEach(function (done) {
+                expect($("h1").text()).toEqual("CREATE A ROOM");
+
+                $("#removeCategory").click();
+                $("#removeCategory").click();
+
+                $("#addCustomCategoryText").val("customCategory2");
+                $("#addCustomCategoryButton").click();
+
+                $("#addCustomCategoryText").val("customCategory1");
+                $("#addCustomCategoryButton").click();
+
+                $("#createAndJoinRoomButton").click();
+                Tracker.afterFlush(done);
+            });
+
+            beforeEach(function (done) {
+                waitForRouter(function() {
+                    done();
+                });
+            });
 
             describe("New room with custom categories", function() {
 
-                beforeEach(function (done) {
-                    waitForElement("h1", function() {
-                        done();
-                    });
-                });
-
                 it("should have custom categories", function (done) {
-                    expect($("h1").text()).toEqual("Sprint Retrospective");
+                    waitForElement("h1", function() {
 
-                    expect($("h2").text()).not.toContain("Went Well");
-                    expect($("h2").text()).not.toContain("Went Poorly");
+                        expect($("h1").text()).toEqual("Sprint Retrospective");
 
-                    expect($("h2").text()).toContain("customCategory1");
-                    expect($("h2").text()).toContain("customCategory2");
-                    done();
+                        expect($("h2").text()).not.toContain("Went Well");
+                        expect($("h2").text()).not.toContain("Went Poorly");
+
+                        expect($("h2").text()).toContain("customCategory1");
+                        expect($("h2").text()).toContain("customCategory2");
+                        done();
+                        
+                    });
                 });
             });
         });

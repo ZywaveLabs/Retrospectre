@@ -28,6 +28,12 @@ describe("Export Test ", function() {
         beforeEach(waitForRouter);
 
         afterEach(function (done) {
+            var cardsToRemove = Cards.find({
+                "roomCode": "ExportTestRoom"
+            });
+            cardsToRemove.forEach(function(card){
+                 Meteor.call("deleteCard", card._id);
+            });
             Router.go('/');
             Tracker.afterFlush(done);
         });
@@ -50,9 +56,8 @@ describe("Export Test ", function() {
                     .withText("This is test data as well")
                     .createdBy("testAuthor2");
 
-                    //TODO if not exists
-                    // Meteor.call("submitCard", card1);
-                    // Meteor.call("submitCard", card2);
+                    Meteor.call("submitCard", card1);
+                    Meteor.call("submitCard", card2);
 
                     $("#exportButton").click();
                     Tracker.afterFlush(done);
