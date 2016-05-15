@@ -1,5 +1,5 @@
 /*eslint-disable*/
-xdescribe("verify user can join room with no auth", function(){
+describe("verify user can join room with no auth", function(){
 
   beforeEach(function (done) {
     spyOn(Router,"go");
