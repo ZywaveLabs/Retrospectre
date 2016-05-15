@@ -15,5 +15,15 @@ Template.card.events({
     },
     "click .disable-editmode": function(){
         Session.set("editCardMode", false);
+    },
+    "click #likeButton": function(eve){
+        eve.stopPropagation();
+        if(eve.target.id === "likeButton") {
+            eve.target.disabled = true;
+        } else if(eve.target.parentNode.id === "likeButton") {
+            eve.target.parentNode.disabled = true;
+        }
+
+        Meteor.call("incrementLikes", this._id);
     }
 });
