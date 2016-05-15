@@ -1,5 +1,5 @@
 /*eslint-disable*/
-xdescribe("remove tags from cards", function () {
+describe("remove tags from cards", function () {
 
   beforeEach(function (done) {
     spyOn(Router,"go");
