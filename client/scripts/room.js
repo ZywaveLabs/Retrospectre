@@ -65,7 +65,7 @@ Template.room.events({
         var tags = e.target.filters.value.split(",");
 
         tags = tags.map(function(element){
-            return element.toLowerCase().trim();
+            return element.trim();
         });
         filterMultipleTags(tags);
     },
@@ -79,17 +79,6 @@ Template.room.events({
         var roomCode = Session.get("roomCode");
 
         Router.go("/room/" + roomCode + "/export");
-    },
-
-    "click #likeButton": function(eve){
-        eve.stopPropagation();
-        if(eve.target.id === "likeButton") {
-            eve.target.disabled = true;
-        } else if(eve.target.parentNode.id === "likeButton") {
-            eve.target.parentNode.disabled = true;
-        }
-
-        Meteor.call("incrementLikes", this._id);
     }
 });
 
