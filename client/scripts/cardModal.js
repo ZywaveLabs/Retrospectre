@@ -18,8 +18,8 @@ Template.cardModal.helpers({
     },
     showEditButton: function(_id){
         return (isOwner(_id) && Session.get("editCardMode") !== true)
-        ? "visible"
-        : "hidden";
+        ? "visible;"
+        : "hidden;";
     },
     inEditMode: function(){
         return Session.get("editCardMode") === true;
