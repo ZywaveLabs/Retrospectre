@@ -69,8 +69,9 @@ Template.createRoom.events({
         ));
     },
 
-    "submit .create-room, click #createAndJoinRoomButton": function(eve) {
+    "click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
+
         if(!Meteor.user()){
             SnackbarMethods.DisplayMessage("Only a moderator can create a room." +
                   " Please sign-in", DEFAULT_SNACKBAR_TIMEOUT);
@@ -106,23 +107,18 @@ Template.createRoom.events({
         Session.set("newRoomCode", eve.target.value);
     },
 
-    "keyup #addCategory": function(eve) {
-        var customCategory = eve.target.value;
-
-        Session.set("categoryToAdd", customCategory);
-    },
-
     "submit .customCategory": function(eve) {
         eve.preventDefault();
-        var customCategory = Session.get("categoryToAdd");
-        if(!preventDuplicates(customCategory))
+
+        var customCategory = eve.target.addCustomCategory.value;
+        if(isDuplicate(customCategory))
             return;
         var nullStr = 0;
         if(customCategory !== undefined && customCategory.length > nullStr) {
             var range = 256;
             var colorValue = genRandomColor(range);
 
-            categories.push({category:Session.get("categoryToAdd"),
+            categories.push({category:customCategory,
                 color:colorValue});
             categoriesDep.changed();
             eve.target.addCustomCategory.value = "";
@@ -150,12 +146,13 @@ function genRandomColor(range){
             g.toString(base) + b.toString(base);
 }
 
-function preventDuplicates(customCategory){
+function isDuplicate(customCategory){
     for(var i = 0; i < categories.length; i++) {
         if(categories[i].category === customCategory){
             SnackbarMethods.DisplayMessage(
                 "Please enter a unique category", DEFAULT_SNACKBAR_TIMEOUT);
-            return false;
+            return true;
         }
     }
+    return false;
 }

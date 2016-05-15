@@ -6,7 +6,7 @@
             <span>
                 <label class="text-info">Room Code</label>
                 <div id="newRoomCode" class="input-group">
-                    <input type="text" class="form-control" name="roomcode" value="{{getNewRoomNumber}}" size="35" maxlength="35" autocomplete="off">
+                    <input type="text" class="form-control" name="roomcode" value="{{getNewRoomNumber}}" size="35" maxlength="35" autocomplete="off" id="roomCodeTextField">
                     <span class="input-group-addon" title="Room name not available" id="roomNotAvailableIcon" style="display: {{roomNotAvailableShow}}"><i class="fa fa-times-circle text-warning"></i></span>
                     <div class="input-group-btn">
                         <button id="generateNewRoomCodeButton" type="button" class="btn btn-default"><i class="fa fa-refresh text-info"></i></button>
@@ -20,7 +20,8 @@
       <span>
                 <label class="text-info center">Add Categories</label>
                 <div id="addCategory" class="input-group center">
-                    <input type="text" class="form-control" name="addCustomCategory" size="35" maxLength="35" autocomplete="off">
+                    <input type="text" class="form-control" name="addCustomCategory" id="addCustomCategoryText"
+                     size="35" maxLength="35" autocomplete="off">
                         <div id="customCategories" class="input-group-btn">
                             <button id="addCustomCategoryButton" type="submit" class="btn btn-default">
                                 <i class="fa fa-plus text-info"></i>
