@@ -45,7 +45,6 @@ Template.room.helpers({
 
     isModerator: function(){
         var room = Rooms.findOne({"roomCode": Session.get("roomCode")});
-
         return room.owner === Meteor.userId();
     }
 });
@@ -55,7 +54,7 @@ Template.room.events({
         Meteor.call("revealCards", Session.get("roomCode"));
     },
 
-    "click tag": function(e){
+    "click .tag": function(e){
         e.stopPropagation();
         filterSingleTag(e.toElement.innerHTML);
     },
