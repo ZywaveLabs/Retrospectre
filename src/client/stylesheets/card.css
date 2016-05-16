@@ -37,14 +37,27 @@ ul.collapsible{
 
 #likeButton{
   float: right;
+	cursor: pointer;
+}
+
+.tag{
+	cursor: pointer;
 }
 
 div.card-panel{
 	border-style: solid;
 	border-width: thick;
+	height: auto;
 }
 
 div.card-action{
   min-height: 32px;
 	margin-top: 10px;
 }
+
+h4.modal-title{
+    text-overflow: ellipsis; 
+    width: 370px;
+    white-space: nowrap;
+    overflow:hidden;
+    }
