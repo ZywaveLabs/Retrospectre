@@ -86,8 +86,8 @@ Template.createRoom.events({
         var room = new Room()
                 .withRoomCode(roomId)
                 .withCategories(categories)
-                .withRevealStatusSetTo(false);
-              //  .createdBy(Meteor.userId())
+                .withRevealStatusSetTo(false)
+                .createdBy(Meteor.userId());
 
         Meteor.call("createRoom", room, function(err,result){
             Session.set("roomCode", roomId);
