@@ -26,6 +26,10 @@ i.right{
   max-height: 39px;
 }
 
+i.fa-plus-circle{
+	cursor: pointer;
+}
+
 div.collapsible-header p{
   float: none;
 }
@@ -37,14 +41,28 @@ ul.collapsible{
 
 #likeButton{
   float: right;
+	cursor: pointer;
+}
+
+.tag{
+	cursor: pointer;
 }
 
 div.card-panel{
 	border-style: solid;
 	border-width: thick;
+	height: auto;
+	cursor: pointer;
 }
 
 div.card-action{
   min-height: 32px;
 	margin-top: 10px;
 }
+
+h4.modal-title{
+    text-overflow: ellipsis;
+    width: 370px;
+    white-space: nowrap;
+    overflow:hidden;
+    }

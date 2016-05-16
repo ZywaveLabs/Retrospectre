@@ -68,7 +68,6 @@ Template.createRoom.events({
             }
         ));
     },
-
     "click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
 
@@ -87,8 +86,8 @@ Template.createRoom.events({
         var room = new Room()
                 .withRoomCode(roomId)
                 .withCategories(categories)
-                .createdBy(Meteor.userId())
-                .withRevealStatusSetTo(false);
+                .withRevealStatusSetTo(false)
+                .createdBy(Meteor.userId());
 
         Meteor.call("createRoom", room, function(err,result){
             Session.set("roomCode", roomId);
