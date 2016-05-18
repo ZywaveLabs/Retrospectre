@@ -12,7 +12,11 @@
         </form>
         <h1 class="text-info">Sprint Retrospective</h1>
         {{#if isModerator}}
-        <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
+            {{#if cardsHidden}}
+                <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
+            {{else}}
+                <button class="btn btn-info" id="hideCardButton" type="button">Hide All Cards</button>
+            {{/if}}
         {{/if}}
          <button class="btn btn-info" id="exportButton" type="button">Export</button>
           {{> cardGrid}}
