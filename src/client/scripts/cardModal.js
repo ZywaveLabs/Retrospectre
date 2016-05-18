@@ -69,7 +69,6 @@ Template.cardModal.events({
     },
     "click .edit-card-button": function(eve){
         eve.preventDefault();
-        $(eve.toElement).hide();
         Session.set("editCardMode", true);
     },
     "submit .addTags": function(e){
@@ -91,7 +90,6 @@ Template.cardModal.events({
         e.preventDefault();
         var id = this._id;
         var changes = grabEdits(e);
-        $(".edit-card-button").show();
         $("#" + id).modal("hide");
         Session.set("editCardMode", false);
         Meteor.call("updateCard", id, changes.thought, changes.category, changes.tags);
