@@ -27,6 +27,8 @@
                             <option>{{this.category}}</option>
                             {{/if}} {{/each}}
                         </select>
+                        <br>
+                        <input class="btn btn-success form-control" type="submit" value="Update">
                     </form>
                     {{else}}
                     <p>Thought:
@@ -74,8 +76,7 @@
                     <button type="button" class="btn btn-info edit-card-button" style="visibility: {{showEditButton _id}}">
                         <span><i class="fa fa-cog"></i>&nbsp;</span>Edit Card
                     </button>
-                    {{#if inEditMode}}
-                    <input class="btn btn-success" type="submit" form="edit-form" value="Update"> {{else}} {{/if}}
+                    {{!-- {{#if inEditMode}} <input class="btn btn-success" type="submit" form="edit-form" value="Update"> {{/if}} --}}
                     <button type="button" class="btn btn-danger btn-sm pull-left" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
                     <button id="cardModalClose" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
