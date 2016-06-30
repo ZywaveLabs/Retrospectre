@@ -1,6 +1,6 @@
 <template name="card">
     {{#with cardInfo this.id}}
-    <div id="card_{{_id}}" class="card-panel disable-editmode" style="border-color:{{../color}}" data-toggle="modal" data-target="#{{_id}}">
+    <div id="card_{{_id}}" class="card-panel disable-editmode" style="border: 1px solid {{../color}};  box-shadow: 0px 3px 5px {{../color}};" data-toggle="modal" data-target="#{{_id}}">
       <!-- <span class="card-text">{{text}}</span> -->
       <span class="card-text">{{#emojione}}{{text}}{{/emojione}}</span>
       <div class="card-action">
@@ -9,7 +9,7 @@
           <span class="tag">{{this}}</span>
         </div>
         {{/each}}
-        <div class="chip" id="likeButton">
+        <div class="badge" id="likeButton">
           <i class="fa fa-thumbs-o-up"></i>&nbsp;{{likes}}&nbsp;&nbsp; Likes
         </div>
       </div>

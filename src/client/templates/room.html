@@ -1,27 +1,46 @@
 <template name="room">
-    <div class="container-fluid">
-        <form id="tagSearchForm" class="navbar-form navbar-right">
-            <div class="input-group">
-                <span class="input-group-addon hidden-xs"><i class="fa fa-filter"></i></span>
-                <input id="filters" type="text" class="form-control" placeholder="Filter tags...">
-                <span class="input-group-btn">
-                    <button id="filterTagsButton" type="submit" class="btn btn-default">Filter</button>
-                    <button id="clearFilter" type="button" class="btn btn-danger">Clear Filters</button>
-                </span>
-            </div>
-        </form>
-        <h1 class="text-info">Sprint Retrospective</h1>
-        {{#if isModerator}}
-            {{#if cardsHidden}}
-                <button class="btn btn-info" id="revealCardButton" type="button">Reveal All Cards</button>
-            {{else}}
-                <button class="btn btn-info" id="hideCardButton" type="button">Hide All Cards</button>
+    <div class="row">
+      <div class="col s12">
+           <div class="room-contain">
+             <div class="row">
+               <div class="col s12">
+               <div class="filter-form center">
+                 <form id="tagSearchForm" class="navbar-form navbar-right">
+                     <div class="input-group">
+                         <span class="input-group-addon hidden-xs"><i class="fa fa-filter"></i></span>
+                         <input id="filters" type="text" class="form-control" placeholder="Filter tags...">
+                         <span class="input-group-btn">
+                             <button id="filterTagsButton" type="submit" class="btn retrospectre-gold">Filter</button>
+                             <button id="clearFilter" type="button" class="btn retrospectre-gold">Clear Filters</button>
+                         </span>
+                     </div>
+                 </form>
+               </div>
+           </div>
+          </div>
+           <div class="row">
+           <div class="col s12">
+            {{> cardGrid}}
+          {{#with docid}}
+            {{> sharejsAce docid=this onRender=config id="editor"}}
+          {{/with}}
+          </div>
+        </div>
+         <div class="row">
+        <div class="col s12">
+          <div class="admin-room-actions u-pad-10">
+            {{#if isModerator}}
+                {{#if cardsHidden}}
+                    <button class="btn retrospectre-gold" id="revealCardButton" type="button">Reveal All Cards</button>
+                {{else}}
+                    <button class="btn retrospectre-gold" id="hideCardButton" type="button">Hide All Cards</button>
+                {{/if}}
             {{/if}}
-        {{/if}}
-         <button class="btn btn-info" id="exportButton" type="button">Export</button>
-          {{> cardGrid}}
-        {{#with docid}}
-          {{> sharejsAce docid=this onRender=config id="editor"}}
-        {{/with}}
+           <button class="btn retrospectre-gold" id="exportButton" type="button">Export</button>
+         </div>
+        </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>

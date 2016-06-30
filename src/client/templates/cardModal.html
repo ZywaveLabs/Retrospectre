@@ -1,14 +1,12 @@
 <template name="cardModal">
     {{#with cardModalInfo this.id}}
-    <div class="modal" id="{{_id}}" tabindex="-1" role="dialog">
+    <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">
-                <i class="fa fa-times"></i>
-              </span>
-                    </button>
+                    <span class="u-right close icon-red" data-dismiss="modal" aria-hidden="true">
+                      <i class="material-icons">close</i>
+                    </span>
                     <h4 class="modal-title">{{text}}</h4>
                 </div>
                 <div class="modal-body">
@@ -19,7 +17,7 @@
                         <span class="input-group-addon text-success" for="tags">Tags</span>
                         <input type="text" id="tags" class="form-control tags" placeholder="Seperate tags with a comma ','" value={{cardTags _id}}>
                         <span class="input-group-addon text-success" for="categoryDropdown">Category</span>
-                        <select class="form-control" id="categoryDropdown">
+                        <select class="browser-default" id="categoryDropdown">
                             <option selected disabled style="display: none;">Select a Category</option>
                             {{#each categories}} {{#if equals this.category ../category}}
                             <option selected>{{this.category}}</option>
@@ -45,14 +43,13 @@
                     <hr>
                     <form id="commentFormField">
                         <div class="commentFormGroup input-group">
-                            <span class="input-group-addon text-success hidden-xs" for="Comment">Comment</span>
-                            <input class="form-control" type="text" id="comment" placeholder="Leave a comment." maxlength="500">
-                            <span class="input-group-btn"><input class="btn btn-primary" id="submitCommentButton" type="submit">Submit</span>
+                            <span class="input-group-addon text-success hidden-xs" for="Comment">Leave A Comment</span>
+                            <input class="form-control" type="text" id="comment" placeholder="Comment..." maxlength="500">
+                            <span class="input-group-btn"><input class="btn retrospectre-gold" id="submitCommentButton" type="submit"></span>
                         </div>
                     </form>
-                    <hr>
                     <div>
-                        <h4>Comments</h4>
+                        <h4>User Submitted Comments</h4>
                         <span id="expand"><i class="fa fa-caret-right"></i></span>
                     </div>
                     <ul class="collapsible popout" data-collapsible="accordion">
@@ -73,12 +70,12 @@
                     {{/if}}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info edit-card-button" style="visibility: {{showEditButton _id}}">
+                    <button type="button" class="btn retrospectre-gold" style="visibility: {{showEditButton _id}}">
                         <span><i class="fa fa-cog"></i>&nbsp;</span>Edit Card
                     </button>
-                    {{!-- {{#if inEditMode}} <input class="btn btn-success" type="submit" form="edit-form" value="Update"> {{/if}} --}}
-                    <button type="button" class="btn btn-danger btn-sm pull-left" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
-                    <button id="cardModalClose" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    {{!-- {{#if inEditMode}} <input class="btn retrospectre-gold" type="submit" form="edit-form" value="Update"> {{/if}} --}}
+                    <button type="button" class="btn retrospectre-gold" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
+                    <button id="cardModalClose" type="button" class="btn btn-flat text-red" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

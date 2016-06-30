@@ -1,6 +1,6 @@
 .card-text{
 		color: black;
-    font-size: 2em;
+    font-size: 1.3em;
 		line-height: 28px;
 }
 div h2{
@@ -61,8 +61,12 @@ div.card-action{
 }
 
 h4.modal-title{
-    text-overflow: ellipsis;
-    width: 370px;
-    white-space: nowrap;
-    overflow:hidden;
-    }
+	text-align: left;
+	padding: 15px
+}
+
+.modal .modal-footer {
+    padding: 20px;
+    width: 100%;
+    float: left;
+}
