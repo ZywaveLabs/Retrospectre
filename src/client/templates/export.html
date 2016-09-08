@@ -1,11 +1,20 @@
 <template name="exportRoom">
-        <button class="btn btn-info" id="copyToClipboardButton" type="button">Copy To Clipboard</button>
-        {{#if getSummaryView}}
-        	<button class="btn btn-info" id="exportAllButton" type="button">Comprehensive View</button>
-        {{else}}
-        	<button class="btn btn-info" id="exportSummaryButton" type="button">Summery View</button>
-       	{{/if}}
-       <textarea id="textArea" rows="50" cols="200" style="margin: 10px 10px 10px 10px" readonly>
+  <div class="row">
+    <div class="col s12">
+        <div class="room-contain">
+          <div class="row">
+            <div class="col s12">
+              <div class="export-selection">
+            <button class="btn retrospectre-gold" id="copyToClipboardButton" type="button">Copy To Clipboard</button>
+            {{#if getSummaryView}}
+            	<button class="btn retrospectre-gold" id="exportAllButton" type="button">Comprehensive View</button>
+            {{else}}
+            	<button class="btn retrospectre-gold" id="exportSummaryButton" type="button">Summery View</button>
+           	{{/if}}
+          </div>
+        </div>
+      </div>
+       <textarea id="textArea" class="export-text" rows="50" cols="200" style="margin: 10px 10px 10px 10px" readonly>
             {{#if getSummaryView}}
 {{!--        --}}{{#each getCategories}}
 {{!--            --}}{{this.category}}
@@ -26,4 +35,7 @@
 {{!--        --}}{{/each}}
             {{/if}}
         </textarea>
+      </div>
+    </div>
+  </div>
 </template>

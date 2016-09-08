@@ -1,88 +1,52 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/snackbar.min.css">
-  <link rel="stylesheet" href="/lib/materialize.css">
-  <link rel="stylesheet" href="/lib/material.css">
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <script src="/lib/snackbar.min.js"></script>
   <script src="/lib/materialize.min.js"></script>
+  <link rel="stylesheet" href="/lib/snackbar.min.css">
+  <link rel="stylesheet" href="/lib/materialize.css">
+  <link rel="stylesheet" href="/lib/material.css">
+  <link rel="stylesheet" href="/lib/theme.css">
 </head>
 <template name="headerFooter">
-  <link rel="stylesheet" href="https://bootswatch.com/{{getTheme}}/bootstrap.min.css">
-  <!--beginning of nav-->
-  <nav class="navbar navbar-default navbar-fixed-top hidden-xs">
-    <div class="container">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">
-          <p class="text-info">Retrospectre</p>
-        </a>
-      </div>
-      <div id="navbar" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="https://github.com/Zywave/Retrospectre/issues"><i class="fa fa-bug text-info" style="font-size: 0.8em;"> Report Bug</i></a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li>{{> loginButtons}}</li>
-          <li style="visibility: {{showAlias}};line-height:3.5;">
-            <button id="setAlias" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#LogInModal">
-              <i class="fa fa-sign-in"> Set Alias </i>
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!--Mobile Nav-->
-  <nav class="navbar navbar-default navbar-fixed-top hidden-sm hidden-md hidden-lg">
-    <div class="row" id="mobileNav">
-      <div class="col-xs-4">
-        <div class="navbar-header">
-          <a href="/" class="navbar-brand">
-            <p class="text-info">Retrospectre</p>
-          </a>
-        </div>
-      </div>
-      <div class="col-xs-2 col-xs-offset-1">
-        <span>
-          <a href="https://github.com/Zywave/Retrospectre/issues">
-            <i class="fa fa-bug text-info"> Report Bug</i>
-          </a>
-        </span>
-      </div>
-      <div class="col-xs-5">
+    <header class="top-bar dynamic-color">
+       <div class="header">
+         <nav>
+          <div class="nav-wrapper">
+            <div class="row">
+            <div class="col s12">
+            <a href="/" class="brand-logo">
+              <div class="applicaiton-name"><span class="logo"><img src="/images/spectre.png" /></span><span class="app-name">Retrospectre</span></div>
+            </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="https://github.com/Zywave/Retrospectre/issues" target="Git Hub">Report Bug</a></li>
+              <li><a id="setAlias" data-toggle="modal" data-target="#LogInModal">Set Alias</a></li>
+              <li>{{>loginButtons}}</li>
+            </ul>
+          </div>
+          </div>
+          </div>
+        </nav>
+       </div>
+    </header>
+    <main class="content templates">
         <div class="row">
-          <div class="col-xs-9">
-            {{>loginButtons}}
-          </div>
-          <div class="col-xs-3"  style="visibility: {{showAlias}}">
-            <button id="setAlias" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#LogInModal">
-              <i class="fa fa-sign-in"> Set Alias </i>
-            </button>
+          <div class="col s12">
+            {{>yield}}
           </div>
         </div>
-      </div>
-    </div>
-  </nav>
-  <!--end of nav-->
-  <!-- render other templates here-->
-  <div class="containter-fluid content">
-    {{>yield}}
-  </div>
-  <div class="footor navbar navbar-static-bottom container-fluid">
-    <p class="text-muted text-center">&#169;2016 Zywave &amp; MSOE SDL HyperWave</p>
-  </div>
-  <script>
-    document.title = "Retrospectre - {{title}}"
-  </script>
-  <style>
-    body {
-      padding-bottom: 70px;
-    }
-  </style>
-  {{> loginModal}}
+    </main>
+    <footer class="app-footer">
+      <p class="copyright center">
+        &#169;2016 Zywave &amp; MSOE SDL HyperWave
+      </p>
+    </footer>
+    <script>
+      document.title = "Retrospectre - {{title}}"
+    </script>
+    {{> loginModal}}
 </template>
