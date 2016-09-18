@@ -67,7 +67,7 @@ Template.cardModal.events({
         eve.toElement.className = "fa fa-caret-right";
         $("ul.collapsible li").hide();
     },
-    "click .edit-card-button": function(eve){
+    "click #editCardButton": function(eve){
         eve.preventDefault();
         Session.set("editCardMode", true);
     },
