@@ -1,41 +1,37 @@
 <template name="cardGrid">
-    {{#if validMultiRow}}
+  {{#if validMultiRow}}
+  <!-- Grabs rows of categories-->
     {{#each getRow}}
-      {{#each this}}
-      <div class="row">
-        <div class="col s12">
-          <h2>{{this.category}}</h2>
-        </div>
-      </div>
-      {{#each cards this.category}}
-      <div class="row">
-        <div class="col s12">
-          {{>card id=_id color= ../color}}
-        </div>
-      </div>
-      {{/each}}
-      {{/each}}
-      <div class="row">
+    <!-- take each category in the current row-->
+    <div class="row">
       {{#each this}}
         <div class="col s3">
           <h2>{{this.category}}</h2>
         </div>
-      {{/each}}
+        <div class="col s1 form-modal">
+          <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}"><i class="material-icons add-card">add_circle</i></span>
+          {{>cardSubmitModal category=this.category}}
+        </div>
+        {{/each}}
       </div>
       <div class="row">
-      {{#each this}}
-        <div class="col s3">
-            {{#each cards this.category}}
-            <div class="row">
-              <div class="col s12">
-                {{>card id=_id color= ../color}}
-              </div>
-            </div>
-            {{/each}}
+        {{#each this}}
+        <div class="col s4">
+        {{#each cards this.category}}
+        <div class="row">
+            {{>card id=_id color= ../color}}
         </div>
-      {{/each}}
-    </div>
+        {{/each}}
+        <!-- Stop displaying cards in category-->
+      </div>
+        {{/each}}
+      </div>
+        <!-- End of current category-->
     {{/each}}
+
+    <!--end of table headers (categories)-->
+
+    <!--Logic to produce card data grid if categories <= 3 -->
     {{else}}
     <div class="row">
       {{#each getCategories}}
@@ -48,13 +44,6 @@
       </div>
       {{/each}}
     </div>
-    {{/if}}
-    <!--end of table headers (categories)-->
-
-
-    <!--Logic to produce card data -->
-    {{#if validMultiRow}}
-    {{else}}
     <div class="row">
       {{#each getCategories}}
       <div class="col s{{getColSpacing false}}">
@@ -63,31 +52,10 @@
             <div class="col s12">
               {{>card id=_id color= ../color}}
             </div>
-
           </div>
           {{/each}}
       </div>
       {{/each}}
     </div>
     {{/if}}
-    <!--
-    {{#each getCategories}}
-    <div class="row">
-      <div class="col s2">
-        <h2>{{this.category}}</h2>
-      </div>
-      <div class="col s2">
-        <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}"><i class="material-icons">add_circle</i></span>
-        {{>cardSubmitModal category=this.category}}
-      </div>
-    </div>
-      {{#each cards this.category}}
-      <div class="row">
-        <div class="col s12">
-          {{>card id=_id color=../color}}
-        </div>
-      </div>
-      {{/each}}
-    {{/each}}
-    {{/if}}-->
 </template>

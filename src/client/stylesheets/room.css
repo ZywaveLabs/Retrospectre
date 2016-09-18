@@ -22,6 +22,11 @@ i.fa-plus-circle {
 div.panel-body {
   text-align: center;
 }
+
+i.add-card{
+  line-height: 2px;
+}
+
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   .card-form form div.form-group {
     padding-left: 0px;

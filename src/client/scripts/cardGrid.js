@@ -1,6 +1,6 @@
 "use strict";
 /* global Cards:false Rooms:false */
-const MAX_COL_PER_ROW = 4;
+const MAX_COL_PER_ROW = 3;
 var uniqueIdCount = 0;
 
 Template.cardGrid.onRendered(function(){
