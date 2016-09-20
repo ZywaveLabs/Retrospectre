@@ -10,6 +10,11 @@ Template.cardModal.helpers({
     cardModalInfo: function(_id) {
         return Cards.findOne({"_id": _id});
     },
+    cardHasTags: function(cardId){
+        var tags = Cards.findOne({_id:cardId}).tags;
+
+        return tags.length > 0; //eslint-disable-line
+    },
     cardTags: function(_id){
         var card = Cards.findOne({"_id": _id});
         var cardTags = card.tags;
@@ -35,6 +40,11 @@ Template.cardModal.helpers({
         var moderator = Rooms.findOne({"roomCode":Session.get("roomCode")}).owner;
 
         return currCardAuth === user || moderator === Meteor.userId();
+    },
+    cardHasComments: function(cardId){
+        var comments = Cards.findOne({_id:cardId}).comments;
+
+        return comments.length > 0; //eslint-disable-line
     }
 
 });
@@ -54,7 +64,9 @@ Template.cardModal.events({
 
     "click #deleteCardButton": function(){
         var maxWidth = 768;
-        Meteor.call("deleteCard", this._id, Session.get("roomCode"), Session.get("author"));
+        // TODO: replace with confirmation modal - Dylan
+        if(confirm("Are You sure you want to delete this card?"))//eslint-disable-line
+            Meteor.call("deleteCard", this._id, Session.get("roomCode"), Session.get("author"));
         if($(window).width() <= maxWidth)
             $(".modal").modal("hide");
     },

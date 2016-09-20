@@ -7,7 +7,7 @@
                     <span class="u-right close icon-red" data-dismiss="modal" aria-hidden="true">
                       <i class="material-icons">close</i>
                     </span>
-                    <h4 class="modal-title">{{text}}</h4>
+                    <h3 class="modal-title">{{text}}</h3>
                 </div>
                 <div class="modal-body">
                     {{#if inEditMode}}
@@ -29,35 +29,39 @@
                         <input class="btn btn-success form-control" type="submit" value="Update">
                     </form>
                     {{else}}
-                    <p>Thought:
-                        <thought class="thought">{{text}}</thought>
-                    </p>
-                    <p>Category: {{category}}</p>
-                    <p>Tags:
+                    <h5>Category</h5>
+                    <p>{{category}}</p>
+                    {{#if cardHasTags _id}}
+                    <h5>Tags</h5>
+                    <p>
                       {{#each tags}}
                         <span class="tag {{this}}">{{this}}</span>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban {{this}}"></i>&nbsp;&nbsp;
                       {{/each}}
                     </p>
-                    <p>Author: {{author}}</p>
-                    <p>Created at: {{createdAt}}</p>
+                    {{/if}}
+                    <h5>Author</h5>
+                    <p>{{author}}</p>
+                    <h5>Created at</h5>
+                    <p>{{createdAt}}</p>
                     <hr>
                     <form id="commentFormField">
                         <div class="commentFormGroup input-group">
-                            <span class="input-group-addon text-success hidden-xs" for="Comment">Leave A Comment</span>
+                            <h5 class="input-group-addon text-success hidden-xs" for="Comment">Leave A Comment</h5>
                             <input class="form-control" type="text" id="comment" placeholder="Comment..." maxlength="500">
-                            <span class="input-group-btn"><input class="btn retrospectre-gold" id="submitCommentButton" type="submit"></span>
+                            <span class="input-group-btn"><button class="btn retrospectre-gold" id="submitCommentButton" type="submit">Submit Your Comment</button></span>
                         </div>
                     </form>
+                    {{#if cardHasComments _id}}
                     <div>
-                        <h4>User Submitted Comments</h4>
+                        <h5>User Submitted Comments</h5>
                         <span id="expand"><i class="fa fa-caret-right"></i></span>
                     </div>
                     <ul class="collapsible popout" data-collapsible="accordion">
                       {{#each comments}}
                       <li>
-                        <div class="collapsible-header blue-grey darken-4">
+                        <div class="collapsible-header indigo">
                           {{#if this.avatar}}
-                          <img class="img-responsive img-rounded" src="{{this.avatar}}" />
+                          <img class="img-responsive" src="{{this.avatar}}" />
                           {{/if}}
                           <p class="white-text">&nbsp;&nbsp; {{this.text}}</p>
                         </div>
@@ -68,15 +72,15 @@
                       {{/each}}
                     </ul>
                     {{/if}}
+                    {{/if}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="editCardButton" class="btn retrospectre-gold" style="visibility: {{showEditButton _id}}">
                         <span><i class="fa fa-cog"></i>&nbsp;</span>Edit Card
                     </button>
                     {{#if canDelete _id}}
-                    <button type="button" class="btn retrospectre-gold" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
+                    <button type="button" class="btn red accent-4" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
                     {{/if}}
-                    <button id="cardModalClose" type="button" class="btn btn-flat text-red" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -87,7 +91,7 @@
             $('.collapsible').collapsible({
                 accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
             });
-            $("ul.collapsible li").hide();
+            //$("ul.collapsible li").hide();
         });
     </script>
 </template>
