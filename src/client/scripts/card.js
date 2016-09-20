@@ -18,12 +18,12 @@ Template.card.events({
     },
     "click #likeButton": function(eve){
         eve.stopPropagation();
-        if(eve.target.id === "likeButton") {
-            eve.target.disabled = true;
-        } else if(eve.target.parentNode.id === "likeButton") {
-            eve.target.parentNode.disabled = true;
-        }
-
+        console.log(eve);
+        console.log(eve.target);
+        eve.target.disabled = true;
         Meteor.call("incrementLikes", this._id);
+    },
+    "click .card-action": function(eve){
+        eve.stopPropagation();
     }
 });

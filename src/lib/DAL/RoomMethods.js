@@ -80,3 +80,8 @@ RoomMethods.HideCards = function(roomCode){
         reveal: false
     }});
 };
+
+RoomMethods.IsModerator = function(roomCode, userId){
+    var currRoomOwner = Rooms.findOne({"roomCode":roomCode}).owner;
+    return currRoomOwner === userId;
+};

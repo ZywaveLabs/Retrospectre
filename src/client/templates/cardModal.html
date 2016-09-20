@@ -73,8 +73,9 @@
                     <button type="button" id="editCardButton" class="btn retrospectre-gold" style="visibility: {{showEditButton _id}}">
                         <span><i class="fa fa-cog"></i>&nbsp;</span>Edit Card
                     </button>
-                    {{!-- {{#if inEditMode}} <input class="btn retrospectre-gold" type="submit" form="edit-form" value="Update"> {{/if}} --}}
+                    {{#if canDelete _id}}
                     <button type="button" class="btn retrospectre-gold" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
+                    {{/if}}
                     <button id="cardModalClose" type="button" class="btn btn-flat text-red" data-dismiss="modal">Cancel</button>
                 </div>
             </div>

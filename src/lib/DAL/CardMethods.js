@@ -16,8 +16,8 @@ CardMethods.SubmitCard = function(cardObject) {
     Cards.insert(cardObject);
 };
 
-CardMethods.DeleteCard = function(id) {
-    Cards.remove(id);
+CardMethods.DeleteCard = function(cardId) {
+    Cards.remove(cardId);
 };
 
 CardMethods.SubmitComment = function(id,comment) {

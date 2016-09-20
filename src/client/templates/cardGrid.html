@@ -5,26 +5,19 @@
     <!-- take each category in the current row-->
     <div class="row">
       {{#each this}}
-        <div class="col s3">
-          <h2>{{this.category}}</h2>
-        </div>
-        <div class="col s1 form-modal">
-          <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}"><i class="material-icons add-card">add_circle</i></span>
-          {{>cardSubmitModal category=this.category}}
-        </div>
-        {{/each}}
-      </div>
-      <div class="row">
-        {{#each this}}
         <div class="col s4">
-        {{#each cards this.category}}
-        <div class="row">
-            {{>card id=_id color= ../color}}
-        </div>
-        {{/each}}
-        <!-- Stop displaying cards in category-->
-      </div>
-        {{/each}}
+          <h2>{{this.category}}</h2>
+          <div class="form-modal">
+            <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}"><i class="material-icons add-card">add_circle</i></span>
+            {{>cardSubmitModal category=this.category}}
+          </div>
+          {{#each cards this.category}}
+          <div class="row" id="cardRow">
+                {{>card id=_id color= ../color}}
+          </div>
+          {{/each}}
+          </div>
+      {{/each}}
       </div>
         <!-- End of current category-->
     {{/each}}

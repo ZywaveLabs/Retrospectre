@@ -7,6 +7,10 @@ div h2{
 	text-align: center;
 }
 
+#cardRow{
+	margin-left: 10%;
+}
+
 #cardImage{
   width: auto !important;
   height: auto;
@@ -41,7 +45,6 @@ ul.collapsible{
 
 #likeButton{
   float: right;
-	cursor: pointer;
 }
 
 .tag{

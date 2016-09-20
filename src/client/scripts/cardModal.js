@@ -28,6 +28,13 @@ Template.cardModal.helpers({
         return Rooms.findOne(
             {"roomCode": Session.get("roomCode")}
         ).categories;
+    },
+    canDelete: function(cardId){
+        var currCardAuth = Cards.findOne({_id:cardId}).author;
+        var user = Meteor.user() ? Meteor.user().profile.name : Session.get("author");
+        var moderator = Rooms.findOne({"roomCode":Session.get("roomCode")}).owner;
+        
+        return currCardAuth === user || moderator === Meteor.userId();
     }
 
 });
@@ -47,9 +54,9 @@ Template.cardModal.events({
 
     "click #deleteCardButton": function(){
         var maxWidth = 768;
+        Meteor.call("deleteCard", this._id, Session.get("roomCode"), Session.get("author"));
         if($(window).width() <= maxWidth)
             $(".modal").modal("hide");
-        Meteor.call("deleteCard", this._id);
     },
 
     "click #removeTag": function(e){

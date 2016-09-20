@@ -1,6 +1,6 @@
 
 // /* eslint-disable */
-/* global Cards:true CardMethods: true */
+/* global Cards:true CardMethods: true RoomMethods: true */
 
 // "use strict";
 
@@ -10,8 +10,13 @@ Meteor.methods({
         CardMethods.SubmitCard(cardObject);
     },
 
-    deleteCard: function(id) {
-        CardMethods.DeleteCard(id);
+    deleteCard: function(cardId, roomCode, author) {
+        var isModerator = RoomMethods.IsModerator(roomCode, Meteor.userId());
+        var cardAuthor = Cards.findOne({_id:cardId}).author;
+        var currUser = Meteor.user() ? Meteor.user().profile.name : author;
+
+        if(isModerator || cardAuthor === currUser)
+            CardMethods.DeleteCard(cardId);
     },
 
     removeTag: function(id,tagToRemove){
