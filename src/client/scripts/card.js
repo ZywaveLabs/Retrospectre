@@ -18,8 +18,6 @@ Template.card.events({
     },
     "click #likeButton": function(eve){
         eve.stopPropagation();
-        console.log(eve);
-        console.log(eve.target);
         eve.target.disabled = true;
         Meteor.call("incrementLikes", this._id);
     },

@@ -33,7 +33,7 @@ Template.cardModal.helpers({
         var currCardAuth = Cards.findOne({_id:cardId}).author;
         var user = Meteor.user() ? Meteor.user().profile.name : Session.get("author");
         var moderator = Rooms.findOne({"roomCode":Session.get("roomCode")}).owner;
-        
+
         return currCardAuth === user || moderator === Meteor.userId();
     }
 
