@@ -9,11 +9,9 @@ Meteor.methods({
     submitCard: function (cardObject) {
         CardMethods.SubmitCard(cardObject);
     },
-
     deleteCard: function(id) {
         CardMethods.DeleteCard(id);
     },
-
     removeTag: function(id,tagToRemove){
         var cardToUpdate;
 
@@ -33,7 +31,6 @@ Meteor.methods({
             cardToUpdate._id,
             {$set: {tags:newTags}});
     },
-
     submitComment : function(id,commentToAdd) {
         CardMethods.SubmitComment(id,commentToAdd);
     },
@@ -42,5 +39,11 @@ Meteor.methods({
     },
     incrementLikes: function(id){
         CardMethods.IncrementLikes(id);
+    },
+    deleteAllCardsInRoom: function(roomCode){
+        CardMethods.DeleteAllCardsInRoom(roomCode);
+    },
+    deleteAllCardsInRoomInCategory: function(roomCode, category){
+        CardMethods.DeleteAllCardsInRoomInCategory(roomCode, category);
     }
 });

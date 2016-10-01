@@ -1,4 +1,4 @@
-/* global RoomMethods: true */
+/* global RoomMethods: true CardMethods */
 
 Meteor.methods({ // eslint-disable-line
     createRoom: function (roomObject) {
@@ -12,5 +12,15 @@ Meteor.methods({ // eslint-disable-line
     },
     hideCards: function(roomCode) {
         RoomMethods.HideCards(roomCode);
+    },
+    deleteRoom: function(roomCode) {
+        CardMethods.DeleteAllCardsInRoom(roomCode);
+        RoomMethods.DeleteRoomByRoomcode(roomCode);
+    },
+    deleteCategoryFromRoom: function(category, roomCode){
+        RoomMethods.DeleteCategoryFromRoom(category, roomCode);
+    },
+    addCategoryToRoom: function(category, roomCode, color){
+        RoomMethods.AddCategoryToRoom(category, roomCode, color);
     }
 });
