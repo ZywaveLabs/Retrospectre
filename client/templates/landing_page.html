@@ -1,13 +1,26 @@
 <template name="landingPage">
-    <div class="center-block container">
-        <h1 id="welcomeHeader" class="center-block text-info">Welcome to the Retrospectre</h1>
-        <form class="join-room">
-            <input class="center-block" id="roomCode" name="roomCode" type="text" placeholder="Room Code..." autocomplete="off">
-            <br>
-            <input class="center-block btn-primary" id="joinRoom" name="joinRoom" type="submit" value="JOIN ROOM" style="margin: 0 auto">
-        </form>
-        <br>
-        <input class="center-block btn-primary" id="createRoomButton" type="button" value="CREATE ROOM" style="margin: 0 auto">
-        <br>
+    <div class="container">
+        <div class="c-card home">
+            <div class="row">
+                <div class="col s12 u-pad-top-10">
+                  <div class="retro-img">
+                    <img src="/images/spectre.png" />
+                  </div>
+                  <div class="app-name-landing-page">Retrospectre</div>
+                </div>
+                <form class="join-room">
+                    <div class="input-field col s12">
+                        <input class="center-block" id="roomCode" name="roomCode" type="text" placeholder="Enter Code Here..." autocomplete="off">
+                        <label for="roomCode">Room Code</label>
+                    </div>
+                    <div class="col s12 u-pad-top-10">
+                        <input class="btn retrospectre-gold width-100" id="joinRoom" name="joinRoom" type="submit" value="Join Room" style="margin: 0 auto">
+                    </div>
+                </form>
+                <div class="col s12 u-pad-top-10">
+                    <input class="btn retrospectre-gold width-100" id="createRoomButton" type="button" value="Create Room" style="margin: 0 auto">
+                </div>
+            </div>
+        </div>
     </div>
 </template>

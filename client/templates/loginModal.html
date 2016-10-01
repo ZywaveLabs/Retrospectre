@@ -4,14 +4,15 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Set Alias</h4>
+                    <h4 class="alias-title">Set Alias</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body alias">
                     <form id="set-alias" class="form" role="form">
+                        <span class="input-group-addon text-success hidden-xs" for="Comment">Enter Your Name:</span>
                         <input class="form-control" type="text" id="alias" value="{{currentAlias}}" maxlength="50">
-                        <button class="col-sm-2 btn btn-primary" id="submitAliasButton" type="submit">Set Alias</button>
+                        <button class="btn retrospectre-gold" id="submitAliasButton" type="submit">Set Alias</button>
+                        <button type="button" class="btn btn-flat text-red" data-dismiss="modal">Cancel</button>
                     </form>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
