@@ -1,0 +1,40 @@
+<template name="cardSubmitModal">
+  {{#with getUniqueID this.category}}
+  <div class="modal fade" id="submit_{{this.abbrv}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Submit a Card</h4>
+        </div>
+        <form class="form" role="form" id="card">
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="control-label text-success" for="thoughts">Thought:</label>
+              <input class="form-control" type="text" id="thoughts" maxlength="500">
+            </div>
+            <div class="form-group">
+              <label class="control-label text-success" for="tags">Tags:</label>
+              <input type="text" id="tags" class="form-control tags" placeholder="Seperate tags with a comma ','">
+            </div>
+            <div class="form-group">
+              <label class="control-label text-success">Category:</label>
+              <select class="form-control" id="categoryDropdown">
+                <option selected disabled style="display: none;">{{this.category}}</option>
+                {{#each categories}}
+                <option>{{this.category}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="form-group">
+              <button class="btn btn-success" id="submitCardButton" type="submit">Submit</button>
+              <button id="cardModalClose" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{/with}}
+</template>

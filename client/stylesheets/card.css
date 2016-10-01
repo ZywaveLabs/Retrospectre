@@ -1,0 +1,68 @@
+.card-text{
+		color: black;
+    font-size: 2em;
+		line-height: 28px;
+}
+div h2{
+	text-align: center;
+}
+
+#cardImage{
+  width: auto !important;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 100px;
+  min-height: 100px;
+}
+
+i.right{
+  float: right;
+}
+
+.img-responsive{
+  max-width: 50px !important;
+  float: left;
+  max-height: 39px;
+}
+
+i.fa-plus-circle{
+	cursor: pointer;
+}
+
+div.collapsible-header p{
+  float: none;
+}
+
+ul.collapsible{
+  list-style-type: none;
+  list-style-image: none;
+}
+
+#likeButton{
+  float: right;
+	cursor: pointer;
+}
+
+.tag{
+	cursor: pointer;
+}
+
+div.card-panel{
+	border-style: solid;
+	border-width: thick;
+	height: auto;
+	cursor: pointer;
+}
+
+div.card-action{
+  min-height: 32px;
+	margin-top: 10px;
+}
+
+h4.modal-title{
+    text-overflow: ellipsis;
+    width: 370px;
+    white-space: nowrap;
+    overflow:hidden;
+    }

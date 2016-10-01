@@ -1,0 +1,42 @@
+div.content{
+	margin-top: 75px;
+}
+h1#welcomeHeader{
+	text-align: center;
+}
+
+input#joinRoom{
+		padding: 5px;
+}
+
+input#createRoomButton{
+	padding: 5px;
+}
+
+input#roomCode{
+	padding: 5px;
+}
+  nav #navbar ul{
+		list-style: none;
+	}
+
+	div#login-buttons{
+		margin-top: 10px;
+	}
+
+	div.col-xs-2{
+		margin-top: 12px;
+	}
+
+	input#joinRoom{
+	  min-width: 200px;
+	}
+	input#roomCode{
+		min-width: 200px;
+	}
+	input#createRoomButton{
+		min-width: 200px;
+	}
+	 div.row#mobileNav{
+		 padding-bottom: 5px;
+	 }
