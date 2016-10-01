@@ -5,11 +5,11 @@
           <div class="row">
             <div class="col s12">
               <div class="export-selection">
-            <button class="btn retrospectre-gold" id="copyToClipboardButton" type="button">Copy To Clipboard</button>
+            <button class="btn retrospectre-blue" id="copyToClipboardButton" type="button">Copy To Clipboard</button>
             {{#if getSummaryView}}
-            	<button class="btn retrospectre-gold" id="exportAllButton" type="button">Comprehensive View</button>
+            	<button class="btn retrospectre-blue" id="exportAllButton" type="button">Comprehensive View</button>
             {{else}}
-            	<button class="btn retrospectre-gold" id="exportSummaryButton" type="button">Summary View</button>
+            	<button class="btn retrospectre-blue" id="exportSummaryButton" type="button">Summary View</button>
            	{{/if}}
           </div>
         </div>
@@ -34,6 +34,7 @@
 {{!--            --}}{{/each}}
 {{!--        --}}{{/each}}
             {{/if}}
+{{!--   --}}{{getSharedTextArea}}
         </textarea>
       </div>
     </div>
