@@ -6,11 +6,11 @@ Template.exportRoom.rendered = function () {
 };
 
 Template.exportRoom.created = function () {
-    self = this;
+    self = this; // eslint-disable-line
     self.sharedText = new ReactiveVar("");
     Meteor.call("getSharedTextForRoom", Session.get("roomCode"), function(err, result){
         if(err)
-            console.log(err);
+            console.log(err); // eslint-disable-line
         else
             self.sharedText.set(result);
     });

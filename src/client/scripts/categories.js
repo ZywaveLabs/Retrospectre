@@ -10,7 +10,7 @@ Template.categories.created = function() {
     // default categories
     this.currentCategories = defaultCategories;
     this.categoriesDep = new Tracker.Dependency();
-}
+};
 
 Template.categories.helpers({
     colorPicker: function(color) {
@@ -27,7 +27,7 @@ Template.categories.helpers({
 });
 
 Template.categories.events({
-    "submit .customCategory": function(eve) {
+    "submit .customCategory": function(eve) {// eslint-disable-line
         eve.preventDefault();
         var tmpl = Template.instance();
         var customCategory = eve.target.addCustomCategory.value;
@@ -43,12 +43,10 @@ Template.categories.events({
             tmpl.categoriesDep.changed();
             eve.target.addCustomCategory.value = "";
         }
-
     },
 
     "click #removeCategory": function() {
         var tmpl = Template.instance();
-        console.log(tmpl);
         var numToRemove = 1;
         tmpl.currentCategories.splice(tmpl.currentCategories.indexOf(this), numToRemove);
         tmpl.categoriesDep.changed();

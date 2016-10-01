@@ -66,4 +66,4 @@ CardMethods.DeleteAllCardsInRoom = function(roomCode){
 
 CardMethods.DeleteAllCardsInRoomInCategory = function(roomCode, category){
     Cards.remove({ $and: [{roomCode:roomCode}, {category:category}] });
-}
+};

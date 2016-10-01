@@ -3,7 +3,8 @@
 Meteor.methods({ // eslint-disable-line
     getSharedTextForRoom: function (roomCode) {
         return ShareJS.model.getSnapshot(RoomMethods.getKeynoteID(roomCode), function(err, o){
-            return o.snapshot;
+            if (!err)
+                return o.snapshot;
         });
     },
 
