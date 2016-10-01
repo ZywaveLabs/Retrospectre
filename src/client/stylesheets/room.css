@@ -9,6 +9,9 @@ div#copyToClipboardButton{
     margin-bottom: 15px;
     resize: none
 }
+div#notesArea{
+  border: 2px solid #3f51b5;
+}
 table, th ,td{
 	border: 0;
 	width: 450px;
@@ -26,6 +29,20 @@ i.fa-plus-circle {
 div.panel-body {
   text-align: center;
 }
+
+i.add-card{
+  line-height: 2px;
+}
+
+div.form-modal{
+  margin-top: -11%;
+  float: right;
+}
+#categoryHeader{
+  font-size: 4em;
+  text-align: center;
+}
+
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   .card-form form div.form-group {
     padding-left: 0px;
