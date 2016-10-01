@@ -10,6 +10,11 @@ Template.cardModal.helpers({
     cardModalInfo: function(_id) {
         return Cards.findOne({"_id": _id});
     },
+    cardHasTags: function(cardId){
+        var tags = Cards.findOne({_id:cardId}).tags;
+
+        return tags.length > 0; //eslint-disable-line
+    },
     cardTags: function(_id){
         var card = Cards.findOne({"_id": _id});
         var cardTags = card.tags;
@@ -28,6 +33,18 @@ Template.cardModal.helpers({
         return Rooms.findOne(
             {"roomCode": Session.get("roomCode")}
         ).categories;
+    },
+    canDelete: function(cardId){
+        var currCardAuth = Cards.findOne({_id:cardId}).author;
+        var user = Meteor.user() ? Meteor.user().profile.name : Session.get("author");
+        var moderator = Rooms.findOne({"roomCode":Session.get("roomCode")}).owner;
+
+        return currCardAuth === user || moderator === Meteor.userId();
+    },
+    cardHasComments: function(cardId){
+        var comments = Cards.findOne({_id:cardId}).comments;
+
+        return comments.length > 0; //eslint-disable-line
     }
 
 });
@@ -47,9 +64,11 @@ Template.cardModal.events({
 
     "click #deleteCardButton": function(){
         var maxWidth = 768;
+        // TODO: replace with confirmation modal - Dylan
+        if(confirm("Are You sure you want to delete this card?"))//eslint-disable-line
+            Meteor.call("deleteCard", this._id, Session.get("roomCode"), Session.get("author"));
         if($(window).width() <= maxWidth)
             $(".modal").modal("hide");
-        Meteor.call("deleteCard", this._id);
     },
 
     "click #removeTag": function(e){
@@ -67,7 +86,7 @@ Template.cardModal.events({
         eve.toElement.className = "fa fa-caret-right";
         $("ul.collapsible li").hide();
     },
-    "click .edit-card-button": function(eve){
+    "click #editCardButton": function(eve){
         eve.preventDefault();
         Session.set("editCardMode", true);
     },
