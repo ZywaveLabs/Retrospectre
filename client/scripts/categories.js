@@ -1,16 +1,16 @@
 /* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false DEFAULT_SNACKBAR_TIMEOUT:false*/
 "use strict";
-
+/*
 // default categories
 var defaultCategories = [{category:"Went Well", color:"#81c784"},
                 {category:"Went Poorly", color:"#f44336"},
               {category:"Kudoz", color:"#2196f3"}];
 
-Template.categories.created = function() {
-    // default categories
-    this.currentCategories = defaultCategories;
-    this.categoriesDep = new Tracker.Dependency();
-};
+// Template.categories.created = function() {
+//     // default categories
+//     this.currentCategories = defaultCategories;
+//     this.categoriesDep = new Tracker.Dependency();
+// };
 
 Template.categories.helpers({
     colorPicker: function(color) {
@@ -76,3 +76,4 @@ function isDuplicate(tmpl, customCategory){
     }
     return false;
 }
+*/
