@@ -37,7 +37,7 @@
                                 <h5>Tags</h5>
                                 <p>
                                     {{#each tags}}
-                                        <span class="tag {{this}}">{{this}}</span>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban {{this}}"></i>&nbsp;&nbsp;
+                                        <span class="tag {{this}}" style="word-wrap: break-word;">{{this}}</span>&nbsp;&nbsp;<i id="removeTag" class="material-icons fa fa-ban {{this}}"></i>&nbsp;&nbsp;
                                     {{/each}}
                                 </p>
                             {{/if}}
@@ -51,7 +51,7 @@
                                     <h5 class="input-group-addon text-success hidden-xs" for="Comment">Leave A Comment</h5>
                                     <input class="form-control" type="text" id="comment" placeholder="Comment..." maxlength="500">
                                     <span class="input-group-btn">
-                                        <button class="btn retrospectre-gold" id="submitCommentButton" type="submit">Submit Your Comment</button>
+                                        <button class="btn retrospectre-blue" id="submitCommentButton" type="submit">Submit Your Comment</button>
                                     </span>
                                 </div>
                             </form>
@@ -83,7 +83,7 @@
                         {{/if}}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="editCardButton" class="btn retrospectre-gold" style="visibility: {{showEditButton _id}}">
+                        <button type="button" id="editCardButton" class="btn retrospectre-blue" style="visibility: {{showEditButton _id}}">
                             <span>
                                 <i class="fa fa-cog"></i>&nbsp;</span>Edit Card
                         </button>
