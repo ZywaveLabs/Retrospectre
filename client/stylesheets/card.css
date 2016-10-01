@@ -2,7 +2,7 @@
 		color: black;
     font-size: 1.3em;
 		line-height: 28px;
-        word-wrap: break-word; 
+        word-wrap: break-word;
 }
 h2#cardCategory{
 	text-align: center;
@@ -70,7 +70,7 @@ div.card-action{
     word-wrap: break-word;
 }
 
-h4.modal-title{
+h3.modal-title{
 	text-align: left;
 	padding: 15px;
     word-wrap: break-word;
