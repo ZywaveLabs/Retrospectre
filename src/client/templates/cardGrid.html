@@ -1,54 +1,38 @@
 <template name="cardGrid">
-  {{#if validMultiRow}}
-  <!-- Grabs rows of categories-->
-    {{#each getRow}}
-    <!-- take each category in the current row-->
-    <div class="row">
-      {{#each this}}
-        <div class="col s4">
-          <h2 id="cardCategory">{{this.category}}</h2>
-          <div class="form-modal">
-            <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}"><i class="material-icons add-card">add_circle</i></span>
+  <div id="displayGrid" class="row hide-on-med-and-down">
+      {{#each getCategories}}
+        <div class="col m4" id="cardCol">
+          <div class="row">
+            <h4>{{this.category}}
+            <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}">
+                <i class="material-icons add-card">add_circle</i>
+            </span>
+          </h4>
             {{>cardSubmitModal category=this.category}}
           </div>
           {{#each cards this.category}}
-          <div class="row" id="cardRow">
-                {{>card id=_id color= ../color}}
-          </div>
+              <div class="row">
+                      {{>card id=_id color= ../color}}
+              </div>
           {{/each}}
-          </div>
+        </div>
       {{/each}}
-      </div>
-        <!-- End of current category-->
-    {{/each}}
-
-    <!--end of table headers (categories)-->
-
-    <!--Logic to produce card data grid if categories <= 3 -->
-    {{else}}
-    <div class="row">
-      {{#each getCategories}}
-      <div class="col s{{getColSpacing true}}">
-        <h2>{{this.category}}</h2>
-      </div>
-      <div class="col s1 form-modal">
-        <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}"><i class="material-icons add-card">add_circle</i></span>
+  </div>
+  <div id="displayGrid">
+    {{#each getCategories}}
+      <div class="row hide-on-large-only">
+        <h4>{{this.category}}
+          <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}">
+              <i class="small material-icons add-card">add_circle</i>
+          </span>
+        </h4>
         {{>cardSubmitModal category=this.category}}
       </div>
-      {{/each}}
-    </div>
-    <div class="row">
-      {{#each getCategories}}
-      <div class="col s{{getColSpacing false}}">
-          {{#each cards this.category}}
-          <div class="row">
-            <div class="col s12">
-              {{>card id=_id color= ../color}}
+        {{#each cards this.category}}
+            <div class="row hide-on-large-only">
+                    {{>card id=_id color= ../color}}
             </div>
-          </div>
-          {{/each}}
-      </div>
-      {{/each}}
-    </div>
-    {{/if}}
+        {{/each}}
+    {{/each}}
+  </div>
 </template>

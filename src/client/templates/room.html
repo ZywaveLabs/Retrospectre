@@ -20,11 +20,13 @@
           </div>
            <div class="row">
             {{> cardGrid}}
-          <div id="notesArea">
-          {{#with docid}}
-            {{> sharejsText docid=this id="editor"}}
-          {{/with}}
-          </div>
+        </div>
+        <div class="row">
+        <div id="notesArea">
+        {{#with docid}}
+          {{> sharejsText docid=this id="editor"}}
+        {{/with}}
+        </div>
         </div>
          <div class="row">
         <div class="col s12">
