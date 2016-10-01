@@ -63,13 +63,13 @@ Template.cardGrid.helpers({
             cards = Cards.find({
                 "roomCode": Session.get("roomCode"),
                 "category": category
-            },{sort:{createdAt:-1}});
+            },{sort:{createdAt:0}});
         } else {
             cards = Cards.find({
                 "roomCode": Session.get("roomCode"),
                 "category": category,
                 $or: [{"reveal": true}, {"author": author}]
-            },{sort: {createdAt: -1}});
+            },{sort: {createdAt: 0}});
         }
         return cards;
     },
