@@ -1,46 +1,44 @@
 <template name="room">
+    {{> moderatorModal}}
     <div class="row">
-      <div class="col s12">
-           <div class="room-contain">
-             <div class="row">
-               <div class="col s12">
-               <div class="filter-form right">
-                 <form id="tagSearchForm" class="navbar-form navbar-right">
-                     <div class="input-group">
-                         <span class="input-group-addon hidden-xs"><i class="fa fa-filter"></i></span>
-                         <input id="filters" type="text" class="form-control" placeholder="Filter tags...">
-                         <span class="input-group-btn">
-                             <button id="filterTagsButton" type="submit" class="btn retrospectre-gold">Filter</button>
-                             <button id="clearFilter" type="button" class="btn retrospectre-gold">Clear Filters</button>
-                         </span>
-                     </div>
-                 </form>
-               </div>
-           </div>
-          </div>
-           <div class="row">
-           <div class="col s12">
-            {{> cardGrid}}
-          {{#with docid}}
-            {{> sharejsText docid=this id="editor"}}
-          {{/with}}
-          </div>
-        </div>
-         <div class="row">
         <div class="col s12">
-          <div class="admin-room-actions u-pad-10">
-            {{#if isModerator}}
-                {{#if cardsHidden}}
-                    <button class="btn retrospectre-gold" id="revealCardButton" type="button">Reveal All Cards</button>
-                {{else}}
-                    <button class="btn retrospectre-gold" id="hideCardButton" type="button">Hide All Cards</button>
-                {{/if}}
-            {{/if}}
-           <button class="btn retrospectre-gold" id="exportButton" type="button">Export</button>
-         </div>
+            <div class="room-contain">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="admin-room-actions u-pad-10">
+                                    {{#if isModerator}}
+                                    <button class="btn retrospectre-blue" data-toggle="modal" data-target="#moderator-modal">Moderator Panel</button>
+                                    {{/if}}
+                                    <button class="btn retrospectre-blue" id="exportButton" type="button">Export</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-form right">
+                          <form id="tagSearchForm" class="navbar-form navbar-right">
+                              <div class="input-group">
+                                  <span class="input-group-addon hidden-xs"><i class="fa fa-filter"></i></span>
+                                  <input id="filters" type="text" class="form-control" placeholder="Filter tags...">
+                                  <span class="input-group-btn">
+                                      <button id="filterTagsButton" type="submit" class="btn retrospectre-blue">Filter</button>
+                                      <button id="clearFilter" type="button" class="btn retrospectre-blue">Clear Filters</button>
+                                  </span>
+                              </div>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        {{> cardGrid}}
+                        <label for="editor">Notes</label>
+                        {{#with docid}}
+                            {{> sharejsText docid=this id="editor"}}
+                        {{/with}}
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-      </div>
     </div>
-  </div>
 </template>
