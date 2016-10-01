@@ -16,6 +16,9 @@ Router.route("/room/:_roomNumber/export", {
     path:"/room/:_roomNumber/export",
     template: "exportRoom",
     title: "Export",
+    waitOn: function() {
+        return [Meteor.subscribe("rooms", this.params._roomNumber), Meteor.subscribe("keynotes")];
+    },
     onBeforeAction: function() {
         Session.set("roomCode", this.params._roomNumber);
         this.next();

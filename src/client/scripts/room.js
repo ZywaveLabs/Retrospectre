@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false Rooms:false*/
+/* global Cards:false Rooms:false */
 /**
 *@purpose To provide the room template with data to display
 **/
@@ -46,23 +46,10 @@ Template.room.helpers({
     isModerator: function(){
         var room = Rooms.findOne({"roomCode": Session.get("roomCode")});
         return room.owner === Meteor.userId();
-    },
-
-    cardsHidden: function(){
-        var room = Rooms.findOne({"roomCode": Session.get("roomCode")});
-        return !room.reveal;
     }
 });
 
 Template.room.events({
-    "click #revealCardButton": function(){
-        Meteor.call("revealCards", Session.get("roomCode"));
-    },
-
-    "click #hideCardButton": function(){
-        Meteor.call("hideCards", Session.get("roomCode"));
-    },
-
     "click .tag": function(e){
         e.stopPropagation();
         filterSingleTag(e.toElement.innerHTML);
