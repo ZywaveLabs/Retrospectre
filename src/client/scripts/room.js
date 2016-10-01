@@ -27,7 +27,7 @@ Template.room.helpers({
         } else {
             author = Session.get("author");
         }
-        if(roomData.reveal){
+        if(roomData.reveal || roomData.ower === Meteor.userId()){
             cards = Cards.find({
                 "roomCode": Session.get("roomCode"),
                 "category": category
@@ -37,7 +37,7 @@ Template.room.helpers({
                 "roomCode": Session.get("roomCode"),
                 "category": category,
                 $or: [{"reveal": true}, {"author": author}]
-            },{sort: {createdAt: -1}});
+            },{sort: {createdAt: 0}});
         }
 
         return cards;

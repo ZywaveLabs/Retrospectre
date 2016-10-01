@@ -59,3 +59,11 @@ CardMethods.Update = function(id, thought, category, tags){
         // lastUpdated: new Date() // Will add this later, not all cards have this field, and trying to this of a better way to do this rather than just having this at every update call
     }});
 };
+
+CardMethods.DeleteAllCardsInRoom = function(roomCode){
+    Cards.remove({roomCode:roomCode});
+};
+
+CardMethods.DeleteAllCardsInRoomInCategory = function(roomCode, category){
+    Cards.remove({ $and: [{roomCode:roomCode}, {category:category}] });
+};
