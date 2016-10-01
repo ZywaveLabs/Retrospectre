@@ -9,7 +9,7 @@
             {{#if getSummaryView}}
             	<button class="btn retrospectre-blue" id="exportAllButton" type="button">Comprehensive View</button>
             {{else}}
-            	<button class="btn retrospectre-blue" id="exportSummaryButton" type="button">Summery View</button>
+            	<button class="btn retrospectre-blue" id="exportSummaryButton" type="button">Summary View</button>
            	{{/if}}
           </div>
         </div>
@@ -26,7 +26,7 @@
 {{!--        --}}{{#each getCategories}}
 {{!--            --}}{{this.category}}
 {{!--            --}}{{#each getCards this.category}}
-{{!--                --}}Thought: {{text}}
+{{!--                --}}{{text}}
 {{!--                --}}Tags: {{tags}}
 {{!--                --}}Author: {{author}}
 {{!--                --}}Comments: {{getComments this}}
