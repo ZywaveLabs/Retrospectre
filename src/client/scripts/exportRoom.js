@@ -35,6 +35,12 @@ Template.exportRoom.events({
     "click #exportAllButton" : function(eve) {
         eve.preventDefault();
         Session.set("isSummaryView", false);
+    },
+
+    "click .return": function() {
+        var roomCode = Session.get("roomCode");
+
+        Router.go("/room/" + roomCode);
     }
 });
 

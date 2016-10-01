@@ -14,6 +14,10 @@ table, th ,td{
 	width: 450px;
 }
 
+div.filter-form{
+    text-align:center;
+}
+
 
 i.fa-plus-circle {
   line-height: inherit !important;
