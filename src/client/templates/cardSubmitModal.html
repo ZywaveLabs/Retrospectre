@@ -8,17 +8,17 @@
         </div>
         <form class="form" role="form" id="card">
           <div class="modal-body">
-            <div class="form-group">
-              <label class="control-label text-success" for="thoughts">Thought:</label>
+            <div class="input-field col s12">
               <input class="form-control" type="text" id="thoughts" maxlength="500">
+              <label class="control-label text-success" for="thoughts">Thought:</label>
             </div>
-            <div class="form-group">
+            <div class="input-field col s12">
               <label class="control-label text-success" for="tags">Tags:</label>
               <input type="text" id="tags" class="form-control tags" placeholder="Seperate tags with a comma ','">
             </div>
-            <div class="form-group">
-              <label class="control-label text-success">Category:</label>
-              <select class="form-control" id="categoryDropdown">
+            <div class="input-field col s12">
+              <label class="label">Category:</label>
+              <select class="browser-default" id="categoryDropdown">
                 <option selected disabled style="display: none;">{{this.category}}</option>
                 {{#each categories}}
                 <option>{{this.category}}</option>
@@ -28,8 +28,8 @@
           </div>
           <div class="modal-footer">
             <div class="form-group">
-              <button class="btn btn-success" id="submitCardButton" type="submit">Submit</button>
-              <button id="cardModalClose" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <button class="btn retrospectre-gold" id="submitCardButton" type="submit">Submit</button>
+              <button id="cardModalClose" type="button" class="btn btn-flat text-red" data-dismiss="modal">Cancel</button>
             </div>
           </div>
         </form>

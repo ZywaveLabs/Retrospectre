@@ -1,0 +1,384 @@
+@import url(https://fonts.googleapis.com/css?family=Aldrich);
+
+html{font-family: "Roboto", sans-serif;    background: #eee;}
+
+h1 {
+    color: #424242;
+    font-family: 'Aldrich', sans-serif;
+    font-size: 3.3rem;
+}
+
+h4{
+  color:#424242;
+}
+
+td, th {
+    padding: 15px 13px;
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 0px;
+}
+
+.modal{
+  top: 15%;
+}
+
+.modal .modal-footer {
+    padding: 20px;
+    width: 100%;
+    float: left;
+    height:auto;
+}
+
+.modal .input-group-btn {
+    display: block;
+    text-align: right;
+    margin-bottom: 25px;
+    margin-top: 20px;
+}
+
+.text-red{
+  color:#f44336;
+}
+
+.close{
+  cursor:pointer;
+}
+
+.badge {
+    background: #424242;
+    color: #fff;
+    padding: 7px;
+    font-size: 12px;
+}
+
+.u-right{
+  float:right;
+}
+
+nav{
+  background:#fff;
+}
+
+nav ul a{
+  color:#424242;
+}
+
+nav ul a:hover{
+  color:#ffab00;
+}
+
+.table-header{
+  background:#424242;
+  color:#fff;
+}
+
+table.retro-stripe>tbody>tr:nth-child(even) {
+    background-color: #eee;
+}
+
+#cardBackgroundColor {
+    max-width: 80px;
+    padding: 0px;
+}
+
+.app-name-landing-page {
+    font-size: 22px;
+    font-family: 'Aldrich', sans-serif;
+}
+
+.retro-img img{
+  max-width:55px;
+}
+
+.form-modal {
+    margin-top: 45px;
+    text-align: center;
+}
+
+.modal-footer .btn {
+    margin-left: 10px!important;
+    margin-right: 10px!important;
+}
+
+.add-card {
+    cursor: pointer;
+    color: #ffab00;
+    font-size:28px;
+}
+
+.add-card:hover {
+    color: #ffc400;
+}
+
+.retrospectre-gold{
+  background:#ffab00;
+}
+
+.retrospectre-gold-text{
+  color:#ffab00;
+}
+.retrospectre-grey{
+  background:#424242;
+}
+
+.retrospectre-grey-text{
+  color:#424242;
+}
+
+.input-field label.active{
+  color:#ffab00;
+}
+
+.btn:hover, .btn-large:hover {
+    background-color: #ffc400;
+}
+
+input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #ffab00;
+    box-shadow: 0 1px 0 0 #ffab00;
+}
+
+input:not([type]):focus:not([readonly]) + label, input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=email]:focus:not([readonly]) + label, input[type=url]:focus:not([readonly]) + label, input[type=time]:focus:not([readonly]) + label, input[type=date]:focus:not([readonly]) + label, input[type=datetime]:focus:not([readonly]) + label, input[type=datetime-local]:focus:not([readonly]) + label, input[type=tel]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label, input[type=search]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label {
+    color: #ffc400;
+}
+
+.btn, .btn-large, .btn-flat{
+  text-transform: capitalize;
+}
+
+.nav-wrapper .btn-flat {
+    box-shadow: none;
+    background-color: transparent;
+    color: #009688;
+    cursor: pointer;
+    transition: background-color .3s;
+    font-size: 1rem;
+    display: inline-block;
+    padding: 0 15px;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.u-pad-10{
+  padding: 10px;
+}
+
+.u-pad-top-10{
+  padding: 10px!important;
+}
+
+.logo {
+    display: inline-block;
+    width: 81px;
+}
+
+.logo img {
+    width: 34px;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+
+.applicaiton-name {
+    font-size: 24px;
+    color: #424242;
+    font-family: 'Aldrich', sans-serif;
+    position: relative;
+}
+
+.app-name {
+    position: absolute;
+}
+
+#login-buttons .login-button, .accounts-dialog .login-button {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    padding: 7px 12px;
+    font-size: 80%;
+    line-height: 1.5;
+    text-align: center;
+    color: #fff;
+    background: ffc400;
+    background: #ffab00;
+    border: 1px solid #ffc400;
+    border-radius: 0px;
+  }
+
+#login-buttons .login-button:hover, .accounts-dialog .login-button:hover {
+    background: #ffc400;
+}
+
+#login-buttons .login-display-name {
+    margin-right: 4px;
+    color: #9e9e9e;
+    border-left: 1px solid #ccc;
+    padding-left: 13px;
+}
+
+.link-white{
+  color:#fff;
+}
+
+.btn-white{
+  background-color:#fff;
+  color:#009688;
+  font-size: 13px;
+}
+ .margin-top-10{
+   margin-top:10px;
+ }
+
+ .margin-top-15 {
+    margin-top: 15px;
+}
+
+.u-center{
+  text-align:center;
+}
+
+#login-buttons .configure-button {
+    background: #fff;
+    border-color: #fff;
+    border-radius: 2px;
+    color: #009688;
+    width: 175px;
+    padding: 8px;
+}
+
+#login-buttons .configure-button:hover {
+    background: #fff;
+    color: #2bbbad;
+    border: none;
+}
+
+.center{
+  text-align: center;
+}
+
+.c-card.home {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 15%;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,150,136,1);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,150,136,1);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,.4);
+    box-sizing: border-box;
+    padding: 19px;
+    text-align: center;
+    background:#fff;
+}
+
+.width-100{
+  width:100%;
+}
+
+.copyright {
+    color: #8c8c8c;
+    padding-top: 15px;
+    font-size:12px;
+    padding-bottom:20px;
+}
+
+.input-group-btn {
+    margin-top: 42px;
+    text-align: center;
+}
+
+select.browser-default {
+  display: block;
+  margin-top: 35px;
+  margin-left: -2px;
+}
+
+.create-room-contain {
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 78px;
+    margin-top: 2%;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.room-contain{
+  width: 90%;
+  margin: 0 auto;
+  background: #fff;
+  padding: 25px;
+  margin-top: 2%;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.icon-red{
+  color: #c62828;
+}
+
+.icon-red:hover {
+    color: #e53935;
+}
+
+.btn-small{
+  padding: 0 1rem;
+}
+
+button:focus {
+    outline: none;
+    background-color: #ffab00;
+}
+
+.btn-flat:hover{
+  background:transparent;
+  box-shadow:none;
+}
+
+.modal{
+  z-index: 5000;
+}
+
+div#LogInModal {
+    top: 15%;
+    max-width: 500px;
+    z-index:500000;
+}
+
+.filter-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.admin-room-actions {
+    text-align: right;
+}
+
+.export-text {
+    min-height: 600px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-shadow: 4px 4px 7px #eee;
+}
+
+.export-selection {
+    text-align: right;
+}
+
+@media screen and (max-width: 1500px){
+  h2{
+    font-size: 2.56rem;
+  }
+}
+
+@media screen and (max-width: 1100px){
+  h2{
+    font-size: 2rem;
+  }
+  .form-modal {
+    margin-top: 27px;
+  }
+}
