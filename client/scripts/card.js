@@ -21,6 +21,14 @@ Template.card.events({
         eve.target.disabled = true;
         Meteor.call("incrementLikes", this._id);
     },
+    "click #likeButtonIcon":function(eve){
+        eve.stopPropagation();
+        eve.target.disabled = true;
+        if(eve.target.parentElement.disabled === false){
+            eve.target.parentElement.disabled = true;
+            Meteor.call("incrementLikes", this._id);
+        }
+    },
     "click .card-action": function(eve){
         eve.stopPropagation();
     }
