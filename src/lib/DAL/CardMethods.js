@@ -1,6 +1,7 @@
 /* global Cards:true CardMethods:true */
 
 Cards = new Mongo.Collection("cards"); // eslint-disable-line
+
 if(Meteor.isServer){
     Meteor.publish("cards", function(roomCode) {
         return Cards.find({"roomCode": roomCode});
@@ -59,3 +60,21 @@ CardMethods.Update = function(id, thought, category, tags){
         // lastUpdated: new Date() // Will add this later, not all cards have this field, and trying to this of a better way to do this rather than just having this at every update call
     }});
 };
+
+CardMethods.GetFilteredCardCollection = function(filter) {
+    console.log("CardMethods GetFilteredCardCollection: " + filter);
+    console.log(Cards.find({
+                "roomCode": Session.get("roomCode"),
+                "category": "Went Well",
+            }, {sort: {createdAt:-1}}));
+
+    // if(filter == null)
+    //     return Cards.find({
+    //             "roomCode": Session.get("roomCode"),
+    //             "category": "Went Well",
+    //         }, {sort: {createdAt:-1}});
+    // //TODO verify category
+    // return Cards.find({
+    //             "text": "3"
+    //         }, {sort: {createdAt: -1}});
+}

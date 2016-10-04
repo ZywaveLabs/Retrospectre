@@ -8,6 +8,15 @@ Template.cardGrid.onRendered(function(){
     Session.set("pairSet",false);
 });
 
+Template.cardGrid.onCreated(function() {
+    var cards = Cards.find({
+                "roomCode": Session.get("roomCode"),
+            }, {sort: {createdAt:-1}});
+    console.log("FFF");
+    console.log(cards);
+    Session.set("cardCollection", cards);
+});
+
 Template.cardGrid.helpers({
 
     validMultiRow: function(){
@@ -49,8 +58,75 @@ Template.cardGrid.helpers({
         return Math.floor(maxBootStrapColSpacing / cat.length);
     },
 
-    cards : function(category) {
+    cards : function(category) { 
+
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
+        var author;
+
+        if(Meteor.user()){
+            author = Meteor.user().profile.name;
+        } else {
+            author = Session.get("author");
+        }
+
+        //TODO bad variable override and shit stuff
+        var filterQuery = Session.get("filterQuery");
+
+        if(filterQuery === undefined) {
+            filterQuery = [{}];
+        } else {
+            var objectList = [];
+            for(var key in filterQuery) {
+                var valueArr = filterQuery[key];
+                for(var value in valueArr) {
+                        var obj = {};
+                        obj[key] = {$regex: new RegExp(valueArr[value], "i")};
+                        objectList.push(obj);
+                    }
+            }
+            // var filter = {"tags": {$regex: new RegExp("four", "i")}}, {"tags": {$regex: new RegExp("for", "i")}};
+            console.log("Filter::");
+            //console.log(filter);
+            console.log(objectList);
+            console.log("FILTER::");
+            filterQuery = objectList;
+        }
+
+        var q = {
+                "roomCode": Session.get("roomCode"),
+                "category": category,
+                $and:filterQuery
+            };
+
+        console.log("::::  Q:::: ")
+        console.log(q);
+        if(roomData.reveal){
+            return Cards.find(q, {sort: {createdAt:-1}}).fetch();
+        } else {
+            return Cards.find({
+                "roomCode": Session.get("roomCode"),
+                "category": category,
+                $or: [{"reveal": true}, {"author": author}],
+                $and:filterQuery
+            }, {sort: {createdAt: -1}}).fetch();
+        }
+        // if(q != "") {
+        //     return Cards.find({
+        //             "roomCode": Session.get("roomCode"),
+        //             "category": category,
+        //         }, {sort: {createdAt:-1}}).fetch();
+        // }
+
+        // return Cards.find({
+        //         "roomCode": Session.get("roomCode"),
+        //         "category": category,
+        //     }, {sort: {createdAt:-1}}).fetch();
+        //return Session.get("cardsCollection");
+        //var x = Session.get("cardCollection");
+        //console.log("HELLLOOOOOOO");
+        //console.log(x);
+        //return x;
+        /*var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var cards = [];
         var author;
 
@@ -62,16 +138,29 @@ Template.cardGrid.helpers({
         if(roomData.reveal){
             cards = Cards.find({
                 "roomCode": Session.get("roomCode"),
-                "category": category
-            },{sort:{createdAt:-1}});
+                "category": category,
+            }, {sort: {createdAt:-1}});
         } else {
             cards = Cards.find({
                 "roomCode": Session.get("roomCode"),
                 "category": category,
                 $or: [{"reveal": true}, {"author": author}]
-            },{sort: {createdAt: -1}});
+            }, {sort: {createdAt: -1}});
         }
-        return cards;
+        return cards;*/
+        //TODO calling this in search make better
+        //console.log(findCards());
+        // return Cards.find({
+        //         "roomCode": Session.get("roomCode"),
+        //         "category": category,
+        //     }, {sort: {createdAt:-1}});
+        //Meteor.call("getFilteredCollection");
+        //return Session.get("cardsCollection");
+        // return Cards.find({
+        //         "roomCode": Session.get("roomCode"),
+        //         "category": category,
+        //     }, {sort: {createdAt:-1}});
+
     },
 
     getUniqueID: function(category){

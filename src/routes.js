@@ -18,6 +18,11 @@ Router.route("/room/:_roomNumber/export", {
     title: "Export",
     onBeforeAction: function() {
         Session.set("roomCode", this.params._roomNumber);
+        console.log("FA:LKSDJFLK:SDJFL:KSDJF:")
+    Session.set("cardsCollection", Cards.find({
+                "roomCode": Session.get("roomCode"),
+                "category": "Went Well",
+            }, {sort: {createdAt:-1}}));
         this.next();
     }
 });

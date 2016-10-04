@@ -1,0 +1,15 @@
+<template name="search">
+  <!-- {{with this.collectionName}} -->
+  <!-- <p> {{this.collectionName}} </p> -->
+  <!-- {{/with}} -->
+  <form id="tagSearchForm" class="navbar-form navbar-right">
+       <div class="input-group">
+           <span class="input-group-addon hidden-xs"><i class="fa fa-filter"></i></span>
+           <input id="filters" type="text" class="form-control" placeholder="Filter tags...">
+           <span class="input-group-btn">
+               <button id="filterTagsButton" type="submit" class="btn retrospectre-gold">Filter</button>
+               <button id="clearFilter" type="button" class="btn retrospectre-gold">Clear Filters</button>
+           </span>
+       </div>
+   </form>
+</template>

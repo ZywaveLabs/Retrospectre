@@ -3,6 +3,7 @@
 /* global Cards:true CardMethods: true */
 
 // "use strict";
+var filter = null;
 
 Meteor.methods({
 
@@ -14,7 +15,7 @@ Meteor.methods({
         CardMethods.DeleteCard(id);
     },
 
-    removeTag: function(id,tagToRemove){
+    removeTag: function(id,tagToRemove) {
         var cardToUpdate;
 
         cardToUpdate = Cards.findOne({_id:id});
@@ -37,10 +38,12 @@ Meteor.methods({
     submitComment : function(id,commentToAdd) {
         CardMethods.SubmitComment(id,commentToAdd);
     },
-    updateCard: function(id, thought, category, tags){
+
+    updateCard: function(id, thought, category, tags) {
         CardMethods.Update(id, thought, category, tags);
     },
-    incrementLikes: function(id){
+
+    incrementLikes: function(id) {
         CardMethods.IncrementLikes(id);
     }
 });
