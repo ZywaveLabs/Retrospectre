@@ -40,6 +40,23 @@ Card = function(){
     this.comments = [];
 };
 
+// If a field is missing or undefined it will not be included in the search.
+// The array represents alternative names that will resolve to the key when the search happens.
+// Example  "text: Text To Search" is the same as "thought: Text To Search"
+CardsSearchableFieldMap = {
+    "_id": undefined,
+    "author": ["author"],
+    "category": ["category"],
+    "comments": ["comments"],
+    "createdAt": undefined,
+    "lastUpdated": undefined,
+    "likes": undefined,
+    "reveal": undefined,
+    "roomCode": undefined,
+    "tags": ["tags", "tag"],
+    "text": ["text", "thought"]
+}
+
 Card.prototype.inRoom = function (roomCode) {
     this.roomCode = roomCode;
     return this;
