@@ -38,6 +38,7 @@ Card = function(){
     this.author = "Anonymous";
     this.reveal = false;
     this.comments = [];
+    this.position = 0;
 };
 
 Card.prototype.inRoom = function (roomCode) {
@@ -82,5 +83,10 @@ Card.prototype.shouldBeRevealed = function (reveal) {
 
 Card.prototype.withComments = function (comments) {
     this.comments = comments;
+    return this;
+};
+
+Card.prototype.withPosition = function (position) {
+    this.position = position;
     return this;
 };
