@@ -1,16 +1,9 @@
 /* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false DEFAULT_SNACKBAR_TIMEOUT:false*/
 "use strict";
 
-// default categories
-var defaultCategories = [{category:"Went Well", color:"#81c784"},
-                {category:"Went Poorly", color:"#f44336"},
-              {category:"Kudoz", color:"#2196f3"}];
-
 Template.categoriesSelector.created = function() {
-    this.currentCategories = defaultCategories;
-    if(this.data.currentCategories !== undefined)
-        this.currentCategories = this.data.currentCategories;
-    this.categoriesDep = new Tracker.Dependency();
+    this.currentCategories = this.data.currentCategories;
+    this.categoriesDep = this.data.tracker;
 };
 
 Template.categoriesSelector.helpers({
@@ -32,18 +25,21 @@ Template.categoriesSelector.events({
         eve.preventDefault();
         var tmpl = Template.instance();
         var customCategory = eve.target.addCustomCategory.value;
+        console.log("1");
         if(isDuplicate(tmpl, customCategory)){
             SnackbarMethods.DisplayMessage("A category with that name exists",
                 DEFAULT_SNACKBAR_TIMEOUT);
             return;
         }
+        console.log("2");
         var nullStr = 0;
         if(customCategory !== undefined && customCategory.length > nullStr) {
+            console.log("3");
             var range = 256;
             var colorValue = genRandomColor(range);
 
-            if(tmpl.data.onCategoryAdded !== undefined
-                && !tmpl.data.onCategoryAdded(tmpl.currentCategories, customCategory, colorValue))
+            if(tmpl.data.onCategoryCreated !== undefined
+                && !tmpl.data.onCategoryCreated(tmpl.currentCategories, customCategory, colorValue))
                 return;
             tmpl.currentCategories.push({category:customCategory,
                 color:colorValue});
@@ -54,13 +50,15 @@ Template.categoriesSelector.events({
 
     "click #removeCategory": function() {
         var tmpl = Template.instance();
-        if(tmpl.data.onCategoryRemoved !== undefined
-            && !tmpl.data.onCategoryRemoved(tmpl.currentCategories, this))
-            return;
-        console.log("test");
-        var numToRemove = 1;
-        tmpl.currentCategories.splice(tmpl.currentCategories.indexOf(this), numToRemove);
-        tmpl.categoriesDep.changed();
+        if(tmpl.data.onCategoryRemoved !== undefined){
+            tmpl.data.onCategoryRemoved(tmpl.currentCategories, this.category, function(allowUpdate){
+                if(allowUpdate){
+                    var numToRemove = 1;
+                    tmpl.currentCategories.splice(tmpl.currentCategories.indexOf(this), numToRemove);
+                    tmpl.categoriesDep.changed();
+                }
+            });
+        }
     },
 
     "change #cardBackgroundColor": function(eve) {
@@ -71,6 +69,7 @@ Template.categoriesSelector.events({
             return;
         }
         this.color = eve.target.value;
+        tmpl.categoriesDep.changed();
     },
 
     "click #info": function(eve){

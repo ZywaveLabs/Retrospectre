@@ -36,6 +36,9 @@ Template.createRoom.helpers({
         categoriesDep.depend();
         return categories;
     },
+    getTracker: function() {
+        return categoriesDep;
+    },
 
 //  Hooks for each of the events on the category selector (I've been modding
 //  gmod a lot recently which gave me this idea)
@@ -47,25 +50,17 @@ Template.createRoom.helpers({
 //  Will automatically not allow duplicate category names and will not call onCreated
     onCategoryCreated: function() {
         return function(currentCategories, categoryName, color) {
-            console.log("Category Created");
-            console.log(categoryName);
-            console.log(color);
             return true;
         };
     },
     onCategoryRemoved: function() {
-        return function(currentCategories, categoryName) {
-            console.log("Category Removed");
-            console.log(categoryName);
-            return true;
+        return function(currentCategories, categoryName, allowUpdate) {
+            allowUpdate(true);
         };
     },
     onColorChanged: function() {
         return function(currentCategories, categoryName, newColor){
-            console.log("Color changed");
-            console.log(categoryName);
-            console.log(newColor);
-            return false;
+            return true;
         };
     }
 });

@@ -20,7 +20,7 @@
           </div>
           </div>
         </form>
-        {{> categoriesSelector currentCategories=getCategories onCategoryCreated=onCategoryCreated onCategoryRemoved=onCategoryRemoved onColorChanged=onColorChanged }}
+        {{> categoriesSelector currentCategories=getCategories tracker=getTracker onCategoryCreated=onCategoryCreated onCategoryRemoved=onCategoryRemoved onColorChanged=onColorChanged }}
       </div>
 
     <input class="u-right btn retrospectre-blue {{createRoomDisable}}" id="createAndJoinRoomButton" name="joinRoom" type="button" value="Create And Join Room" {{createRoomDisable}}>

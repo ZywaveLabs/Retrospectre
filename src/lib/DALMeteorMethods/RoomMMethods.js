@@ -22,5 +22,8 @@ Meteor.methods({ // eslint-disable-line
     },
     addCategoryToRoom: function(category, roomCode, color){
         RoomMethods.AddCategoryToRoom(category, roomCode, color);
+    },
+    updateCategoryColor: function(category, roomCode, newColor){
+        RoomMethods.UpdateCategoryColor(category, roomCode, newColor);
     }
 });
