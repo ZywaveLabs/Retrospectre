@@ -2,7 +2,7 @@
 /* global Cards:false */
 
 Template.search.events({
-    "keyup #filters": function(eve) {
+    "keyup #filters": function(eve) { // eslint-disable-line
         var inputValue = eve.target.value;
         var splitInputArray = inputValue.split(",");
         var listOfFilters = {};
@@ -14,15 +14,14 @@ Template.search.events({
 
             // a ':' in the input indcates a search for a certain field
             if(str.includes(":")) {
-                key = normalizeString(str.slice(0, str.indexOf(':')));
-                value = normalizeString(str.slice(str.indexOf(':') + 1, str.length));
+                key = normalizeString(str.slice(0, str.indexOf(":")));
+                value = normalizeString(str.slice(str.indexOf(":") + 1, str.length));
             }
             if(listOfFilters[key] === undefined) {
                 listOfFilters[key] = [];
             }
             listOfFilters[key].push(value);
         }
-        
         Session.set("searchQuery", listOfFilters);
     }
 });
@@ -50,4 +49,3 @@ Template.search.helpers({
 function normalizeString(string) {
     return string.toLowerCase().trim();
 }
-

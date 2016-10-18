@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false Rooms:false */
+/* global Cards:false Rooms:false CardsSearchableFieldMap: true getMongoQueryObjectFromSearch: true*/
 const MAX_COL_PER_ROW = 4;
 var uniqueIdCount = 0;
 
@@ -10,8 +10,8 @@ Template.cardGrid.onRendered(function(){
 
 Template.cardGrid.onCreated(function() {
     var cards = Cards.find({
-                "roomCode": Session.get("roomCode"),
-            }, {sort: {createdAt:-1}});
+        "roomCode": Session.get("roomCode")
+    }, {sort: {createdAt:-1}});
     Session.set("searchKeyMapping", CardsSearchableFieldMap);
 });
 
@@ -36,11 +36,11 @@ Template.cardGrid.helpers({
         var revealQuery = roomData.reveal ? [{}] : [{"reveal": true}, {"author": author}];
 
         var baseQuery = {
-                 "category": category,
-                 $and:searchQuery,
-                 $or: revealQuery
-            };
-            
+            "category": category,
+            $and:searchQuery,
+            $or: revealQuery
+        };
+
         return Cards.find(baseQuery, {sort: {createdAt:-1}}).fetch();
     },
 

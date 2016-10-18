@@ -1,5 +1,5 @@
 // /* eslint-disable */
-/* global Card: true */
+/* global Card: true, CardsSearchableFieldMap: true */
 
 /* If you want to make cards in a more interesting way
 var myCard = new Card()
@@ -55,7 +55,7 @@ CardsSearchableFieldMap = {
     "roomCode": undefined,
     "tags": ["tags", "tag"],
     "text": ["text", "thought"]
-}
+};
 
 Card.prototype.inRoom = function (roomCode) {
     this.roomCode = roomCode;
