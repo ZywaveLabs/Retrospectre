@@ -9,9 +9,6 @@ Template.cardGrid.onRendered(function(){
 });
 
 Template.cardGrid.onCreated(function() {
-    var cards = Cards.find({
-        "roomCode": Session.get("roomCode")
-    }, {sort: {createdAt:-1}});
     Session.set("searchKeyMapping", CardsSearchableFieldMap);
 });
 
