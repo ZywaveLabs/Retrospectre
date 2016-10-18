@@ -39,7 +39,7 @@ Template.room.helpers({
 
     isModerator: function(){
         var room = Rooms.findOne({"roomCode": Session.get("roomCode")});
-        return room.owner === Meteor.userId();
+        return room.moderator === UserMethods.getAuthor();
     },
 
     cardsHidden: function(){

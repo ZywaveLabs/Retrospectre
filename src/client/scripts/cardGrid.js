@@ -18,7 +18,7 @@ Template.cardGrid.helpers({
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var cards = [];
         var author = UserMethods.getAuthor();
-        if(roomData.reveal){
+        if(roomData.reveal || author === roomData.moderator){
             cards = Cards.find({
                 "roomCode": Session.get("roomCode"),
                 "category": category

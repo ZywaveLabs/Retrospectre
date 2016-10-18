@@ -19,7 +19,7 @@ Room = function(){
     this.categories = [{category:"Went Well", color:"#00ff00"},
                        {category:"Went Poorly", color:"#ff0000"}];
     this.createdAt = new Date();
-    this.owner = "";
+    this.moderator = "";
     this.reveal = false;
 };
 
@@ -38,8 +38,8 @@ Room.prototype.createdAtTime = function (createdAt) {
     return this;
 };
 
-Room.prototype.createdBy = function (moderator) {
-    this.owner = moderator;
+Room.prototype.moderatedBy = function (moderator) {
+    this.moderator = moderator;
     return this;
 };
 

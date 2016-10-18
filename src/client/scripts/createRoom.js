@@ -1,4 +1,4 @@
-/* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false DEFAULT_SNACKBAR_TIMEOUT:false*/
+/* globals  RoomMethods:false SnackbarMethods:false Room:false DEFAULT_SNACKBAR_TIMEOUT:false UserMethods:false*/
 "use strict";
 
 // default categories
@@ -88,7 +88,7 @@ Template.createRoom.events({
                 .withRoomCode(roomId)
                 .withCategories(categories)
                 .withRevealStatusSetTo(false)
-                .createdBy(Meteor.userId());
+                .moderatedBy(UserMethods.getAuthor());
 
         Meteor.call("createRoom", room, function(err,result){
             Session.set("roomCode", roomId);
