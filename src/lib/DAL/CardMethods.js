@@ -17,8 +17,8 @@ CardMethods.SubmitCard = function(cardObject) {
     Cards.insert(cardObject);
 };
 
-CardMethods.DeleteCard = function(id) {
-    Cards.remove(id);
+CardMethods.DeleteCard = function(cardId) {
+    Cards.remove(cardId);
 };
 
 CardMethods.SubmitComment = function(id,comment) {
@@ -61,20 +61,10 @@ CardMethods.Update = function(id, thought, category, tags){
     }});
 };
 
-CardMethods.GetFilteredCardCollection = function(filter) {
-    console.log("CardMethods GetFilteredCardCollection: " + filter);
-    console.log(Cards.find({
-                "roomCode": Session.get("roomCode"),
-                "category": "Went Well",
-            }, {sort: {createdAt:-1}}));
+CardMethods.DeleteAllCardsInRoom = function(roomCode){
+    Cards.remove({roomCode:roomCode});
+};
 
-    // if(filter == null)
-    //     return Cards.find({
-    //             "roomCode": Session.get("roomCode"),
-    //             "category": "Went Well",
-    //         }, {sort: {createdAt:-1}});
-    // //TODO verify category
-    // return Cards.find({
-    //             "text": "3"
-    //         }, {sort: {createdAt: -1}});
-}
+CardMethods.DeleteAllCardsInRoomInCategory = function(roomCode, category){
+    Cards.remove({ $and: [{roomCode:roomCode}, {category:category}] });
+};

@@ -27,6 +27,26 @@ Template.search.events({
     }
 });
 
+Template.search.helpers({
+    infoToolTip: function() {
+        var mapping = Session.get("searchKeyMapping");
+
+        var toolTipString = "Seperate search terms by a comma(,).\n" +
+                            "Search a field use format:   FIELD_NAME: SEARCH_CRITERIA\n" +
+                            "Invalid keys are ignored. Valid search key mapping:\n";
+        for(var key in mapping) {
+            if(mapping[key] !== undefined) {
+                toolTipString += key + ": ";
+                for(var value in mapping[key]) {
+                    toolTipString += mapping[key][value] + " ";
+                }
+                toolTipString += "\n";
+            }
+        }
+        return toolTipString;
+    }
+});
+
 function normalizeString(string) {
     return string.toLowerCase().trim();
 }

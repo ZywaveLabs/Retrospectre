@@ -46,8 +46,7 @@ RoomMethods.CreateRoom = function(roomObject){
                         }));
         Rooms.insert(roomObject);
         var notes = new Keynotes()
-          .withRoomCode(roomObject.roomCode)
-          .createdBy(roomObject.owner);
+          .withRoomCode(roomObject.roomCode);
 
         var docId = KeyNotes.insert(notes);
 
@@ -56,11 +55,12 @@ RoomMethods.CreateRoom = function(roomObject){
 };
 
 RoomMethods.DeleteRoomById = function(id){
-    Rooms.remove({_id:id});
+    RoomMethods.DeleteRoomByRoomcode(Rooms.findOne({_id:id}).roomCode);
 };
 
 RoomMethods.DeleteRoomByRoomcode = function(roomCode){
     Rooms.remove({roomCode:roomCode});
+    KeyNotes.remove({roomCode:roomCode});
 };
 
 RoomMethods.getKeynoteID = function(roomCode){
@@ -79,4 +79,21 @@ RoomMethods.HideCards = function(roomCode){
     Rooms.update({roomCode: roomCode}, {$set:{
         reveal: false
     }});
+};
+RoomMethods.IsModerator = function(roomCode, userId){
+    var currRoomOwner = Rooms.findOne({"roomCode":roomCode}).owner;
+    return currRoomOwner === userId;
+};
+RoomMethods.DeleteCategoryFromRoom = function(category, roomCode){
+    Rooms.update(
+      { roomCode: roomCode },
+      { $pull: { categories: { category: category } } }
+  );
+};
+
+RoomMethods.AddCategoryToRoom = function(category, roomCode, color){
+    Rooms.update(
+        { roomCode: roomCode },
+        { $push: { categories: { category: category, color: color}}}
+    );
 };

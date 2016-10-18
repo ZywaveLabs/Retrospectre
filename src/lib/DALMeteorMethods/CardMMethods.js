@@ -1,9 +1,8 @@
 
 // /* eslint-disable */
-/* global Cards:true CardMethods: true */
+/* global Cards:true CardMethods: true RoomMethods: true */
 
 // "use strict";
-var filter = null;
 
 Meteor.methods({
 
@@ -11,11 +10,16 @@ Meteor.methods({
         CardMethods.SubmitCard(cardObject);
     },
 
-    deleteCard: function(id) {
-        CardMethods.DeleteCard(id);
+    deleteCard: function(cardId, roomCode, author) {
+        var isModerator = RoomMethods.IsModerator(roomCode, Meteor.userId());
+        var cardAuthor = Cards.findOne({_id:cardId}).author;
+        var currUser = Meteor.user() ? Meteor.user().profile.name : author;
+
+        if(isModerator || cardAuthor === currUser)
+            CardMethods.DeleteCard(cardId);
     },
 
-    removeTag: function(id,tagToRemove) {
+    removeTag: function(id, tagToRemove) {
         var cardToUpdate;
 
         cardToUpdate = Cards.findOne({_id:id});
@@ -45,5 +49,13 @@ Meteor.methods({
 
     incrementLikes: function(id) {
         CardMethods.IncrementLikes(id);
+    },
+
+    deleteAllCardsInRoom: function(roomCode){
+        CardMethods.DeleteAllCardsInRoom(roomCode);
+    },
+
+    deleteAllCardsInRoomInCategory: function(roomCode, category){
+        CardMethods.DeleteAllCardsInRoomInCategory(roomCode, category);
     }
 });

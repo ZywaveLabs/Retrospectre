@@ -2,9 +2,18 @@
 		color: black;
     font-size: 1.3em;
 		line-height: 28px;
+        word-wrap: break-word;
 }
-div h2{
+h2#cardCategory{
 	text-align: center;
+	margin-right: 20px;
+}
+
+div#displayGrid{
+	margin-top: 25px;
+}
+#cardRow{
+	margin-left: 10%;
 }
 
 #cardImage{
@@ -41,7 +50,7 @@ ul.collapsible{
 
 #likeButton{
   float: right;
-	cursor: pointer;
+	background-color: #424242;
 }
 
 .tag{
@@ -58,15 +67,27 @@ div.card-panel{
 div.card-action{
   min-height: 32px;
 	margin-top: 10px;
+    word-wrap: break-word;
 }
 
-h4.modal-title{
+h3.modal-title{
 	text-align: left;
-	padding: 15px
+	padding: 15px;
+    word-wrap: break-word;
+}
+
+thought.thought{
+    word-wrap: break-word;
 }
 
 .modal .modal-footer {
     padding: 20px;
     width: 100%;
     float: left;
+}
+#deleteCardButton{
+	float: left;
+}
+img.img-responsive{
+	margin-top: 1%;
 }

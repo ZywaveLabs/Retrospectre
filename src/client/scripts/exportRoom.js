@@ -5,6 +5,18 @@ Template.exportRoom.rendered = function () {
     Session.set("isSummaryView", true);
 };
 
+Template.exportRoom.created = function () {
+    self = this; // eslint-disable-line
+    self.sharedText = new ReactiveVar("");
+    Meteor.call("getSharedTextForRoom", Session.get("roomCode"), function(err, result){
+        if(err)
+            console.log(err); // eslint-disable-line
+        else
+            self.sharedText.set(result);
+    });
+};
+
+
 Template.exportRoom.events({
 
     "click #copyToClipboardButton" : function(eve) {
@@ -23,6 +35,12 @@ Template.exportRoom.events({
     "click #exportAllButton" : function(eve) {
         eve.preventDefault();
         Session.set("isSummaryView", false);
+    },
+
+    "click .return": function() {
+        var roomCode = Session.get("roomCode");
+
+        Router.go("/room/" + roomCode);
     }
 });
 
@@ -64,5 +82,9 @@ Template.exportRoom.helpers({
 
     getSummaryView : function() {
         return Session.get("isSummaryView");
+    },
+
+    getSharedTextArea : function(){
+        return self.sharedText.get();
     }
 });

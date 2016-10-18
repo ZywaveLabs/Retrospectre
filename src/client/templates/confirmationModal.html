@@ -1,0 +1,24 @@
+<template name="confirmationModal">
+    <div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" style="z-index: 100000">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="u-right close icon-red confirmationModalCancel" aria-hidden="true">
+                        <i class="material-icons">close</i>
+                    </span>
+                    <h2 class="modal-title">Danger, Will Robinson!</h2>
+                </div>
+                <div class="modal-body">
+                    <p style="text-align: center">You are about to perform an action that cannot be reversed, are you sure you wish to continue?</p>
+                    <p style="text-align: center">Current Action:
+                        <u>{{confirmationAction}}</u>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirmationModalCancel" type="button" class="btn retrospectre-blue confirmationModalCancel" style="float: left">Cancel</button>
+                    <button id="confirmationModalAccept" type="button" class="btn" style="background-color: #D32F2F; float: right">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

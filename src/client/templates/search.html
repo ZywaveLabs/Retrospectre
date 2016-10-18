@@ -1,6 +1,9 @@
 <template name="search">
-      <div class="input-group">
-          <input id="filters" type="text" class="form-control" placeholder="Filter...">
-		  <i class="material-icons filter-info">info</i>
-      </div>
+	<div class="filterDiv">
+		<input id="filters" type="text" class="form-control" placeholder="Search...">
+	</div>
+	<div class="searchInfoDiv">
+		<i class="material-icons search-info">info</i>
+		<span class="tooltiptext">{{infoToolTip}}</span>
+	</div>
 </template>

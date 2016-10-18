@@ -3,27 +3,28 @@
 /* global Cards:true CardMethods: true */
 
 //"use strict";
-
-getMongoQueryObjectFromSearch = function () {
+/**
+* @param searchFieldMap 
+*/
+getMongoQueryObjectFromSearch = function (searchFieldMap) {
 		//TODO pass this in
-		var searchFieldMap = CardsSearchableFieldMap;
+		// var searchFieldMap = CardsSearchableFieldMap;
         var filterQuery = Session.get("searchQuery");
         if(filterQuery === undefined) {
         	return [{}];
         }
+
         var mongoQueryObject = [{}];
         for(var key in filterQuery) {
             var valuesToFilter = filterQuery[key];
 
             for(var value in valuesToFilter) {
             	var mongoSearchCriteria;
-
                 key = getMappedField(key, searchFieldMap);
-
+                
             	if(key === "") {
             		var mongoSearchCriteria = {$where: function() {
                             for(var objKey in this) {
-
                             	if(searchFieldMap[objKey] === undefined) {
                             		continue;
                             	}
