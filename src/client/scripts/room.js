@@ -63,11 +63,6 @@ Template.room.events({
         Meteor.call("hideCards", Session.get("roomCode"));
     },
 
-    "click .tag": function(e){
-        e.stopPropagation();
-        //add to filter?
-    },
-
     "click #exportButton": function() {
         var roomCode = Session.get("roomCode");
 
