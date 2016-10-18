@@ -46,7 +46,7 @@ div.collapsible-header p{
 ul.collapsible{
   list-style-type: none;
   list-style-image: none;
-	height: 200px;
+	max-height: 200px;
 	width: 75%;
 	overflow-y: scroll;
 }
