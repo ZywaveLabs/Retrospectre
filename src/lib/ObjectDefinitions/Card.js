@@ -1,4 +1,4 @@
-// /* eslint-disable */
+/* eslint-disable */
 /* global Card: true */
 
 /* If you want to make cards in a more interesting way
