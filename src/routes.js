@@ -1,4 +1,4 @@
-/* global RoomMethods SnackbarMethods Logs DEFAULT_SNACKBAR_TIMEOUT:true Cards: true*/
+/* global RoomMethods SnackbarMethods Logs DEFAULT_SNACKBAR_TIMEOUT:true*/
 "use strict";
 
 Router.configure({
@@ -21,10 +21,6 @@ Router.route("/room/:_roomNumber/export", {
     },
     onBeforeAction: function() {
         Session.set("roomCode", this.params._roomNumber);
-        Session.set("cardsCollection", Cards.find({
-            "roomCode": Session.get("roomCode"),
-            "category": "Went Well"
-        }, {sort: {createdAt:-1}}));
         this.next();
     }
 });
