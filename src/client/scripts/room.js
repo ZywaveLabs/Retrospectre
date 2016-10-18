@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false Rooms:false*/
+/* global Cards:false Rooms:false UserMethods:false*/
 /**
 *@purpose To provide the room template with data to display
 **/
@@ -20,13 +20,7 @@ Template.room.helpers({
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var cards = [];
-        var author;
-
-        if(Meteor.user()){
-            author = Meteor.user().profile.name;
-        } else {
-            author = Session.get("author");
-        }
+        var author = UserMethods.getAuthor();
         if(roomData.reveal || roomData.ower === Meteor.userId()){
             cards = Cards.find({
                 "roomCode": Session.get("roomCode"),

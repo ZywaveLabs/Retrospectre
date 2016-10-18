@@ -1,6 +1,5 @@
 "use strict";
-/* global Cards:false Rooms:false */
-const MAX_COL_PER_ROW = 4;
+/* global Cards:false Rooms:false UserMethods:false*/
 var uniqueIdCount = 0;
 
 Template.cardGrid.onRendered(function(){
@@ -18,13 +17,7 @@ Template.cardGrid.helpers({
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var cards = [];
-        var author;
-
-        if(Meteor.user()){
-            author = Meteor.user().profile.name;
-        } else {
-            author = Session.get("author");
-        }
+        var author = UserMethods.getAuthor();
         if(roomData.reveal){
             cards = Cards.find({
                 "roomCode": Session.get("roomCode"),

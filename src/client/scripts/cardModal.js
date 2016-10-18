@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false*/
+/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false UserMethods:false*/
 const MinCommentLen = 4;
 var EditedCard = function(thought,tags,category){
     this.thought = thought;
@@ -36,7 +36,7 @@ Template.cardModal.helpers({
     },
     canDelete: function(cardId){
         var currCardAuth = Cards.findOne({_id:cardId}).author;
-        var user = Meteor.user() ? Meteor.user().profile.name : Session.get("author");
+        var user = UserMethods.getAuthor();
         var moderator = Rooms.findOne({"roomCode":Session.get("roomCode")}).owner;
 
         return currCardAuth === user || moderator === Meteor.userId();
@@ -121,13 +121,8 @@ Template.registerHelper("equals", function (a, b) {
 function isOwner(_id){
     var card = Cards.findOne({"_id": _id});
 
-    if (Meteor.user()) {
-        if(Meteor.user().profile.name === card.author){
-            return true;
-        }
-    } else if(Session.get("author") === card.author){
+    if(UserMethods.getAuthor() === card.author)
         return true;
-    }
     return false;
 }
 
