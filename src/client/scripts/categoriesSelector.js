@@ -25,16 +25,13 @@ Template.categoriesSelector.events({
         eve.preventDefault();
         var tmpl = Template.instance();
         var customCategory = eve.target.addCustomCategory.value;
-        console.log("1");
         if(isDuplicate(tmpl, customCategory)){
             SnackbarMethods.DisplayMessage("A category with that name exists",
                 DEFAULT_SNACKBAR_TIMEOUT);
             return;
         }
-        console.log("2");
         var nullStr = 0;
         if(customCategory !== undefined && customCategory.length > nullStr) {
-            console.log("3");
             var range = 256;
             var colorValue = genRandomColor(range);
 
@@ -70,10 +67,6 @@ Template.categoriesSelector.events({
         }
         this.color = eve.target.value;
         tmpl.categoriesDep.changed();
-    },
-
-    "click #info": function(eve){
-        console.log(Template.instance().currentCategories);
     }
 });
 

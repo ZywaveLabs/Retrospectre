@@ -40,14 +40,6 @@ Template.createRoom.helpers({
         return categoriesDep;
     },
 
-//  Hooks for each of the events on the category selector (I've been modding
-//  gmod a lot recently which gave me this idea)
-//  Returns a callback that is called before each event
-//  Return a boolean value on whether to allow event or not
-//  If true, will update it's own template accordingly and manage current
-//  categories stored on the template, but will not make any database changes
-//  Will have to manually make any database changes on this template
-//  Will automatically not allow duplicate category names and will not call onCreated
     onCategoryCreated: function() {
         return function(currentCategories, categoryName, color) {
             return true;
