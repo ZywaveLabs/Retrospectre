@@ -4,8 +4,7 @@
 // default categories
 var categories = [{category:"Went Well", color:"#81c784"},
                 {category:"Went Poorly", color:"#f44336"},
-              {category:"Kudoz", color:"#2196f3"},
-                {category:"LOLZ", color:"#123456"}];
+              {category:"Kudoz", color:"#2196f3"}];
 var categoriesDep = new Tracker.Dependency();
 
 
