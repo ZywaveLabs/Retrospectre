@@ -37,26 +37,7 @@ CardMethods.DeleteCard = function(cardId) {
     });
     var roomCode = cardToDel.roomCode;
     var cat = cardToDel.category;
-    Cards.update({
-            $and: [{
-                roomCode: roomCode
-            }, {
-                category: cat
-            }, {
-                position: {
-                    $gt: cardToDel.position
-                }
-            }]
-        },
-        {
-            $inc: {
-                position: -1
-            }
-        },
-        {
-            multi: true
-        }
-    );
+    updateCardPosition(roomCode, cat, cardToDel.position, -1);
     Cards.remove(cardId);
 };
 
@@ -119,44 +100,23 @@ CardMethods.Update = function(id, thought, category, tags) {
     });
     var roomCode = cardToUpdate.roomCode;
     var cat = cardToUpdate.category;
-    //update other cards position upon update
-    Cards.update({
-            $and: [{
-                roomCode: roomCode
-            }, {
-                category: cat
-            }, {
-                position: {
-                    $gt: cardToUpdate.position
-                }
-            }]
-        },
-        {
-            $inc: {
-                position: -1
-            }
-        },
-        {
-            multi: true
-        }
-    );
-    //update existing card's position before updating card
-    Cards.update({
+    if (cat !== currCategory) {
+        updateCardPosition(roomCode, cat, cardToUpdate.position, -1);
+        //update existing card's position before updating card
+        Cards.update({
             $and: [{
                 roomCode: roomCode
             }, {
                 category: category
             }]
-        },
-        {
+        }, {
             $inc: {
                 position: 1
             }
-        },
-        {
+        }, {
             multi: true
-        }
-    );
+        });
+    }
     Cards.update({
         _id: id
     }, {
@@ -164,8 +124,7 @@ CardMethods.Update = function(id, thought, category, tags) {
             text: thought,
             tags: tags,
             category: category,
-            position:0
-                // lastUpdated: new Date() // Will add this later, not all cards have this field, and trying to this of a better way to do this rather than just having this at every update call
+            position: 0
         }
     });
 };
@@ -248,42 +207,9 @@ CardMethods.UpdatePosition = function(cardId, currPosition, currCategory, newCar
         _id: cardId
     }).roomCode;
     //decrement existing cards by one in currCategory
-    Cards.update({
-        $and: [{
-            roomCode: roomCode
-        }, {
-            category: currCategory
-        }, {
-            position: {
-                $gt: currPosition
-            }
-        }]
-    }, {
-        $inc: {
-            position: -1
-        }
-    }, {
-        multi: true
-    });
-
+    updateCardPosition(roomCode, currCategory, currPosition, -1);
     //increment new category cards by 1
-    Cards.update({
-        $and: [{
-            roomCode: roomCode
-        }, {
-            category: newCardCategory
-        }, {
-            position: {
-                $gt: siblingPos
-            }
-        }]
-    }, {
-        $inc: {
-            position: 1
-        }
-    }, {
-        multi: true
-    });
+    updateCardPosition(roomCode, newCardCategory, siblingPos, 1);
 
     Cards.update({
         _id: cardId
@@ -294,3 +220,23 @@ CardMethods.UpdatePosition = function(cardId, currPosition, currCategory, newCar
         }
     });
 };
+
+function updateCardPosition(roomCode, category, position, inc) {
+    Cards.update({
+        $and: [{
+            roomCode: roomCode
+        }, {
+            category: category
+        }, {
+            position: {
+                $gt: position
+            }
+        }]
+    }, {
+        $inc: {
+            position: inc
+        }
+    }, {
+        multi: true
+    });
+}
