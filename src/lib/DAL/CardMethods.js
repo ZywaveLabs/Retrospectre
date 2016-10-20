@@ -102,31 +102,12 @@ CardMethods.Update = function(id, thought, category, tags) {
     var cat = cardToUpdate.category;
     if (cat !== currCategory) {
         updateCardPosition(roomCode, cat, cardToUpdate.position, -1);
-        //update existing card's position before updating card
-        Cards.update({
-            $and: [{
-                roomCode: roomCode
-            }, {
-                category: category
-            }]
-        }, {
-            $inc: {
-                position: 1
-            }
-        }, {
-            multi: true
-        });
-    }
-    Cards.update({
-        _id: id
-    }, {
-        $set: {
-            text: thought,
-            tags: tags,
-            category: category,
-            position: 0
-        }
-    });
+        updateCardPosition(roomCode, category, -1, 1);
+        updateSingleCard(id,thought,tags,category,cardToUpdate.comments,0);
+  }
+  else{
+    updateSingleCard(id,thought,tags,category,cardToUpdate.comments,cardToUpdate.position);
+  }
 };
 
 CardMethods.DeleteAllCardsInRoom = function(roomCode) {
@@ -151,24 +132,9 @@ CardMethods.UpdatePositionLast = function(cardId, currPosition, currCategory, ne
     }).roomCode;
     //change cards whose position is greater than curr card position decrement -1
     //updates the cards of t original category
-    Cards.update({
-        $and: [{
-            roomCode: roomCode
-        }, {
-            category: currCategory
-        }, {
-            position: {
-                $gt: currPosition
-            }
-        }]
-    }, {
-        $inc: {
-            position: -1
-        }
-    }, {
-        multi: true
-    });
-    cards = Cards.find({
+    updateCardPosition(roomCode,currCategory,currPosition,-1);
+    //find last card in category
+    var cards = Cards.find({
         $and: [{
             roomCode: roomCode
         }, {
@@ -180,8 +146,8 @@ CardMethods.UpdatePositionLast = function(cardId, currPosition, currCategory, ne
         }
     });
     cards = cards.fetch();
-    var lastPos = cards[0];
-    if (lastPos === null || lastPos === undefined) {
+    var lastCard = cards[0];
+    if (lastCard === null || lastCard === undefined) {
         Cards.update({
             _id: cardId
         }, {
@@ -195,7 +161,7 @@ CardMethods.UpdatePositionLast = function(cardId, currPosition, currCategory, ne
             _id: cardId
         }, {
             $set: {
-                position: parseInt(lastPos.position) + 1,
+                position: parseInt(lastCard.position) + 1,
                 category: newCardCategory
             }
         });
@@ -239,4 +205,18 @@ function updateCardPosition(roomCode, category, position, inc) {
     }, {
         multi: true
     });
+}
+
+function updateSingleCard(id, thought,tags,category,comments,position){
+  Cards.update({
+      _id: id
+  }, {
+      $set: {
+          text: thought,
+          tags: tags,
+          category: category,
+          comments:comments,
+          position: position
+      }
+  });
 }
