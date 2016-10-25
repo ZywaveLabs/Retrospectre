@@ -1,6 +1,7 @@
 /* global Cards:true CardMethods:true */
 
 Cards = new Mongo.Collection("cards"); // eslint-disable-line
+
 if(Meteor.isServer){
     Meteor.publish("cards", function(roomCode) {
         return Cards.find({"roomCode": roomCode});

@@ -1,11 +1,15 @@
 "use strict";
-/* global Cards:false Rooms:false */
+/* global Cards:false Rooms:false CardsSearchableFieldMap: true getMongoQueryObjectFromSearch: true*/
 const MAX_COL_PER_ROW = 4;
 var uniqueIdCount = 0;
 
 Template.cardGrid.onRendered(function(){
     Session.set("getUniqueID_CallCount",uniqueIdCount);
     Session.set("pairSet",false);
+});
+
+Template.cardGrid.onCreated(function() {
+    Session.set("searchKeyMapping", CardsSearchableFieldMap);
 });
 
 Template.cardGrid.helpers({
@@ -17,7 +21,6 @@ Template.cardGrid.helpers({
 
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
-        var cards = [];
         var author;
 
         if(Meteor.user()){
@@ -25,19 +28,17 @@ Template.cardGrid.helpers({
         } else {
             author = Session.get("author");
         }
-        if(roomData.reveal){
-            cards = Cards.find({
-                "roomCode": Session.get("roomCode"),
-                "category": category
-            },{sort:{createdAt:-1}});
-        } else {
-            cards = Cards.find({
-                "roomCode": Session.get("roomCode"),
-                "category": category,
-                $or: [{"reveal": true}, {"author": author}]
-            },{sort: {createdAt: -1}});
-        }
-        return cards;
+
+        var searchQuery = getMongoQueryObjectFromSearch(CardsSearchableFieldMap);
+        var revealQuery = roomData.reveal ? [{}] : [{"reveal": true}, {"author": author}];
+
+        var baseQuery = {
+            "category": category,
+            $and:searchQuery,
+            $or: revealQuery
+        };
+
+        return Cards.find(baseQuery, {sort: {createdAt:-1}}).fetch();
     },
 
     getUniqueID: function(category){
