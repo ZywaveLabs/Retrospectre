@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false*/
+/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false UserMethods:false*/
 const MinCommentLen = 4;
 var EditedCard = function(thought,tags,category){
     this.thought = thought;
@@ -36,10 +36,10 @@ Template.cardModal.helpers({
     },
     canDelete: function(cardId){
         var currCardAuth = Cards.findOne({_id:cardId}).author;
-        var user = Meteor.user() ? Meteor.user().profile.name : Session.get("author");
-        var moderator = Rooms.findOne({"roomCode":Session.get("roomCode")}).owner;
+        var user = UserMethods.getAuthor();
+        var moderator = Rooms.findOne({"roomCode":Session.get("roomCode")}).moderator;
 
-        return currCardAuth === user || moderator === Meteor.userId();
+        return currCardAuth === user || moderator === user;
     },
     cardHasComments: function(cardId){
         var comments = Cards.findOne({_id:cardId}).comments;
@@ -66,7 +66,7 @@ Template.cardModal.events({
         var maxWidth = 768;
         // TODO: replace with confirmation modal - Dylan
         if(confirm("Are You sure you want to delete this card?"))//eslint-disable-line
-            Meteor.call("deleteCard", this._id, Session.get("roomCode"), Session.get("author"));
+            Meteor.call("deleteCard", this._id, Session.get("roomCode"));
         if($(window).width() <= maxWidth)
             $(".modal").modal("hide");
     },
@@ -121,13 +121,8 @@ Template.registerHelper("equals", function (a, b) {
 function isOwner(_id){
     var card = Cards.findOne({"_id": _id});
 
-    if (Meteor.user()) {
-        if(Meteor.user().profile.name === card.author){
-            return true;
-        }
-    } else if(Session.get("author") === card.author){
+    if(UserMethods.getAuthor() === card.author)
         return true;
-    }
     return false;
 }
 
