@@ -1,11 +1,25 @@
 "use strict";
-/* global Cards:false Rooms:false CardsSearchableFieldMap: true getMongoQueryObjectFromSearch: true*/
-const MAX_COL_PER_ROW = 4;
+/* global Cards:false Rooms:false CardsSearchableFieldMap: true dragula:false getMongoQueryObjectFromSearch: true UserMethods:false*/
 var uniqueIdCount = 0;
 
-Template.cardGrid.onRendered(function(){
-    Session.set("getUniqueID_CallCount",uniqueIdCount);
-    Session.set("pairSet",false);
+Template.cardGrid.onRendered(function() {
+    Session.set("getUniqueID_CallCount", uniqueIdCount);
+    Session.set("pairSet", false);
+    var containers = getContainers();
+    var dragNDrop = dragula(containers);
+
+    dragNDrop.on("drop", function(el, target, source, sibling) {
+        var cardId = $(el).attr("id");
+        var currCategory = $(source).attr("name");
+        var newCardCategory = $(target).attr("name");
+        var currPosition = parseInt($(el).attr("position"));
+        if (sibling === null) {
+            Meteor.call("updatePosition", cardId, currPosition, currCategory, newCardCategory,-1);//eslint-disable-line
+        } else {
+            var siblingPos = parseInt($(sibling).attr("position"));
+            Meteor.call("updatePosition", cardId, currPosition, currCategory, newCardCategory, siblingPos);
+        }
+    });
 });
 
 Template.cardGrid.onCreated(function() {
@@ -14,23 +28,16 @@ Template.cardGrid.onCreated(function() {
 
 Template.cardGrid.helpers({
     getCategories: function() {
-        return Rooms.findOne(
-          {"roomCode": Session.get("roomCode")}
-      ).categories;
+        return Rooms.findOne({
+            "roomCode": Session.get("roomCode")
+        }).categories;
     },
-
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
-        var author;
-
-        if(Meteor.user()){
-            author = Meteor.user().profile.name;
-        } else {
-            author = Session.get("author");
-        }
+        var author = UserMethods.getAuthor();
 
         var searchQuery = getMongoQueryObjectFromSearch(CardsSearchableFieldMap);
-        var revealQuery = roomData.reveal ? [{}] : [{"reveal": true}, {"author": author}];
+        var revealQuery = roomData.reveal ? [{}] : [{"reveal": true}, {"author": author},{"moderator":author}];
 
         var baseQuery = {
             "category": category,
@@ -38,20 +45,19 @@ Template.cardGrid.helpers({
             $or: revealQuery
         };
 
-        return Cards.find(baseQuery, {sort: {createdAt:-1}}).fetch();
+        return Cards.find(baseQuery, {sort: {position:-1}}).fetch();
     },
 
-    getUniqueID: function(category){
+    getUniqueID: function(category) {
         return category.replace(/\s/g, "");
     }
 });
 
-Template.cardGrid.events({
-    "click div.col-xs-2 span": function(eve){
-        var maxWidth = 768;
-        if($(window).width() < maxWidth){
-            var dataTarget = eve.currentTarget.dataset.target;
-            $("div.modal" + dataTarget).modal("toggle");
-        }
+function getContainers() {
+    var categories = Rooms.findOne({"roomCode":Session.get("roomCode")}).categories;
+    var containers = [];
+    for (var i = 0; i < categories.length; i++) {
+        containers.push(document.querySelector("." + categories[i].category.replace(/\s/g, "")));
     }
-});
+    return containers;
+}
