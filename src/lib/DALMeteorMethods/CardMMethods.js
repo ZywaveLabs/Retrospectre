@@ -52,10 +52,16 @@ Meteor.methods({
     },
 
     deleteAllCardsInRoom: function(roomCode){
+        var isModerator = RoomMethods.IsModerator(roomCode, Meteor.userId());
+        if(!isModerator)
+            return;
         CardMethods.DeleteAllCardsInRoom(roomCode);
     },
 
     deleteAllCardsInRoomInCategory: function(roomCode, category){
+        var isModerator = RoomMethods.IsModerator(roomCode, Meteor.userId());
+        if(!isModerator)
+            return;
         CardMethods.DeleteAllCardsInRoomInCategory(roomCode, category);
     }
 });

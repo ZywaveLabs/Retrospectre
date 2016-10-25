@@ -6,79 +6,10 @@
                     <span class="u-right close" data-dismiss="modal">
                         <i class="material-icons">close</i>
                     </span>
-                    <h4 class="modal-title">Moderator Actions</h4>
+                    <h4 class="modal-title">Category Selector</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        {{#if cardsHidden}}
-                            <button class="btn retrospectre-blue col s3" id="revealCardButton" type="button">Reveal All Cards</button>
-                            <span class="col offset-s1 s8">Reveals all hidden cards so everyone can see them.</span>
-                        {{else}}
-                            <button class="btn retrospectre-blue col s3" id="hideCardButton" type="button">Hide All Cards</button>
-                            <span class="col offset-s1 s8">Hides all cards so only their respective authors can see them.</span>
-                        {{/if}}
-                    </div>
-                    <div class="row">
-                        <button class="btn retrospectre-blue col s3" id="clearRoomButton" type="button">Delete All Cards</button>
-                        <span class="col offset-s1 s8">Deletes all cards in this room, including all associated data. This action is irreversible.</span>
-                    </div>
-                    <div class="row">
-                        <button class="btn retrospectre-blue col s3" id="deleteRoomButton" type="button">Delete This Room</button>
-                        <span class="col offset-s1 s8">Deletes this room and all data within. This action is irreversible.</span>
-                    </div>
-                    <!-- TODO Extract this out -->
-                    <!-- <form class="customCategory">
-                        <div class="row">
-                            <div class="col m10">
-                                <label class="text-info center">Add Categories</label>
-                                <div id="addCategory" class="input-group center">
-                                    <input type="text" class="form-control" name="addCustomCategory" id="addCustomCategoryText" size="35" maxLength="35" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col m2 u-pad-top-10">
-                                <div id="customCategories" class="input-group-btn">
-                                    <button id="addCustomCategoryButton" type="submit" class="waves-effect retrospectre-blue btn btn-small">
-                                        <i class="material-icons add_circle">add_circle</i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col m12">
-                                <table class="responsive-table retro-stripe">
-                                    <thead class="table-header">
-                                        <tr>
-                                            <th>
-                                                Current Categories
-                                            </th>
-                                            <th class="center">
-                                                Background Color</th>
-                                            <th class="center">
-                                                Remove Category</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{#each getCategories}}
-                                            <tr>
-                                                <td>
-                                                    {{this.category}}
-                                                </td>
-                                                <td class="center">
-                                                    <input {{colorPicker this.color}}/>
-                                                </td>
-                                                <td class="center">
-                                                    <button id="removeCategory" type="button" class="btn btn-flat">
-                                                        <i class="material-icons icon-red">delete_forever</i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        {{/each}}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </form> -->
-                    <!-- End extract -->
+                    {{> categoriesSelector currentCategories=categories tracker=getTracker onCategoryCreated=onCategoryCreated onCategoryRemoved=onCategoryRemoved onColorChanged=onColorChanged}}
                 </div>
                 <div class="modal-footer"></div>
             </div>

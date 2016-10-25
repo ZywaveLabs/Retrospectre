@@ -1,18 +1,12 @@
 /* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false DEFAULT_SNACKBAR_TIMEOUT:false*/
 "use strict";
-/*
-// default categories
-var defaultCategories = [{category:"Went Well", color:"#81c784"},
-                {category:"Went Poorly", color:"#f44336"},
-              {category:"Kudoz", color:"#2196f3"}];
 
-// Template.categories.created = function() {
-//     // default categories
-//     this.currentCategories = defaultCategories;
-//     this.categoriesDep = new Tracker.Dependency();
-// };
+Template.categoriesSelector.created = function() {
+    this.currentCategories = this.data.currentCategories;
+    this.categoriesDep = this.data.tracker;
+};
 
-Template.categories.helpers({
+Template.categoriesSelector.helpers({
     colorPicker: function(color) {
         return {
             id: "cardBackgroundColor",
@@ -26,18 +20,24 @@ Template.categories.helpers({
     }
 });
 
-Template.categories.events({
+Template.categoriesSelector.events({
     "submit .customCategory": function(eve) {// eslint-disable-line
         eve.preventDefault();
         var tmpl = Template.instance();
         var customCategory = eve.target.addCustomCategory.value;
-        if(isDuplicate(tmpl, customCategory))
+        if(isDuplicate(tmpl, customCategory)){
+            SnackbarMethods.DisplayMessage("A category with that name exists",
+                DEFAULT_SNACKBAR_TIMEOUT);
             return;
+        }
         var nullStr = 0;
         if(customCategory !== undefined && customCategory.length > nullStr) {
             var range = 256;
             var colorValue = genRandomColor(range);
 
+            if(tmpl.data.onCategoryCreated !== undefined
+                && !tmpl.data.onCategoryCreated(tmpl.currentCategories, customCategory, colorValue))
+                return;
             tmpl.currentCategories.push({category:customCategory,
                 color:colorValue});
             tmpl.categoriesDep.changed();
@@ -47,13 +47,26 @@ Template.categories.events({
 
     "click #removeCategory": function() {
         var tmpl = Template.instance();
-        var numToRemove = 1;
-        tmpl.currentCategories.splice(tmpl.currentCategories.indexOf(this), numToRemove);
-        tmpl.categoriesDep.changed();
+        if(tmpl.data.onCategoryRemoved !== undefined){
+            tmpl.data.onCategoryRemoved(tmpl.currentCategories, this.category, function(allowUpdate){
+                if(allowUpdate){
+                    var numToRemove = 1;
+                    tmpl.currentCategories.splice(tmpl.currentCategories.indexOf(this), numToRemove);
+                    tmpl.categoriesDep.changed();
+                }
+            });
+        }
     },
 
     "change #cardBackgroundColor": function(eve) {
+        var tmpl = Template.instance();
+        if(tmpl.data.onColorChanged !== undefined
+            && !tmpl.data.onColorChanged(tmpl.currentCategories, this.category, eve.target.value)){
+            eve.target.value = this.color;
+            return;
+        }
         this.color = eve.target.value;
+        tmpl.categoriesDep.changed();
     }
 });
 
@@ -76,4 +89,3 @@ function isDuplicate(tmpl, customCategory){
     }
     return false;
 }
-*/

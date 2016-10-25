@@ -97,3 +97,10 @@ RoomMethods.AddCategoryToRoom = function(category, roomCode, color){
         { $push: { categories: { category: category, color: color}}}
     );
 };
+
+RoomMethods.UpdateCategoryColor = function(category, roomCode, newColor){
+    Rooms.update(
+        { roomCode: roomCode, "categories.category": category },
+        {$set: {"categories.$.color" : newColor }}
+    );
+};
