@@ -10,11 +10,13 @@
           </h4>
             {{>cardSubmitModal category=this.category}}
           </div>
-          {{#each cards this.category}}
-              <div class="row">
-                      {{>card id=_id color= ../color}}
-              </div>
-          {{/each}}
+            <div id="draggableCol" class="{{getUniqueID this.category}}" name="{{this.category}}">
+              {{#each cards this.category}}
+                  <div class="row" id="{{_id}}" position="{{this.position}}">
+                          {{>card id=_id color= ../color}}
+                  </div>
+              {{/each}}
+          </div>
         </div>
       {{/each}}
   </div>

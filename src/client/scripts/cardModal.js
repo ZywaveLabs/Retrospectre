@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false*/
+/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false Popup:false*/
 const MinCommentLen = 4;
 var EditedCard = function(thought,tags,category){
     this.thought = thought;
@@ -64,9 +64,9 @@ Template.cardModal.events({
 
     "click #deleteCardButton": function(){
         var maxWidth = 768;
-        // TODO: replace with confirmation modal - Dylan
-        if(confirm("Are You sure you want to delete this card?"))//eslint-disable-line
+        Popup.Confirm("Are you sure you want to delete this card?", function(){
             Meteor.call("deleteCard", this._id, Session.get("roomCode"), Session.get("author"));
+        });
         if($(window).width() <= maxWidth)
             $(".modal").modal("hide");
     },

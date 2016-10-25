@@ -1,4 +1,3 @@
-// /* eslint-disable */
 /* global Card: true, CardsSearchableFieldMap: true */
 
 /* If you want to make cards in a more interesting way
@@ -27,7 +26,7 @@ author - {string} Author of the card
 reveal - {boolean} If the card should be visible to everyone besides author
 comments - {object[]} Comments added to card after creation as notes
 */
-Card = function(){
+Card = function(){//eslint-disable-line
     this.roomCode = "";
     this.category = "";
     this.createdAt = new Date();
@@ -38,6 +37,7 @@ Card = function(){
     this.author = "Anonymous";
     this.reveal = false;
     this.comments = [];
+    this.position = 0;
 };
 
 // If a field is missing or undefined it will not be included in the search.
@@ -99,5 +99,10 @@ Card.prototype.shouldBeRevealed = function (reveal) {
 
 Card.prototype.withComments = function (comments) {
     this.comments = comments;
+    return this;
+};
+
+Card.prototype.withPosition = function (position) {
+    this.position = position;
     return this;
 };

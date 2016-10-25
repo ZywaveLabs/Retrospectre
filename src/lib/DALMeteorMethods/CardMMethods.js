@@ -63,5 +63,11 @@ Meteor.methods({
         if(!isModerator)
             return;
         CardMethods.DeleteAllCardsInRoomInCategory(roomCode, category);
+    },
+    updatePositionLast: function(cardId, currPosition, currCategory, newCardCategory){
+        CardMethods.UpdatePositionLast(cardId, currPosition, currCategory, newCardCategory);
+    },
+    updatePosition: function(cardId,currPosition,currCategory,newCardCategory,siblingPos){//eslint-disable-line
+        CardMethods.UpdatePosition(cardId,currPosition,currCategory,newCardCategory,siblingPos);
     }
 });
