@@ -1,5 +1,4 @@
 <template name="room">
-    {{> moderatorModal}}
     <div class="row">
         <div class="col s12">
             <div class="room-contain">
@@ -9,7 +8,28 @@
                             <div class="col s12">
                                 <div class="admin-room-actions u-pad-10">
                                     {{#if isModerator}}
-                                    <button class="btn retrospectre-blue" data-toggle="modal" data-target="#moderator-modal">Moderator Panel</button>
+                                        {{> moderatorModal}}
+                                        <a id="moderator-dropdown-button" class="dropdown-button btn retrospectre-blue" data-activates="moderator-dropdown">Moderator Actions</a>
+                                        <!-- Dropdown Structure -->
+                                        <ul id="moderator-dropdown" class="dropdown-content">
+                                            <li>
+                                                {{#if cardsHidden}}
+                                                    <a id="revealCardButton">Reveal All Cards</a>
+                                                {{else}}
+                                                    <a id="hideCardButton">Hide All Cards</a>
+                                                {{/if}}
+                                            </li>
+                                            <li>
+                                                <a id="clearRoomButton">Delete All Cards</a>
+                                            </li>
+                                            <li>
+                                                <a id="deleteRoomButton">Delete Room</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a data-toggle="modal" data-target="#moderator-modal">Category Selector</a>
+                                            </li>
+                                        </ul>
                                     {{/if}}
                                     <button class="btn retrospectre-blue" id="exportButton" type="button">Export</button>
                                 </div>
@@ -21,16 +41,16 @@
                     </div>
                 </div>
                 <div class="row">
-                 {{> cardGrid}}
-             </div>
-             <div class="row">
-               <div id="notesArea">
-                 <label for="editor">Notes</label>
-               {{#with docid}}
-                 {{> sharejsText docid=this id="editor"}}
-               {{/with}}
-               </div>
-             </div>
+                    {{> cardGrid}}
+                </div>
+                <div class="row">
+                    <div id="notesArea">
+                        <label for="editor">Notes</label>
+                        {{#with docid}}
+                            {{> sharejsText docid=this id="editor"}}
+                        {{/with}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
