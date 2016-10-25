@@ -1,5 +1,4 @@
 /* global Cards:true CardMethods:true */
-/*eslint-disable*/
 Cards = new Mongo.Collection("cards"); // eslint-disable-line
 if (Meteor.isServer) {
     Meteor.publish("cards", function(roomCode) {
@@ -101,11 +100,10 @@ CardMethods.Update = function(id, thought, newCardCategory, tags) {
     var oldCategory = cardToUpdate.category;
     if (oldCategory !== newCardCategory) {
         decrementPosition(roomCode, oldCategory, cardToUpdate.position);
-        incrementPositionB(roomCode,newCardCategory,0);
-  }
-  else{
-    updateSingleCard(id,thought,tags,category,cardToUpdate.comments,cardToUpdate.position);
-  }
+        incrementPositionB(roomCode,newCardCategory,0);//eslint-disable-line
+    }else{
+        updateSingleCard(id,thought,tags,newCardCategory,cardToUpdate.comments,cardToUpdate.position);
+    }
 };
 
 CardMethods.DeleteAllCardsInRoom = function(roomCode) {
@@ -124,53 +122,76 @@ CardMethods.DeleteAllCardsInRoomInCategory = function(roomCode, category) {
     });
 };
 
-CardMethods.UpdatePosition = function(cardId, currPosition, currCategory, newCardCategory, siblingPos) {
+CardMethods.UpdatePosition = function(cardId, currPosition, currCategory, newCardCategory, siblingPos) {//eslint-disable-line
     var roomCode = Cards.findOne({
         _id: cardId
     }).roomCode;
+    var newPosition;
     //decrement existing cards by one in currCategory
     if(currCategory === newCardCategory){
-      incrementPositionA(roomCode,currCategory,currPosition,siblingPos);
+        incrementPositionB(roomCode,currCategory,currPosition,siblingPos);// eslint-disable-line
+        newPosition = siblingPos;
     }else{
-      decrementPosition(roomCode, currCategory, currPosition);
-      incrementPositionB(roomCode,newCardCategory,siblingPos);
+        decrementPosition(roomCode, currCategory, currPosition);
+        incrementPositionA(roomCode,newCardCategory,siblingPos + 1);//eslint-disable-line
+        newPosition = siblingPos + 1;//eslint-disable-line
     }
 
     Cards.update({
         _id: cardId
     }, {
         $set: {
-            position: siblingPos,
+            position: newPosition,//eslint-disable-line
             category: newCardCategory
         }
     });
 };
-function incrementPositionA(roomCode, currCategory,currPosition,siblingPos){
+function incrementPositionA(roomCode, currCategory,siblingPos){
     Cards.update({
-      $and:[{roomCode:roomCode},{category:currCategory},{position:{$lt:currPosition}},{position:{$gte:siblingPos}}]
+        $and:[{roomCode:roomCode},{category:currCategory},{position:{$gte:siblingPos}}]
     },{$inc:{position:1}},{multi:true});
 }
 function decrementPosition(roomCode, currCategory, currPosition){
     Cards.update({
-      $and:[{roomCode:roomCode},{category:currCategory},{position:{$gt:currPosition}}]
+        $and:[{roomCode:roomCode},{category:currCategory},{position:{$gt:currPosition}}]
     },{$inc:{position:-1}},{multi:true});
 }
-function incrementPositionB(roomCode,newCardCategory,siblingPos){
+function incrementPositionB(roomCode, currCategory, currPosition, siblingPos) {
     Cards.update({
-      $and:[{roomCode:roomCode},{category:newCardCategory},{position:{$gte:siblingPos}}]
-    },{$inc:{position:1}},{multi:true});
+        $and: [{
+            roomCode: roomCode
+        }, {
+            category: currCategory
+        }, {
+            $and: [{
+                position: {
+                    $lte: siblingPos
+                }
+            }, {
+                position: {
+                    $gt: currPosition
+                }
+            }]
+        }]
+    }, {
+        $inc: {
+            position: -1
+        }
+    }, {
+        multi: true
+    });
 }
 
-function updateSingleCard(id, thought,tags,category,comments,position){
-  Cards.update({
-      _id: id
-  }, {
-      $set: {
-          text: thought,
-          tags: tags,
-          category: category,
-          comments:comments,
-          position: position
-      }
-  });
+function updateSingleCard(id, thought,tags,category,comments,position){//eslint-disable-line
+    Cards.update({
+        _id: id
+    }, {
+        $set: {
+            text: thought,
+            tags: tags,
+            category: category,
+            comments:comments,
+            position: position
+        }
+    });
 }

@@ -14,7 +14,7 @@ Template.cardGrid.onRendered(function() {
         var newCardCategory = $(target).attr("name");
         var currPosition = parseInt($(el).attr("position"));
         if (sibling === null) {
-            Meteor.call("updatePosition", cardId, currPosition, currCategory, newCardCategory,0);//eslint-disable-line
+            Meteor.call("updatePosition", cardId, currPosition, currCategory, newCardCategory,-1);//eslint-disable-line
         } else {
             var siblingPos = parseInt($(sibling).attr("position"));
             Meteor.call("updatePosition", cardId, currPosition, currCategory, newCardCategory, siblingPos);
@@ -77,7 +77,7 @@ function getContainers() {
     var categories = Rooms.findOne({"roomCode":Session.get("roomCode")}).categories;
     var containers = [];
     for (var i = 0; i < categories.length; i++) {
-        containers.push(document.querySelector("." + categories[i].replace(/\s/g, "")));
+        containers.push(document.querySelector("." + categories[i].category.replace(/\s/g, "")));
     }
     return containers;
 }
