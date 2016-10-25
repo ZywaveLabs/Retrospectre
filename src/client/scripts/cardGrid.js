@@ -1,7 +1,6 @@
 "use strict";
 /* global Cards:false Rooms:false dragula:false */
 var uniqueIdCount = 0;
-var draggableCategories = [];
 
 Template.cardGrid.onRendered(function() {
     Session.set("getUniqueID_CallCount", uniqueIdCount);
@@ -70,15 +69,15 @@ Template.cardGrid.helpers({
     },
 
     getUniqueID: function(category) {
-        draggableCategories.push(category.replace(/\s/g, ""));
         return category.replace(/\s/g, "");
     }
 });
 
 function getContainers() {
+    var categories = Rooms.findOne({"roomCode":Session.get("roomCode")}).categories;
     var containers = [];
-    for (var i = 0; i < draggableCategories.length; i++) {
-        containers.push(document.querySelector("." + draggableCategories[i]));
+    for (var i = 0; i < categories.length; i++) {
+        containers.push(document.querySelector("." + categories[i].replace(/\s/g, "")));
     }
     return containers;
 }
