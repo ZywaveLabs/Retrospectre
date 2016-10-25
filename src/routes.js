@@ -74,6 +74,46 @@ Router.map(function () {
     });
 });
 
+
+// function resetRoomModerator() {
+//   console.log('hi');
+//   this.next();
+// };
+
+//Router.onBeforeAction('customPackageHook', {where : 'server'});
+
+// Router.onBeforeAction(resetRoomModerator// or except: ['routeOne', 'routeTwo']
+// );
+// Router.onBeforeAction(function(req, res, next) {
+//   // in here next() is equivalent to this.next();
+//   console.log("HELLO");
+//   console.log("SESSON CODE: ", Session.get("roomCode"));
+//   next();
+// }, {where: 'server'});
+
+if( Meteor.isServer) {
+
+    
+Iron.Router.hooks.customPackageHook = function () {
+  console.log('hi');
+  this.next();
+};
+
+    Router.onBeforeAction('customPackageHook');
+    // Meteor.publish("yourPublishFunction", function(){ 
+    //     var id = this._session.id;
+    //     console.log("*********START************");
+    //     console.log(this);
+    //     console.log("**********END*************");
+    //     console.log(this._session.socket);
+    //     this._session.socket.on("close", Meteor.bindEnvironment(function()
+    //     {
+    //       console.log(id); // called once the user disconnects
+    //     }, function(e){console.log(e)}));
+    // });
+
+}
+
 //  If current session is on the client side then return the title of the current route taken
 if (Meteor.isClient) {
     Template.headerFooter.helpers({
