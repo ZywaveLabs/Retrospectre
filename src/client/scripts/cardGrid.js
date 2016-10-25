@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false Rooms:false dragula:false */
+/* global Cards:false Rooms:false CardsSearchableFieldMap: true dragula:false getMongoQueryObjectFromSearch: true UserMethods:false*/
 var uniqueIdCount = 0;
 
 Template.cardGrid.onRendered(function() {
@@ -22,50 +22,30 @@ Template.cardGrid.onRendered(function() {
     });
 });
 
+Template.cardGrid.onCreated(function() {
+    Session.set("searchKeyMapping", CardsSearchableFieldMap);
+});
+
 Template.cardGrid.helpers({
     getCategories: function() {
         return Rooms.findOne({
             "roomCode": Session.get("roomCode")
         }).categories;
     },
+    cards : function(category) {
+        var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
+        var author = UserMethods.getAuthor();
 
-    cards: function(category) {
-        var roomData = Rooms.findOne({
-            "roomCode": Session.get("roomCode")
-        });
-        var cards = [];
-        var author;
+        var searchQuery = getMongoQueryObjectFromSearch(CardsSearchableFieldMap);
+        var revealQuery = roomData.reveal ? [{}] : [{"reveal": true}, {"author": author},{"moderator":author}];
 
-        if (Meteor.user()) {
-            author = Meteor.user().profile.name;
-        } else {
-            author = Session.get("author");
-        }
-        if (roomData.reveal) {
-            cards = Cards.find({
-                "roomCode": Session.get("roomCode"),
-                "category": category
-            }, {
-                sort: {
-                    position: -1
-                }
-            });
-        } else {
-            cards = Cards.find({
-                "roomCode": Session.get("roomCode"),
-                "category": category,
-                $or: [{
-                    "reveal": true
-                }, {
-                    "author": author
-                }]
-            }, {
-                sort: {
-                    position: -1
-                }
-            });
-        }
-        return cards;
+        var baseQuery = {
+            "category": category,
+            $and:searchQuery,
+            $or: revealQuery
+        };
+
+        return Cards.find(baseQuery, {sort: {position:-1}}).fetch();
     },
 
     getUniqueID: function(category) {

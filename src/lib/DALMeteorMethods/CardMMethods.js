@@ -9,6 +9,7 @@ Meteor.methods({
     submitCard: function (cardObject) {
         CardMethods.SubmitCard(cardObject);
     },
+
     deleteCard: function(cardId, roomCode, author) {
         var isModerator = RoomMethods.IsModerator(roomCode, Meteor.userId());
         var cardAuthor = Cards.findOne({_id:cardId}).author;
@@ -17,7 +18,8 @@ Meteor.methods({
         if(isModerator || cardAuthor === currUser)
             CardMethods.DeleteCard(cardId);
     },
-    removeTag: function(id,tagToRemove){
+
+    removeTag: function(id, tagToRemove) {
         var cardToUpdate;
 
         cardToUpdate = Cards.findOne({_id:id});
@@ -36,19 +38,30 @@ Meteor.methods({
             cardToUpdate._id,
             {$set: {tags:newTags}});
     },
+
     submitComment : function(id,commentToAdd) {
         CardMethods.SubmitComment(id,commentToAdd);
     },
-    updateCard: function(id, thought, category, tags){
+
+    updateCard: function(id, thought, category, tags) {
         CardMethods.Update(id, thought, category, tags);
     },
-    incrementLikes: function(id){
+
+    incrementLikes: function(id) {
         CardMethods.IncrementLikes(id);
     },
+
     deleteAllCardsInRoom: function(roomCode){
+        var isModerator = RoomMethods.IsModerator(roomCode, Meteor.userId());
+        if(!isModerator)
+            return;
         CardMethods.DeleteAllCardsInRoom(roomCode);
     },
+
     deleteAllCardsInRoomInCategory: function(roomCode, category){
+        var isModerator = RoomMethods.IsModerator(roomCode, Meteor.userId());
+        if(!isModerator)
+            return;
         CardMethods.DeleteAllCardsInRoomInCategory(roomCode, category);
     },
     updatePositionLast: function(cardId, currPosition, currCategory, newCardCategory){

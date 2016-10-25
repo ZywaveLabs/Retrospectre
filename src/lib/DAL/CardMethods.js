@@ -1,6 +1,6 @@
 /* global Cards:true CardMethods:true */
 Cards = new Mongo.Collection("cards"); // eslint-disable-line
-if (Meteor.isServer) {
+if(Meteor.isServer) {
     Meteor.publish("cards", function(roomCode) {
         return Cards.find({
             "roomCode": roomCode
@@ -55,18 +55,6 @@ CardMethods.SubmitComment = function(id, comment) {
     });
 };
 
-CardMethods.AddTagToCard = function(id, text) {
-
-};
-
-CardMethods.AddTagsToCard = function(id, arrayOfTags) {
-
-};
-
-CardMethods.RemoveTagFromCard = function(id, text) {
-
-};
-
 CardMethods.IncrementLikes = function(id) {
     Cards.update({
         _id: id
@@ -78,7 +66,6 @@ CardMethods.IncrementLikes = function(id) {
 };
 
 CardMethods.ToggleReveal = function(id) {
-    // TODO: Test... also, actually use this
     var show = Cards.findOne({
         _id: id
     }).reveal;
@@ -127,7 +114,6 @@ CardMethods.UpdatePosition = function(cardId, currPosition, currCategory, newCar
         _id: cardId
     }).roomCode;
     var newPosition;
-    //decrement existing cards by one in currCategory
     if(currCategory === newCardCategory){
         incrementPositionB(roomCode,currCategory,currPosition,siblingPos);// eslint-disable-line
         newPosition = siblingPos;
