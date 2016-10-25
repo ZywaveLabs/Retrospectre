@@ -15,7 +15,7 @@ Template.cardGrid.onRendered(function() {
         var newCardCategory = $(target).attr("name");
         var currPosition = parseInt($(el).attr("position"));
         if (sibling === null) {
-            Meteor.call("updatePositionLast", cardId, currPosition, currCategory, newCardCategory);
+            Meteor.call("updatePosition", cardId, currPosition, currCategory, newCardCategory,0);//eslint-disable-line
         } else {
             var siblingPos = parseInt($(sibling).attr("position"));
             Meteor.call("updatePosition", cardId, currPosition, currCategory, newCardCategory, siblingPos);

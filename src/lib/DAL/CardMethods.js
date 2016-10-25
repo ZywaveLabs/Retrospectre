@@ -36,8 +36,7 @@ CardMethods.DeleteCard = function(cardId) {
         _id: cardId
     });
     var roomCode = cardToDel.roomCode;
-    var cat = cardToDel.category;
-    updateCardPosition(roomCode, cat, cardToDel.position, -1);
+    decrementPosition(roomCode, cardToDel.category, cardToDel.position);
     Cards.remove(cardId);
 };
 
@@ -94,16 +93,15 @@ CardMethods.ToggleReveal = function(id) {
     });
 };
 
-CardMethods.Update = function(id, thought, category, tags) {
+CardMethods.Update = function(id, thought, newCardCategory, tags) {
     var cardToUpdate = Cards.findOne({
         _id: id
     });
     var roomCode = cardToUpdate.roomCode;
-    var cat = cardToUpdate.category;
-    if (cat !== currCategory) {
-        updateCardPosition(roomCode, cat, cardToUpdate.position, -1);
-        updateCardPosition(roomCode, category, -1, 1);
-        updateSingleCard(id,thought,tags,category,cardToUpdate.comments,0);
+    var oldCategory = cardToUpdate.category;
+    if (oldCategory !== newCardCategory) {
+        decrementPosition(roomCode, oldCategory, cardToUpdate.position);
+        incrementPositionB(roomCode,newCardCategory,0);
   }
   else{
     updateSingleCard(id,thought,tags,category,cardToUpdate.comments,cardToUpdate.position);
@@ -126,85 +124,41 @@ CardMethods.DeleteAllCardsInRoomInCategory = function(roomCode, category) {
     });
 };
 
-CardMethods.UpdatePositionLast = function(cardId, currPosition, currCategory, newCardCategory) {
-    var roomCode = Cards.findOne({
-        _id: cardId
-    }).roomCode;
-    //change cards whose position is greater than curr card position decrement -1
-    //updates the cards of t original category
-    updateCardPosition(roomCode,currCategory,currPosition,-1);
-    //find last card in category
-    var cards = Cards.find({
-        $and: [{
-            roomCode: roomCode
-        }, {
-            category: newCardCategory
-        }]
-    }, {
-        sort: {
-            position: -1
-        }
-    });
-    cards = cards.fetch();
-    var lastCard = cards[0];
-    if (lastCard === null || lastCard === undefined) {
-        Cards.update({
-            _id: cardId
-        }, {
-            $set: {
-                position: 0,
-                category: newCardCategory
-            }
-        });
-    } else {
-        Cards.update({
-            _id: cardId
-        }, {
-            $set: {
-                position: parseInt(lastCard.position) + 1,
-                category: newCardCategory
-            }
-        });
-    }
-};
-
 CardMethods.UpdatePosition = function(cardId, currPosition, currCategory, newCardCategory, siblingPos) {
     var roomCode = Cards.findOne({
         _id: cardId
     }).roomCode;
     //decrement existing cards by one in currCategory
-    updateCardPosition(roomCode, currCategory, currPosition, -1);
-    //increment new category cards by 1
-    updateCardPosition(roomCode, newCardCategory, siblingPos, 1);
+    if(currCategory === newCardCategory){
+      incrementPositionA(roomCode,currCategory,currPosition,siblingPos);
+    }else{
+      decrementPosition(roomCode, currCategory, currPosition);
+      incrementPositionB(roomCode,newCardCategory,siblingPos);
+    }
 
     Cards.update({
         _id: cardId
     }, {
         $set: {
-            position: siblingPos + 1,
+            position: siblingPos,
             category: newCardCategory
         }
     });
 };
-
-function updateCardPosition(roomCode, category, position, inc) {
+function incrementPositionA(roomCode, currCategory,currPosition,siblingPos){
     Cards.update({
-        $and: [{
-            roomCode: roomCode
-        }, {
-            category: category
-        }, {
-            position: {
-                $gt: position
-            }
-        }]
-    }, {
-        $inc: {
-            position: inc
-        }
-    }, {
-        multi: true
-    });
+      $and:[{roomCode:roomCode},{category:currCategory},{position:{$lt:currPosition}},{position:{$gte:siblingPos}}]
+    },{$inc:{position:1}},{multi:true});
+}
+function decrementPosition(roomCode, currCategory, currPosition){
+    Cards.update({
+      $and:[{roomCode:roomCode},{category:currCategory},{position:{$gt:currPosition}}]
+    },{$inc:{position:-1}},{multi:true});
+}
+function incrementPositionB(roomCode,newCardCategory,siblingPos){
+    Cards.update({
+      $and:[{roomCode:roomCode},{category:newCardCategory},{position:{$gte:siblingPos}}]
+    },{$inc:{position:1}},{multi:true});
 }
 
 function updateSingleCard(id, thought,tags,category,comments,position){
