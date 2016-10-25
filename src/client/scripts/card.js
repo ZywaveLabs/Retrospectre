@@ -9,6 +9,13 @@ Template.card.helpers({
 });
 
 Template.card.events({
+    "click .card-panel": function() {
+      // This code is used to toggle modal on a mobile/small screen resolution
+        var maxwidth = 768;
+        if ($(window).width() < maxwidth) {
+            $("div.modal#" + this._id).modal("toggle");
+        }
+    },
     "click .disable-editmode": function() {
         Session.set("editCardMode", false);
     },
