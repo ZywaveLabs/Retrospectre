@@ -1,4 +1,7 @@
 <template name="room">
+    {{#if isModerator}}
+        {{> moderatorModal}}
+    {{/if}}
     <div class="row">
         <div class="col s12">
             <div class="room-contain">
@@ -8,7 +11,6 @@
                             <div class="col s12">
                                 <div class="admin-room-actions u-pad-10">
                                     {{#if isModerator}}
-                                        {{> moderatorModal}}
                                         <a id="moderator-dropdown-button" class="dropdown-button btn retrospectre-blue" data-activates="moderator-dropdown">Moderator Actions</a>
                                         <!-- Dropdown Structure -->
                                         <ul id="moderator-dropdown" class="dropdown-content">
