@@ -38,8 +38,9 @@ Template.room.helpers({
     },
 
     isModerator: function(){
-        var room = Rooms.findOne({"roomCode": Session.get("roomCode")});
-        return room.moderator === UserMethods.getAuthor();
+        console.log("HELLLOOOOOOOOOOOO");
+        console.log(Meteor.call("isModerator", Session.get("roomCode")));
+        return Meteor.call("isModerator", Session.get("roomCode"));
     },
 
     cardsHidden: function(){

@@ -36,6 +36,8 @@ Router.route("/room/:_roomNumber", {
     onBeforeAction: function (){
         if(RoomMethods.RoomExists(this.params._roomNumber)){
             Session.set("roomCode", this.params._roomNumber);
+
+            Meteor.subscribe("yourPublishFunction", Session.get("roomCode"));
             this.next();
         }else{
             SnackbarMethods.DisplayMessage("Room does not exist, redirected to home", DEFAULT_SNACKBAR_TIMEOUT);
@@ -80,37 +82,44 @@ Router.map(function () {
 //   this.next();
 // };
 
-//Router.onBeforeAction('customPackageHook', {where : 'server'});
+// Router.onBeforeAction('customPackageHook', {where : 'server'});
 
 // Router.onBeforeAction(resetRoomModerator// or except: ['routeOne', 'routeTwo']
-// );
-// Router.onBeforeAction(function(req, res, next) {
-//   // in here next() is equivalent to this.next();
-//   console.log("HELLO");
-//   console.log("SESSON CODE: ", Session.get("roomCode"));
-//   next();
-// }, {where: 'server'});
+//);
+Router.onBeforeAction(function(req, res, next) {
+  // in here next() is equivalent to this.next();
+  if(!req.url.startsWith("/room/" + Session.get("roomCode"))) {
+    console.log("RESET MODERATOR NOW");
+    //console.log(Meteor.call("isModerator"));
+    //console.log(Session);
+  }
+  next();
+});
 
 if( Meteor.isServer) {
 
-    
-Iron.Router.hooks.customPackageHook = function () {
-  console.log('hi');
-  this.next();
-};
 
-    Router.onBeforeAction('customPackageHook');
-    // Meteor.publish("yourPublishFunction", function(){ 
-    //     var id = this._session.id;
-    //     console.log("*********START************");
-    //     console.log(this);
-    //     console.log("**********END*************");
-    //     console.log(this._session.socket);
-    //     this._session.socket.on("close", Meteor.bindEnvironment(function()
-    //     {
-    //       console.log(id); // called once the user disconnects
-    //     }, function(e){console.log(e)}));
-    // });
+    // Iron.Router.hooks.customPackageHook = function () {
+    //   console.log('hi ASLKS');
+    //   this.next();
+    // };
+
+    // Router.onBeforeAction('customPackageHook');
+    Meteor.publish("yourPublishFunction", function(room){ 
+        var id = this._session.id;
+        //var room = Session.get("roomCode");
+        console.log("*********START************");
+        console.log(room);
+        console.log(id);
+        console.log("**********END*************");
+        //console.log(this._session.socket);
+        this._session.socket.on("close", Meteor.bindEnvironment(function()
+        {
+          console.log(id); // called once the user disconnects
+          console.log(room);
+          // if moderator reset
+        }, function(e){console.log(e)}));
+    });
 
 }
 
