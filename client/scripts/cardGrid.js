@@ -1,6 +1,8 @@
 "use strict";
 /* global Cards:false Rooms:false CardsSearchableFieldMap: true dragula:false getMongoQueryObjectFromSearch: true UserMethods:false*/
 var uniqueIdCount = 0;
+var MAX_COL_PER_ROW = 4;
+var rowOfCategories = [];
 
 Template.cardGrid.onRendered(function() {
     Session.set("getUniqueID_CallCount", uniqueIdCount);
@@ -32,13 +34,24 @@ Template.cardGrid.helpers({
             "roomCode": Session.get("roomCode")
         }).categories;
     },
+
+    getRow: function(){
+        var categories = Rooms.findOne(
+          {"roomCode": Session.get("roomCode")}
+      ).categories;
+        var numOfRowsOfCategories = Math.floor(MAX_COL_PER_ROW / categories.length);
+
+        numOfRowsOfCategories += MAX_COL_PER_ROW % categories.length;
+        rowOfCategories = populateRows(rowOfCategories,numOfRowsOfCategories,categories);
+        return rowOfCategories;
+    },
+
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var author = UserMethods.getAuthor();
 
         var searchQuery = getMongoQueryObjectFromSearch(CardsSearchableFieldMap);
-        var revealQuery = roomData.reveal ? [{}] : [{"reveal": true}, {"author": author},{"moderator":author}];
-
+        var revealQuery = (roomData.reveal || roomData.owner === Meteor.userId()) ? [{}] : [{"reveal": true}, {"author": author}];//eslint-disable-line
         var baseQuery = {
             "category": category,
             $and:searchQuery,
@@ -50,6 +63,19 @@ Template.cardGrid.helpers({
 
     getUniqueID: function(category) {
         return category.replace(/\s/g, "");
+    },
+
+    getColSpacing: function(category){
+        var catLength;
+        var materializeGridSize = 12;
+        for(var i = 0; i < rowOfCategories.length; i++){
+            var innerArray = rowOfCategories[i];
+            catLength = innerArray.length;
+            for(var j = 0; j < innerArray.length; j++){
+                if(innerArray[j].category === category)
+                    return  Math.floor(materializeGridSize / catLength);
+            }
+        }
     }
 });
 
@@ -60,4 +86,23 @@ function getContainers() {
         containers.push(document.querySelector("." + categories[i].category.replace(/\s/g, "")));
     }
     return containers;
+}
+
+function populateRows(rowsOfCategories,numOfRowsOfCategories,categories){
+    var index = 0;
+    /* creates an array of subarray
+    *  each subarray holds category
+    *  im using this technique to creates
+    *  a more bootstrap grid view
+    */
+    for (var i = 0; i < numOfRowsOfCategories; i++) {
+        rowsOfCategories[i] = new Array();
+    }
+    for (var j = 0; j < categories.length; index++) {
+        for (var k = 0; k < MAX_COL_PER_ROW && j < categories.length; k++) {
+            rowsOfCategories[index][k] = categories[j];
+            j++;
+        }
+    }
+    return rowsOfCategories;
 }
