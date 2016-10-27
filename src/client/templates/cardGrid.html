@@ -1,15 +1,15 @@
 <template name="cardGrid">
   <div id="displayGrid" class="row hide-on-med-and-down">
-      {{#each getCategories}}
-        <div class="col m4" id="cardCol">
-          <div class="row">
+      {{#each getRow}}
+    <div class="row">
+        {{#each this}}
+        <div class="col m{{getColSpacing this.category}}" id="cardCol">
             <h4>{{this.category}}
             <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}">
                 <i class="material-icons add-card">add_circle</i>
             </span>
           </h4>
             {{>cardSubmitModal category=this.category}}
-          </div>
             <div id="draggableCol" class="{{getUniqueID this.category}}" name="{{this.category}}">
               {{#each cards this.category}}
                   <div class="row" id="{{_id}}" position="{{this.position}}">
@@ -18,6 +18,8 @@
               {{/each}}
           </div>
         </div>
+        {{/each}}
+      </div>
       {{/each}}
   </div>
   <div id="displayGrid">

@@ -20,6 +20,7 @@ Template.moderatorModal.helpers({
     onCategoryRemoved: function() {
         return function(currentCategories, categoryName, allowUpdate) {
             Popup.Confirm("Delete this category - " + categoryName, function(){
+                Meteor.call("deleteAllCardsInRoomInCategory",Session.get("roomCode"),categoryName);
                 Meteor.call("deleteCategoryFromRoom", categoryName, Session.get("roomCode"));
                 allowUpdate(true);
             }, function(){
