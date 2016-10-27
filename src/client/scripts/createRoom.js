@@ -10,15 +10,23 @@ var categoriesDep = new Tracker.Dependency();
 
 Template.createRoom.onCreated(function() {
     this.subscribe("rooms");
-    Meteor.call("generateNewRoomCode", function(error, result) {
-        if (!error) {
-            Session.set("newRoomCode", result);
-            Session.set("roomCodeAvailable", true);
-        } else {
-            SnackbarMethods.DisplayMessage("Error generating new room code, " +
-                "please check console for details", DEFAULT_SNACKBAR_TIMEOUT, error);
-        }
-    });
+    if(Session.get("newRoomCode") === undefined){
+        Meteor.call("generateNewRoomCode", function(error, result) {
+            if (!error) {
+                Session.set("newRoomCode", result);
+                Session.set("roomCodeAvailable", true);
+            } else {
+                SnackbarMethods.DisplayMessage("Error generating new room code, " +
+                    "please check console for details", DEFAULT_SNACKBAR_TIMEOUT, error);
+            }
+        });
+    }else{
+        var newRoomCode = Session.get("newRoomCode");
+        var show = (newRoomCode !== null && newRoomCode !== "" &&
+            !RoomMethods.RoomExists(newRoomCode));
+
+        Session.set("roomCodeAvailable", show);
+    }
 });
 
 Template.createRoom.helpers({

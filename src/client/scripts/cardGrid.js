@@ -51,8 +51,7 @@ Template.cardGrid.helpers({
         var author = UserMethods.getAuthor();
 
         var searchQuery = getMongoQueryObjectFromSearch(CardsSearchableFieldMap);
-        var revealQuery = roomData.reveal ? [{}] : [{"reveal": true}, {"author": author},{"moderator":author}];
-
+        var revealQuery = (roomData.reveal || roomData.owner === Meteor.userId()) ? [{}] : [{"reveal": true}, {"author": author}];//eslint-disable-line
         var baseQuery = {
             "category": category,
             $and:searchQuery,
@@ -66,11 +65,17 @@ Template.cardGrid.helpers({
         return category.replace(/\s/g, "");
     },
 
-    getColSpacing: function(){
-        console.log(rowOfCategories);
-        var catLength = Rooms.findOne({"roomCode":Session.get("roomCode")}).categories.length;
+    getColSpacing: function(category){
+        var catLength;
         var materializeGridSize = 12;
-        return  Math.floor(materializeGridSize / catLength);
+        for(var i = 0; i < rowOfCategories.length; i++){
+            var innerArray = rowOfCategories[i];
+            catLength = innerArray.length;
+            for(var j = 0; j < innerArray.length; j++){
+                if(innerArray[j].category === category)
+                    return  Math.floor(materializeGridSize / catLength);
+            }
+        }
     }
 });
 

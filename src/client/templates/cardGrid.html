@@ -3,7 +3,7 @@
       {{#each getRow}}
     <div class="row">
         {{#each this}}
-        <div class="col m{{getColSpacing}}" id="cardCol">
+        <div class="col m{{getColSpacing this.category}}" id="cardCol">
             <h4>{{this.category}}
             <span data-toggle="modal" data-target="#submit_{{getUniqueID this.category}}">
                 <i class="material-icons add-card">add_circle</i>
