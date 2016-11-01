@@ -32,8 +32,7 @@ Template.categoriesSelector.events({
         }
         var nullStr = 0;
         if(customCategory !== undefined && customCategory.length > nullStr) {
-            var range = 256;
-            var colorValue = genRandomColor(range);
+            var colorValue = genRandomColor();
 
             if(tmpl.data.onCategoryCreated !== undefined
                 && !tmpl.data.onCategoryCreated(tmpl.currentCategories, customCategory, colorValue))
@@ -70,16 +69,21 @@ Template.categoriesSelector.events({
     }
 });
 
-function genRandomColor(range){
+function genRandomColor(){
+    // Get a random number between 0 and 255
+    var range = 256;
     var r = Math.floor(Math.random() * (range));
     var g = Math.floor(Math.random() * (range));
     var b = Math.floor(Math.random() * (range));
-    var base = 16;// prints to hex
-    var hexDigits = 2;
+
+    var base = 16;// hex
+    var hexDigits = 2; // 2 digits long, required format for HTML e.g. '0F' instead of just 'F'
+
+    // Make sure each base color (r, g, b) is 2 digits
     r = ("00" + r.toString(base)).substr(-hexDigits);
     g = ("00" + g.toString(base)).substr(-hexDigits);
     b = ("00" + b.toString(base)).substr(-hexDigits);
-    return "#" + r + g + b;
+    return "#" + r + g + b; // Combine them into a single hex color string
 }
 
 function isDuplicate(tmpl, customCategory){
