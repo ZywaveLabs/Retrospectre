@@ -75,8 +75,11 @@ function genRandomColor(range){
     var g = Math.floor(Math.random() * (range));
     var b = Math.floor(Math.random() * (range));
     var base = 16;// prints to hex
-    return "#" + r.toString(base) +
-            g.toString(base) + b.toString(base);
+    var hexDigits = 2;
+    r = ("00" + r.toString(base)).substr(-hexDigits);
+    g = ("00" + g.toString(base)).substr(-hexDigits);
+    b = ("00" + b.toString(base)).substr(-hexDigits);
+    return "#" + r + g + b;
 }
 
 function isDuplicate(tmpl, customCategory){
