@@ -64,11 +64,12 @@ Template.cardModal.events({
 
     "click #deleteCardButton": function(){
         var maxWidth = 768;
-        Popup.Confirm("Are you sure you want to delete this card?", function(){
-            Meteor.call("deleteCard", this._id, Session.get("roomCode"), Session.get("author"));
+        var _id = this._id;
+        Popup.Confirm("Delete this card", function(){
+            if($(window).width() <= maxWidth)
+                $(".modal").modal("hide");
+            Meteor.call("deleteCard", _id, Session.get("roomCode"), Session.get("author"));
         });
-        if($(window).width() <= maxWidth)
-            $(".modal").modal("hide");
     },
 
     "click #removeTag": function(e){
