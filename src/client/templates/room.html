@@ -10,6 +10,7 @@
                         <div class="row">
                             <div class="col s12">
                                 <div class="admin-room-actions u-pad-10">
+                                    <a id="show-users-button" href="#" data-activates="slide-out" class="btn retrospectre-blue button-collapse">See Users</a>
                                     {{#if isModerator}}
                                         <a id="moderator-dropdown-button" class="dropdown-button btn retrospectre-blue" data-activates="moderator-dropdown">Moderator Actions</a>
                                         <!-- Dropdown Structure -->
@@ -54,6 +55,9 @@
                     </div>
                 </div>
             </div>
+            <ul id="slide-out" class="side-nav">
+              <li>Users Currently in This Room</li>
+            </ul>
         </div>
     </div>
 </template>

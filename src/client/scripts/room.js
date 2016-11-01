@@ -20,7 +20,8 @@ Template.room.onRendered(function() {
         gutter: 0,
         belowOrigin: false,
         alignment: "left"
-    });
+    }),
+    $(".button-collapse").sideNav();
 });
 
 Template.room.helpers({
