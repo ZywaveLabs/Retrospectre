@@ -4,11 +4,24 @@
 *@purpose To provide the room template with data to display
 **/
 
+var isModReactiveVarHelper;
+
 Template.room.onCreated(function () {
     Meteor.autorun(function() {
         Meteor.subscribe("cards", Session.get("roomCode"));
     });
+
+    // A reactive var is for isModerator variable so the server can validate
+    // the moderator and and have the clients update appropriately
+    this.isUserRoomModerator = new ReactiveVar();
+    this.isUserRoomModerator.set(false);
+    isModReactiveVarHelper = this.isUserRoomModerator;
+
+    Meteor.call('isModerator', Session.get("roomCode"), function(error, response){
+            isModReactiveVarHelper.set(response);
+    });
 });
+
 
 Template.room.helpers({
 
@@ -17,6 +30,7 @@ Template.room.helpers({
             {"roomCode": Session.get("roomCode")}
         ).categories;
     },
+
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var cards = [];
@@ -37,10 +51,12 @@ Template.room.helpers({
         return cards;
     },
 
-    isModerator: function(){
-        console.log("HELLLOOOOOOOOOOOO");
-        console.log(Meteor.call("isModerator", Session.get("roomCode")));
-        return Meteor.call("isModerator", Session.get("roomCode"));
+    isModerator: function() {
+        return Template.instance().isUserRoomModerator.get();
+    },
+
+    displayClaimModeratorButton: function() {
+        return Rooms.findOne({"roomCode": Session.get("roomCode")}).moderator === "";
     },
 
     cardsHidden: function(){
@@ -58,24 +74,12 @@ Template.room.events({
         Meteor.call("hideCards", Session.get("roomCode"));
     },
 
-    "click .tag": function(e){
-        e.stopPropagation();
-        filterSingleTag(e.toElement.innerHTML);
-    },
-
-    "submit #tagSearchForm": function(e){
-        e.preventDefault();
-        var tags = e.target.filters.value.split(",");
-
-        tags = tags.map(function(element){
-            return element.trim();
+    "click #claimModeratorButton": function() {
+        Meteor.call("claimModerator", Session.get("roomCode"), function(error, result) {
+            if(!error) {
+                isModReactiveVarHelper.set(result);
+            }
         });
-        filterMultipleTags(tags);
-    },
-
-    "click #clearFilter": function(){
-        clearFilter();
-        $("#filters").val("");
     },
 
     "click #exportButton": function() {
@@ -84,44 +88,3 @@ Template.room.events({
         Router.go("/room/" + roomCode + "/export");
     }
 });
-
-/**
-*@param {string} tag - tag to filter cards by
-*Filters cards by the tag given
-**/
-function filterSingleTag(tag){
-    filterMultipleTags([tag]);
-    $("#filters").val(tag);
-}
-
-/**
-*@param {string[]} tags - Array of strings containing tags to filter by
-*Filters displayed cards by tags
-**/
-function filterMultipleTags(tags){
-    var numCards = $(".card-panel").length;
-    var indexFound = 0;
-    for(var i = 0; i < numCards;i++){
-        var compTags;
-        var found;
-
-        found = false;
-        compTags = $(".card-panel").eq(i).find(".tag");
-        for(var j = 0; j < compTags.length; j++){
-            if(tags.indexOf(compTags[j].innerHTML) >= indexFound)
-                found = true;
-        }
-        if(!found)
-            $(".card-panel").eq(i).hide();
-        else if (found)
-            $(".card-panel").eq(i).show();
-    }
-}
-
-/**
-*Clears filters field and show all cards
-**/
-function clearFilter(){
-    $("#filters").val("");
-    $(".card-panel").show();
-}

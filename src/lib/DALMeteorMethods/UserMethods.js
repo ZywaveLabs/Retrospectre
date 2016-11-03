@@ -15,5 +15,5 @@ UserMethods.getUserImage = function(user){
 };
 
 UserMethods.getAuthor = function(){
-  return Meteor.user() ? Meteor.user().profile.name:Session.get("author");
+  return Meteor.user() ? Meteor.user().profile.name : Session.get("author");
 };

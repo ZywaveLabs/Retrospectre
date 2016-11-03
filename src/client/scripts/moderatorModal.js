@@ -32,11 +32,15 @@ Template.moderatorModal.events({
 
     "click #deleteRoomButton": function(){
         var roomCode = Session.get("roomCode");
-        Popup.Confirm("Delete this room - " + roomCode, function(){
-            Router.go("/");
-            Meteor.call("deleteSharedTextForRoom", roomCode, function(){
-                Meteor.call("deleteRoom", roomCode);
-            });
+        Popup.Confirm("Delete this room - " + roomCode, function(error, result){
+            if(!error) {
+                Router.go("/");
+                Meteor.call("deleteSharedTextForRoom", roomCode, function(error, result){
+                    if(!error) {
+                        Meteor.call("deleteRoom", roomCode);
+                    }
+                });
+            }
         });
     }
 });

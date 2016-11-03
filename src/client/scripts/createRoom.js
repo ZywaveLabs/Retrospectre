@@ -88,13 +88,16 @@ Template.createRoom.events({
                 .withRoomCode(roomId)
                 .withCategories(categories)
                 .withRevealStatusSetTo(false)
-                .moderatedBy(UserMethods.getAuthor());
+                .moderatedBy(Meteor.connection._lastSessionId);
 
         Meteor.call("createRoom", room, function(err,result){
-            Session.set("roomCode", roomId);
-            Router.go("/room/" + roomId);
-            if(!err)
+            if(err) {
+                SnackbarMethods.DisplayMessage("Ummmm...somthing bad happened @(~_~)@", DEFAULT_SNACKBAR_TIMEOUT);  
+            } else {
+                Session.set("roomCode", roomId);
+                Router.go("/room/" + roomId);
                 Session.set("docId",result);
+            }
         });
     },
 
