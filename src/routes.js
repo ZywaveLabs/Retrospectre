@@ -92,8 +92,6 @@ if(Meteor.isServer) {
             if(RoomMethods.IsModerator(roomCode, id)) {
                 RoomMethods.ResetModerator(roomCode);
             }
-
-            //Meteor.call("resetModeratorOnResetConnection", roomCode, id);
         }, function(e){}));
     });
 
