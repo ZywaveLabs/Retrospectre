@@ -35,8 +35,8 @@ Template.moderatorModal.events({
         Popup.Confirm("Delete this room - " + roomCode, function(error, result){
             if(!error) {
                 Router.go("/");
-                Meteor.call("deleteSharedTextForRoom", roomCode, function(error, result){
-                    if(!error) {
+                Meteor.call("deleteSharedTextForRoom", roomCode, function(err, res){
+                    if(!err) {
                         Meteor.call("deleteRoom", roomCode);
                     }
                 });

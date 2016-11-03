@@ -92,7 +92,7 @@ Template.createRoom.events({
 
         Meteor.call("createRoom", room, function(err,result){
             if(err) {
-                SnackbarMethods.DisplayMessage("Ummmm...somthing bad happened @(~_~)@", DEFAULT_SNACKBAR_TIMEOUT);  
+                SnackbarMethods.DisplayMessage("Ummmm...somthing bad happened @(~_~)@", DEFAULT_SNACKBAR_TIMEOUT);
             } else {
                 Session.set("roomCode", roomId);
                 Router.go("/room/" + roomId);

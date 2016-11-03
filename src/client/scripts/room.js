@@ -17,8 +17,8 @@ Template.room.onCreated(function () {
     this.isUserRoomModerator.set(false);
     isModReactiveVarHelper = this.isUserRoomModerator;
 
-    Meteor.call('isModerator', Session.get("roomCode"), function(error, response){
-            isModReactiveVarHelper.set(response);
+    Meteor.call("isModerator", Session.get("roomCode"), function(error, response){
+        isModReactiveVarHelper.set(response);
     });
 });
 

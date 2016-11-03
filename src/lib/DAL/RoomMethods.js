@@ -81,10 +81,6 @@ RoomMethods.HideCards = function(roomCode){
     }});
 };
 
-RoomMethods.isRoomModerated = function(roomCode) {
-    return Rooms.findOne({"roomCode": roomCode}).moderator !== "";
-}
-
 RoomMethods.IsModerator = function(roomCode, moderatorID){
     var room = Rooms.findOne({"roomCode":roomCode});
     return room.moderator === moderatorID;
@@ -95,10 +91,9 @@ RoomMethods.ClaimModerator = function(roomCode, moderatorId) {
     if(currentModerator === "") {
         Rooms.update({roomCode: roomCode}, {$set:{moderator: moderatorId}});
         return true;
-    } else {
-        return false;
     }
-}
+    return false;
+};
 
 RoomMethods.ResetModerator = function(roomCode) {
     Rooms.update({roomCode: roomCode}, {$set:{moderator: ""}});

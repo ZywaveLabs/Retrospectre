@@ -77,21 +77,24 @@ Router.map(function () {
 });
 
 Router.onBeforeAction(function(req, res, next) {
-  var roomCode = Session.get("roomCode");
-  // resets moderator if user redirects out of room
-  if(roomCode !== undefined && !req.url.startsWith("/room/" + roomCode) && !req.url.startsWith("/create-room")) {
-      Meteor.call("resetModerator", roomCode);
-  }
-  next();
+    var roomCode = Session.get("roomCode");
+    // resets moderator if user redirects out of room
+    if(roomCode !== undefined && !req.url.startsWith("/room/" + roomCode) && !req.url.startsWith("/create-room")) {
+        Meteor.call("resetModerator", roomCode);
+    }
+    next();
 });
 
-if( Meteor.isServer) {
-    Meteor.publish("resetModeratorOnReset", function(roomCode){ 
+if(Meteor.isServer) {
+    Meteor.publish("resetModeratorOnReset", function(roomCode){
         var id = this._session.id;
-        this._session.socket.on("close", Meteor.bindEnvironment(function()
-        {
-          Meteor.call("resetModeratorOnResetConnection", roomCode, id);
-        }, function(e){console.log(e)}));
+        this._session.socket.on("close", Meteor.bindEnvironment(function() {
+            if(RoomMethods.IsModerator(roomCode, id)) {
+                RoomMethods.ResetModerator(roomCode);
+            }
+
+            //Meteor.call("resetModeratorOnResetConnection", roomCode, id);
+        }, function(e){}));
     });
 
 }
