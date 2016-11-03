@@ -19,6 +19,13 @@ table, th ,td{
 div.filter-form{
     text-align:center;
 }
+#show-users-button{
+  float:left;
+}
+.side-nav{
+  transform: translateX(0px) !important;
+  text-align: center;
+}
 
 
 i.fa-plus-circle {
