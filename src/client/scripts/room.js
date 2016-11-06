@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false Rooms:false Popup: false*/
+/* global Cards:false Rooms:false Popup: false UserMethods:false*/
 /**
  *@purpose To provide the room template with data to display
  **/
@@ -7,9 +7,31 @@
 Template.room.onCreated(function() {
     Meteor.autorun(function() {
         Meteor.subscribe("cards", Session.get("roomCode"));
+        if (Meteor.user()) {
+            Meteor.call("addUserToRoom", Session.get("author"), Session.get("roomCode"));
+        }
     });
+    if (Session.get("author")) {
+        Meteor.call("addUserToRoom", Session.get("author"), Session.get("roomCode"), function(err, res) {
+            if (err) {
+                return;
+            }
+            if (res) {
+                Session.set("aliasID", res);
+            }
+        });
+    }
 });
 
+Template.room.onDestroyed(function() {
+    if (Meteor.user())
+        Meteor.call("removeUserFromRoom", Meteor.userId(), Session.get("roomCode"));
+    if (Session.get("aliasID")) {
+        Meteor.call("removeUserFromRoom", Session.get("aliasID"), Session.get("roomCode"), function() {
+            Session.set("aliasID", null);
+        });
+    }
+});
 
 Template.room.onRendered(function() {
     $(".dropdown-button").dropdown({
@@ -78,6 +100,10 @@ Template.room.helpers({
             "roomCode": Session.get("roomCode")
         });
         return !room.reveal;
+    },
+
+    getUsersInRoom: function() {
+        UserMethods.getUsersInRoom(Session.get("roomCode"));
     }
 });
 
@@ -111,5 +137,9 @@ Template.room.events({
                 Meteor.call("deleteRoom", roomCode);
             });
         });
+    },
+
+    "click #login-buttons-logout": function() {
+        Meteor.call("removeUserFromRoom", Meteor.userId(), Session.get("roomCode"));
     }
 });

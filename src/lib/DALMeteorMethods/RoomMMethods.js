@@ -1,4 +1,4 @@
-/* global RoomMethods: true CardMethods */
+/* global RoomMethods: true CardMethods UserMethods:false*/
 
 Meteor.methods({ // eslint-disable-line
     createRoom: function (roomObject) {
@@ -43,5 +43,14 @@ Meteor.methods({ // eslint-disable-line
         if(!isModerator)
             return;
         RoomMethods.UpdateCategoryColor(category, roomCode, newColor);
+    },
+    addUserToRoom: function(author,roomCode){
+        return UserMethods.addUserToRoom(author,roomCode);
+    },
+    removeUserFromRoom: function(id,roomCode){
+        UserMethods.removeUserFromRoom(id,roomCode);
+    },
+    changeAlias: function(aliasID, newAlias){
+        UserMethods.changeAlias(aliasID,newAlias);
     }
 });
