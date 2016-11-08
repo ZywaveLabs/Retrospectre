@@ -16,9 +16,8 @@ Template.room.onCreated(function() {
             if (err) {
                 return;
             }
-            if (res) {
+            if (res)
                 Session.set("aliasID", res);
-            }
         });
     }
 });
@@ -103,7 +102,7 @@ Template.room.helpers({
     },
 
     getUsersInRoom: function() {
-        UserMethods.getUsersInRoom(Session.get("roomCode"));
+        return UserMethods.getUsersInRoom(Session.get("roomCode")).fetch();
     }
 });
 
@@ -137,9 +136,5 @@ Template.room.events({
                 Meteor.call("deleteRoom", roomCode);
             });
         });
-    },
-
-    "click #login-buttons-logout": function() {
-        Meteor.call("removeUserFromRoom", Meteor.userId(), Session.get("roomCode"));
     }
 });

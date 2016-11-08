@@ -14,17 +14,15 @@ Template.loginModal.events({
         $("#LogInModal").modal("hide");
         SnackbarMethods.DisplayMessage("Alias set", DEFAULT_SNACKBAR_TIMEOUT);
         if (Session.get("roomCode")) {
-            if (!Session.get("aliasID")) {
-                Meteor.call("addUserToRoom", Session.get("author"), Session.get("roomCode"), function(err, res) {
-                    if (err) {
-                        return;
-                    }
-                    if (res) {
-                        Session.set("aliasID", res);
-                    }
-                });
-            } else {
+            if (Session.get("aliasID"))
                 Meteor.call("changeAlias", Session.get("aliasID"), Session.get("author"));
+            else {
+                Meteor.call("addUserToRoom", Session.get("author"), Session.get("roomCode"), function(err, res) {
+                    if (err)
+                        return;
+                    if (res)
+                        Session.set("aliasID", res);
+                });
             }
         }
     }
