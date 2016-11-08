@@ -6,6 +6,21 @@ var EditedCard = function(thought,tags,category){
     this.tags = tags;
     this.category = category;
 };
+
+
+// var isModReactiveVarHelper;
+
+// Template.cardModal.onCreated(function () {
+//     this.isUserRoomModerator = new ReactiveVar();
+//     this.isUserRoomModerator.set(false);
+//     isModReactiveVarHelper = this.isUserRoomModerator;
+
+//     Meteor.call("isModerator", Session.get("roomCode"), function(error, response){
+//         console.log("Response: ", response);
+//         isModReactiveVarHelper.set(response);
+//     });
+// });
+
 Template.cardModal.helpers({
     cardModalInfo: function(_id) {
         return Cards.findOne({"_id": _id});
@@ -37,9 +52,8 @@ Template.cardModal.helpers({
     canDelete: function(cardId){
         var currCardAuth = Cards.findOne({_id:cardId}).author;
         var user = UserMethods.getAuthor();
-        var moderator = Rooms.findOne({"roomCode":Session.get("roomCode")}).moderator;
-
-        return currCardAuth === user || moderator === user;
+        var moderator = Meteor.call("isModerator", Session.get("roomCode"));
+        return currCardAuth === user || moderator;
     },
     cardHasComments: function(cardId){
         var comments = Cards.findOne({_id:cardId}).comments;

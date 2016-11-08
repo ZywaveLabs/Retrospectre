@@ -28,15 +28,18 @@ Meteor.methods({ // eslint-disable-line
 
     addCategoryToRoom: function(category, roomCode, color){
         RoomMethods.AddCategoryToRoom(category, roomCode, color);
+    },
+
+    isModerator: function(roomCode) {
+        if(Meteor.isServer) {
+            return RoomMethods.IsModerator(roomCode, this.connection.id);
+        }
+        return RoomMethods.IsModerator(roomCode, Meteor.connection._lastSessionId);
     }
 });
 
 if(Meteor.isServer) {
     Meteor.methods({
-        isModerator: function(roomCode) {
-            return RoomMethods.IsModerator(roomCode, this.connection.id);
-        },
-
         claimModerator: function(roomCode) {
             return RoomMethods.ClaimModerator(roomCode, this.connection.id);
         },

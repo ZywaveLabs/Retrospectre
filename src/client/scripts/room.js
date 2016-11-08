@@ -6,6 +6,10 @@
 
 var isModReactiveVarHelper;
 
+// isUserModeratorOfRoom = function() {
+//     return isModReactiveVarHelper.get();
+// }
+
 Template.room.onCreated(function () {
     Meteor.autorun(function() {
         Meteor.subscribe("cards", Session.get("roomCode"));
