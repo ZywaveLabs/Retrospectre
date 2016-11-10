@@ -1,5 +1,5 @@
 /* global Rooms:true RoomMethods:true KeyNotes:true Logger:false
-Keynotes:true */
+Keynotes:true Users:false*/
 
 Rooms = new Mongo.Collection("rooms");
 KeyNotes = new Mongo.Collection("keynotes");

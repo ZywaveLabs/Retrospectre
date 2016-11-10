@@ -1,4 +1,4 @@
-/* global RoomMethods SnackbarMethods Logs DEFAULT_SNACKBAR_TIMEOUT:true*/
+/* global RoomMethods SnackbarMethods Logs DEFAULT_SNACKBAR_TIMEOUT:true UserMethods:false*/
 "use strict";
 
 Router.configure({
@@ -12,8 +12,8 @@ Router.route("/", {
 });
 
 Router.route("/room/:_roomNumber/export", {
-    name:"Export",
-    path:"/room/:_roomNumber/export",
+    name: "Export",
+    path: "/room/:_roomNumber/export",
     template: "exportRoom",
     title: "Export",
     waitOn: function() {
@@ -33,11 +33,12 @@ Router.route("/room/:_roomNumber", {
     waitOn: function() {
         return Meteor.subscribe("rooms", this.params._roomNumber);
     },
-    onBeforeAction: function (){
-        if(RoomMethods.RoomExists(this.params._roomNumber)){
+    onBeforeAction: function() {
+        if (RoomMethods.RoomExists(this.params._roomNumber)) {
             Session.set("roomCode", this.params._roomNumber);
+            Meteor.subscribe("removeUserAfterLeaveRoom",Session.get("roomCode"));
             this.next();
-        }else{
+        } else {
             SnackbarMethods.DisplayMessage("Room does not exist, redirected to home", DEFAULT_SNACKBAR_TIMEOUT);
             this.redirect("/");
         }
@@ -50,16 +51,16 @@ Router.route("/create-room", {
     title: "Create Room"
 });
 
-Router.map(function () {
+Router.map(function() {
     this.route("logdump", {
         path: "/logdump",
         where: "server",
-        action: function () {
+        action: function() {
             var query = this.params.query.query;
             var json = {};
 
             try {
-                if(query){
+                if (query) {
                     query = JSON.parse(query);
                 } else {
                     query = {};
@@ -67,19 +68,31 @@ Router.map(function () {
                 json = Logs.find(query).fetch();
                 this.response.setHeader("Content-Type", "application/json");
             } catch (e) {
-                json = {error: "Error parsing query"};
+                json = {
+                    error: "Error parsing query"
+                };
             }
             this.response.end(JSON.stringify(json));
         }
     });
 });
 
+if (Meteor.isServer) {
+    Meteor.publish("removeUserAfterLeaveRoom", function(roomCode) {
+        var id = this.userId;
+        this._session.socket.on("close",Meteor.bindEnvironment(function() {
+            if (id)
+                UserMethods.removeUserFromRoom(id, roomCode);
+        }));
+    });
+}
+
 //  If current session is on the client side then return the title of the current route taken
 if (Meteor.isClient) {
     Template.headerFooter.helpers({
-        title: function () {
+        title: function() {
             document.title = "Retrospectre - " +
-            Router.current().route.options.title;
+                Router.current().route.options.title;
             return Router.current().route.options.title;
         }
     });
