@@ -13,7 +13,9 @@ table, th ,td{
 	border: 0;
 	width: 450px;
 }
-
+#draggableCol{
+  min-height: 100px;
+}
 div.filter-form{
     text-align:center;
 }

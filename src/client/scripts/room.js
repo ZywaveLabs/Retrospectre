@@ -1,15 +1,14 @@
 "use strict";
-/* global Cards:false Rooms:false UserMethods:false RoomMethods:true*/
+/* global Cards:false Rooms:false Popup: false UserMethods:false RoomMethods:true*/
 /**
-*@purpose To provide the room template with data to display
-**/
+ *@purpose To provide the room template with data to display
+ **/
 
-Template.room.onCreated(function () {
+Template.room.onCreated(function() {
     Meteor.autorun(function() {
         Meteor.subscribe("cards", Session.get("roomCode"));
     });
 });
-
 
 Template.room.helpers({
     isModerator: function() {
@@ -18,20 +17,23 @@ Template.room.helpers({
 
     displayClaimModeratorButton: function() {
         return Rooms.findOne({"roomCode": Session.get("roomCode")}).moderator === "";
+
     },
 
-    cardsHidden: function(){
-        var room = Rooms.findOne({"roomCode": Session.get("roomCode")});
+    cardsHidden: function() {
+        var room = Rooms.findOne({
+            "roomCode": Session.get("roomCode")
+        });
         return !room.reveal;
     }
 });
 
 Template.room.events({
-    "click #revealCardButton": function(){
+    "click #revealCardButton": function() {
         Meteor.call("revealCards", Session.get("roomCode"));
     },
 
-    "click #hideCardButton": function(){
+    "click #hideCardButton": function() {
         Meteor.call("hideCards", Session.get("roomCode"));
     },
 
@@ -43,5 +45,22 @@ Template.room.events({
         var roomCode = Session.get("roomCode");
 
         Router.go("/room/" + roomCode + "/export");
+    },
+
+    "click #clearRoomButton": function() {
+        var roomCode = Session.get("roomCode"); // Get some closure in here
+        Popup.Confirm("Delete all cards in room", function() {
+            Meteor.call("deleteAllCardsInRoom", roomCode);
+        });
+    },
+
+    "click #deleteRoomButton": function() {
+        var roomCode = Session.get("roomCode");
+        Popup.Confirm("Delete this room - " + roomCode, function() {
+            Router.go("/");
+            Meteor.call("deleteSharedTextForRoom", roomCode, function() {
+                Meteor.call("deleteRoom", roomCode);
+            });
+        });
     }
 });

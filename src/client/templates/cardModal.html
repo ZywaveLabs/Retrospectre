@@ -1,6 +1,6 @@
 <template name="cardModal">
     {{#with cardModalInfo this.id}}
-        <div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modal_{{_id}}" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -88,7 +88,7 @@
                                 <i class="fa fa-cog"></i>&nbsp;</span>Edit Card
                         </button>
                         {{#if canDelete _id}}
-                            <button type="button" class="btn red accent-4" id="deleteCardButton" data-dismiss="modal">Delete Card</button>
+                            <button type="button" class="btn red accent-4" id="deleteCardButton">Delete Card</button>
                         {{/if}}
                     </div>
                 </div>

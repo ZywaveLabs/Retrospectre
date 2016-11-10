@@ -10,41 +10,56 @@ var categoriesDep = new Tracker.Dependency();
 
 Template.createRoom.onCreated(function() {
     this.subscribe("rooms");
-    Meteor.call("generateNewRoomCode", function(error, result) {
-        if (!error) {
-            Session.set("newRoomCode", result);
-            Session.set("roomCodeAvailable", true);
-        } else {
-            SnackbarMethods.DisplayMessage("Error generating new room code, " +
-                "please check console for details", DEFAULT_SNACKBAR_TIMEOUT, error);
-        }
-    });
+    if(Session.get("newRoomCode") === undefined){
+        Meteor.call("generateNewRoomCode", function(error, result) {
+            if (!error) {
+                Session.set("newRoomCode", result);
+                Session.set("roomCodeAvailable", true);
+            } else {
+                SnackbarMethods.DisplayMessage("Error generating new room code, " +
+                    "please check console for details", DEFAULT_SNACKBAR_TIMEOUT, error);
+            }
+        });
+    }else{
+        var newRoomCode = Session.get("newRoomCode");
+        var show = (newRoomCode !== null && newRoomCode !== "" &&
+            !RoomMethods.RoomExists(newRoomCode));
+
+        Session.set("roomCodeAvailable", show);
+    }
 });
 
 Template.createRoom.helpers({
-
     getNewRoomNumber: function() {
         return Session.get("newRoomCode");
     },
-
     roomNotAvailableShow: function() {
         return (Session.get("roomCodeAvailable") ? "none" : "");
     },
-
     createRoomDisable: function() {
         return (Session.get("roomCodeAvailable") ? "" : "disabled");
     },
-
     getCategories: function() {
         categoriesDep.depend();
         return categories;
     },
+    getTracker: function() {
+        return categoriesDep;
+    },
 
-    colorPicker: function(color) {
-        return {
-            id: "cardBackgroundColor",
-            type: "color",
-            value: color
+    onCategoryCreated: function() {
+        return function(currentCategories, categoryName, color) {
+            return true;
+        };
+    },
+    onCategoryRemoved: function() {
+        return function(currentCategories, categoryName, allowUpdate) {
+            allowUpdate(true);
+        };
+    },
+    onColorChanged: function() {
+        return function(currentCategories, categoryName, newColor){
+            return true;
         };
     }
 });
@@ -71,12 +86,6 @@ Template.createRoom.events({
     },
     "click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
-
-        if(!Meteor.user()){
-            SnackbarMethods.DisplayMessage("Only a moderator can create a room." +
-                  " Please sign-in", DEFAULT_SNACKBAR_TIMEOUT);
-            return;
-        }
         var roomId = Session.get("newRoomCode");
 
         if (roomId === null || roomId === "") {
@@ -108,54 +117,5 @@ Template.createRoom.events({
 
         Session.set("roomCodeAvailable", show);
         Session.set("newRoomCode", eve.target.value);
-    },
-
-    "submit .customCategory": function(eve) {
-        eve.preventDefault();
-
-        var customCategory = eve.target.addCustomCategory.value;
-        if(isDuplicate(customCategory))
-            return;
-        var nullStr = 0;
-        if(customCategory !== undefined && customCategory.length > nullStr) {
-            var range = 256;
-            var colorValue = genRandomColor(range);
-
-            categories.push({category:customCategory,
-                color:colorValue});
-            categoriesDep.changed();
-            eve.target.addCustomCategory.value = "";
-        }
-
-    },
-
-    "click #removeCategory": function() {
-        var numToRemove = 1;
-        categories.splice(categories.indexOf(this), numToRemove);
-        categoriesDep.changed();
-    },
-
-    "change #cardBackgroundColor": function(eve) {
-        this.color = eve.target.value;
     }
 });
-
-function genRandomColor(range){
-    var r = Math.floor(Math.random() * (range));
-    var g = Math.floor(Math.random() * (range));
-    var b = Math.floor(Math.random() * (range));
-    var base = 16;// prints to hex
-    return "#" + r.toString(base) +
-            g.toString(base) + b.toString(base);
-}
-
-function isDuplicate(customCategory){
-    for(var i = 0; i < categories.length; i++) {
-        if(categories[i].category === customCategory){
-            SnackbarMethods.DisplayMessage(
-                "Please enter a unique category", DEFAULT_SNACKBAR_TIMEOUT);
-            return true;
-        }
-    }
-    return false;
-}

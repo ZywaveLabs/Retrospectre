@@ -3,7 +3,7 @@ accounts-google@1.0.6
 accounts-oauth@1.1.8
 accounts-ui@1.1.6
 accounts-ui-unstyled@1.1.8
-aldeed:template-extension@4.0.0
+ahref:dragula@3.5.4
 amplify@1.0.0
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
@@ -19,6 +19,7 @@ caching-html-compiler@1.0.2
 callback-hook@1.0.4
 check@1.1.0
 coffeescript@1.0.11
+cosmos:browserify@0.9.4
 dburles:mongo-collection-instances@0.3.5
 ddp@1.2.2
 ddp-client@1.2.1
@@ -50,8 +51,6 @@ iron:location@1.0.11
 iron:middleware-stack@1.0.11
 iron:router@1.0.12
 iron:url@1.0.11
-jandres:mutation-summary@0.0.1
-jandres:template-children@0.0.6
 jquery@1.11.4
 lai:collection-extensions@0.2.1_1
 launch-screen@1.0.4
@@ -102,7 +101,6 @@ spacebars-compiler@1.0.7
 standard-minifiers@1.0.2
 templating@1.1.5
 templating-tools@1.0.0
-timdown:rangy@1.2.3
 tracker@1.0.9
 ui@1.0.8
 underscore@1.0.4
