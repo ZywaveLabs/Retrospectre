@@ -7,6 +7,7 @@
 Template.room.onCreated(function() {
     Meteor.autorun(function() {
         Meteor.subscribe("cards", Session.get("roomCode"));
+        Meteor.subscribe("usersInRoom", Session.get("roomCode"));
         if (Meteor.user()) {
             Meteor.call("addUserToRoom", Session.get("author"), Session.get("roomCode"));
         }
