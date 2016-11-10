@@ -1,5 +1,6 @@
 "use strict";
-/* global Cards:false Rooms:false CardsSearchableFieldMap: true dragula:false getMongoQueryObjectFromSearch: true UserMethods:false*/
+/* global Cards:false Rooms:false CardsSearchableFieldMap: true dragula:false getMongoQueryObjectFromSearch: true UserMethods:false RoomMethods:true*/
+
 var uniqueIdCount = 0;
 var MAX_COL_PER_ROW = 4;
 var rowOfCategories = [];
@@ -47,11 +48,12 @@ Template.cardGrid.helpers({
     },
 
     cards : function(category) {
-        var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
+        var roomCode = Session.get("roomCode");
+        var roomData = Rooms.findOne({"roomCode": roomCode});
         var author = UserMethods.getAuthor();
 
         var searchQuery = getMongoQueryObjectFromSearch(CardsSearchableFieldMap);
-        var revealQuery = (roomData.reveal || roomData.owner === Meteor.userId()) ? [{}] : [{"reveal": true}, {"author": author}];//eslint-disable-line
+        var revealQuery = (roomData.reveal || RoomMethods.IsModerator(roomCode)) ? [{}] : [{"reveal": true}, {"author": author}];//eslint-disable-line
         var baseQuery = {
             "category": category,
             $and:searchQuery,

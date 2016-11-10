@@ -36,6 +36,8 @@ Router.route("/room/:_roomNumber", {
     onBeforeAction: function (){
         if(RoomMethods.RoomExists(this.params._roomNumber)){
             Session.set("roomCode", this.params._roomNumber);
+
+            Meteor.subscribe("resetModeratorOnReset", Session.get("roomCode"));
             this.next();
         }else{
             SnackbarMethods.DisplayMessage("Room does not exist, redirected to home", DEFAULT_SNACKBAR_TIMEOUT);
@@ -73,6 +75,27 @@ Router.map(function () {
         }
     });
 });
+
+Router.onBeforeAction(function(req, res, next) {
+    var roomCode = Session.get("roomCode");
+    // resets moderator if user redirects out of room
+    if(roomCode !== undefined && !req.url.startsWith("/room/" + roomCode) && !req.url.startsWith("/create-room")) {
+        Meteor.call("resetModerator", roomCode);
+    }
+    next();
+});
+
+if(Meteor.isServer) {
+    Meteor.publish("resetModeratorOnReset", function(roomCode){
+        var id = this._session.id;
+        this._session.socket.on("close", Meteor.bindEnvironment(function() {
+            if(RoomMethods.IsModerator(roomCode, id)) {
+                RoomMethods.ResetModerator(roomCode);
+            }
+        }, function(e){}));
+    });
+
+}
 
 //  If current session is on the client side then return the title of the current route taken
 if (Meteor.isClient) {

@@ -1,5 +1,5 @@
 "use strict";
-/* global SnackbarMethods:false Card:false Rooms:false s:false DEFAULT_SNACKBAR_TIMEOUT:false*/
+/* global SnackbarMethods:false Card:false Rooms:false s:false DEFAULT_SNACKBAR_TIMEOUT:false UserMethods:false*/
 
 var ModalCategory = function(abbrv,category){
     this.abbrv = abbrv;
@@ -51,9 +51,7 @@ Template.cardSubmitModal.events({
 });
 
 function getCardData(eve){
-    var author = Meteor.user() ?
-                    Meteor.user().profile.name :
-                    Session.get("author");
+    var author = UserMethods.getAuthor();
     var thought = eve.target.thoughts.value;
     var category = eve.target.categoryDropdown.value;
     if(completeCard(category,thought,author))

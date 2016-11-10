@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false Rooms:false Popup: false*/
+/* global Cards:false Rooms:false Popup: false UserMethods:false RoomMethods:true*/
 /**
  *@purpose To provide the room template with data to display
  **/
@@ -10,67 +10,14 @@ Template.room.onCreated(function() {
     });
 });
 
-
-Template.room.onRendered(function() {
-    $(".dropdown-button").dropdown({
-        inDuration: 300,
-        outDuration: 225,
-        constrain_width: false, // eslint-disable-line
-        hover: false,
-        gutter: 0,
-        belowOrigin: false,
-        alignment: "left"
-    });
-});
-
 Template.room.helpers({
-
-    getCategories: function() {
-        return Rooms.findOne({
-            "roomCode": Session.get("roomCode")
-        }).categories;
-    },
-    cards: function(category) {
-        var roomData = Rooms.findOne({
-            "roomCode": Session.get("roomCode")
-        });
-        var cards = [];
-        var author;
-
-        if (Meteor.user()) {
-            author = Meteor.user().profile.name;
-        } else {
-            author = Session.get("author");
-        }
-        if (roomData.reveal || roomData.ower === Meteor.userId()) {
-            cards = Cards.find({
-                "roomCode": Session.get("roomCode"),
-                "category": category
-            });
-        } else {
-            cards = Cards.find({
-                "roomCode": Session.get("roomCode"),
-                "category": category,
-                $or: [{
-                    "reveal": true
-                }, {
-                    "author": author
-                }]
-            }, {
-                sort: {
-                    createdAt: 0
-                }
-            });
-        }
-
-        return cards;
-    },
-
     isModerator: function() {
-        var room = Rooms.findOne({
-            "roomCode": Session.get("roomCode")
-        });
-        return room.owner === Meteor.userId();
+        return RoomMethods.IsModerator(Session.get("roomCode"));
+    },
+
+    displayClaimModeratorButton: function() {
+        return Rooms.findOne({"roomCode": Session.get("roomCode")}).moderator === "";
+
     },
 
     cardsHidden: function() {
@@ -88,6 +35,10 @@ Template.room.events({
 
     "click #hideCardButton": function() {
         Meteor.call("hideCards", Session.get("roomCode"));
+    },
+
+    "click #claimModeratorButton": function() {
+        Meteor.call("claimModerator", Session.get("roomCode"));
     },
 
     "click #exportButton": function() {

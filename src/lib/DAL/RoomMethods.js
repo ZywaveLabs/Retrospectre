@@ -80,10 +80,32 @@ RoomMethods.HideCards = function(roomCode){
         reveal: false
     }});
 };
-RoomMethods.IsModerator = function(roomCode, userId){
-    var currRoomOwner = Rooms.findOne({"roomCode":roomCode}).owner;
-    return currRoomOwner === userId;
+
+RoomMethods.IsModerator = function(roomCode, moderatorID){
+    var room = Rooms.findOne({"roomCode":roomCode});
+    if(moderatorID === undefined) {
+        if(Meteor.isServer) {
+            moderatorID = this.connection.id;
+        } else {
+            moderatorID = Meteor.connection._lastSessionId;
+        }
+    }
+    return room.moderator === moderatorID;
 };
+
+RoomMethods.ClaimModerator = function(roomCode, moderatorId) {
+    var currentModerator = Rooms.findOne({"roomCode":roomCode}).moderator;
+    if(currentModerator === "") {
+        Rooms.update({roomCode: roomCode}, {$set:{moderator: moderatorId}});
+        return true;
+    }
+    return false;
+};
+
+RoomMethods.ResetModerator = function(roomCode) {
+    Rooms.update({roomCode: roomCode}, {$set:{moderator: ""}});
+};
+
 RoomMethods.DeleteCategoryFromRoom = function(category, roomCode){
     Rooms.update(
       { roomCode: roomCode },
@@ -95,12 +117,5 @@ RoomMethods.AddCategoryToRoom = function(category, roomCode, color){
     Rooms.update(
         { roomCode: roomCode },
         { $push: { categories: { category: category, color: color}}}
-    );
-};
-
-RoomMethods.UpdateCategoryColor = function(category, roomCode, newColor){
-    Rooms.update(
-        { roomCode: roomCode, "categories.category": category },
-        {$set: {"categories.$.color" : newColor }}
     );
 };

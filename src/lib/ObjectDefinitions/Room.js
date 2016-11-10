@@ -4,7 +4,7 @@ RoomObject
 roomCode - {string} Room that the card is in
 categories - {string[]} Categories for the room
 createdAt - {datetime} Will default to now, but can pass a time for testing
-owner - {string} Person who created the room
+moderator - {string} Connction id of user who has moderator power in the room
 reveal - {boolean} If the cards should be visible to everyone besides author
 anonymousAccess - {object} Access that people who are not signed in have
 */
@@ -19,7 +19,7 @@ Room = function(){
     this.categories = [{category:"Went Well", color:"#00ff00"},
                        {category:"Went Poorly", color:"#ff0000"}];
     this.createdAt = new Date();
-    this.owner = "";
+    this.moderator = "";
     this.reveal = false;
 };
 
@@ -38,8 +38,8 @@ Room.prototype.createdAtTime = function (createdAt) {
     return this;
 };
 
-Room.prototype.createdBy = function (moderator) {
-    this.owner = moderator;
+Room.prototype.moderatedBy = function (moderator) {
+    this.moderator = moderator;
     return this;
 };
 

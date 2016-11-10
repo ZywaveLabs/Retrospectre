@@ -1,4 +1,4 @@
-/* globals Rooms:false RoomMethods:false SnackbarMethods:false Room:false DEFAULT_SNACKBAR_TIMEOUT:false*/
+/* globals  RoomMethods:false SnackbarMethods:false Room:false DEFAULT_SNACKBAR_TIMEOUT:false UserMethods:false*/
 "use strict";
 
 // default categories
@@ -86,12 +86,6 @@ Template.createRoom.events({
     },
     "click #createAndJoinRoomButton": function(eve) {
         eve.preventDefault();
-
-        if(!Meteor.user()){
-            SnackbarMethods.DisplayMessage("Only a moderator can create a room." +
-                  " Please sign-in", DEFAULT_SNACKBAR_TIMEOUT);
-            return;
-        }
         var roomId = Session.get("newRoomCode");
 
         if (roomId === null || roomId === "") {
@@ -103,13 +97,16 @@ Template.createRoom.events({
                 .withRoomCode(roomId)
                 .withCategories(categories)
                 .withRevealStatusSetTo(false)
-                .createdBy(Meteor.userId());
+                .moderatedBy(Meteor.connection._lastSessionId);
 
         Meteor.call("createRoom", room, function(err,result){
-            Session.set("roomCode", roomId);
-            Router.go("/room/" + roomId);
-            if(!err)
+            if(err) {
+                SnackbarMethods.DisplayMessage("Ummmm...somthing bad happened @(~_~)@", DEFAULT_SNACKBAR_TIMEOUT);
+            } else {
+                Session.set("roomCode", roomId);
+                Router.go("/room/" + roomId);
                 Session.set("docId",result);
+            }
         });
     },
 

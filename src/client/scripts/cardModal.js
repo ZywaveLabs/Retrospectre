@@ -1,11 +1,13 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false Popup:false*/
+/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false Popup:false UserMethods:false RoomMethods:true*/
+
 const MinCommentLen = 4;
 var EditedCard = function(thought,tags,category){
     this.thought = thought;
     this.tags = tags;
     this.category = category;
 };
+
 Template.cardModal.helpers({
     cardModalInfo: function(_id) {
         return Cards.findOne({"_id": _id});
@@ -37,9 +39,9 @@ Template.cardModal.helpers({
     canDelete: function(cardId){
         var currCardAuth = Cards.findOne({_id:cardId}).author;
         var user = Meteor.user() ? Meteor.user().profile.name : Session.get("author");
-        var moderator = Rooms.findOne({"roomCode":Session.get("roomCode")}).owner;
 
-        return (currCardAuth === user || moderator === Meteor.userId()) && Session.get("editCardMode") === false;
+        return (currCardAuth === user || RoomMethods.IsModerator(Session.get("roomCode")))
+            && Session.get("editCardMode") === false;
     },
     cardHasComments: function(cardId){
         var comments = Cards.findOne({_id:cardId}).comments;
@@ -122,13 +124,8 @@ Template.registerHelper("equals", function (a, b) {
 function isOwner(_id){
     var card = Cards.findOne({"_id": _id});
 
-    if (Meteor.user()) {
-        if(Meteor.user().profile.name === card.author){
-            return true;
-        }
-    } else if(Session.get("author") === card.author){
+    if(UserMethods.getAuthor() === card.author)
         return true;
-    }
     return false;
 }
 
