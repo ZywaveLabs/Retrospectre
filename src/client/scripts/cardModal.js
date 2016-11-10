@@ -1,24 +1,11 @@
 "use strict";
-/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false UserMethods:false*/
+/* global Cards:false SnackbarMethods:false UserMethods:false DEFAULT_SNACKBAR_TIMEOUT:false Rooms:false UserMethods:false RoomMethods:true*/
 const MinCommentLen = 4;
 var EditedCard = function(thought,tags,category){
     this.thought = thought;
     this.tags = tags;
     this.category = category;
 };
-
-
-var isModReactiveVarHelper;
-
-Template.cardModal.onCreated(function () {
-    this.isUserRoomModerator = new ReactiveVar();
-    this.isUserRoomModerator.set(false);
-    isModReactiveVarHelper = this.isUserRoomModerator;
-
-    Meteor.call("isModerator", Session.get("roomCode"), function(error, response){
-        isModReactiveVarHelper.set(response);
-    });
-});
 
 Template.cardModal.helpers({
     cardModalInfo: function(_id) {
@@ -50,10 +37,8 @@ Template.cardModal.helpers({
     },
     canDelete: function(cardId){
         var currCardAuth = Cards.findOne({_id:cardId}).author;
-        var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var user = UserMethods.getAuthor();
-        var moderator = Template.instance().isUserRoomModerator.get();
-        return currCardAuth === user || roomData.moderator === Meteor.connection._lastSessionId;
+        return currCardAuth === user || RoomMethods.IsModerator(Session.get("roomCode"));
     },
     cardHasComments: function(cardId){
         var comments = Cards.findOne({_id:cardId}).comments;

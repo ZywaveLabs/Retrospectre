@@ -28,13 +28,6 @@ Meteor.methods({ // eslint-disable-line
 
     addCategoryToRoom: function(category, roomCode, color){
         RoomMethods.AddCategoryToRoom(category, roomCode, color);
-    },
-
-    isModerator: function(roomCode) {
-        if(Meteor.isServer) {
-            return RoomMethods.IsModerator(roomCode, this.connection.id);
-        }
-        return RoomMethods.IsModerator(roomCode, Meteor.connection._lastSessionId);
     }
 });
 
@@ -45,8 +38,7 @@ if(Meteor.isServer) {
         },
 
         resetModerator: function(roomCode) {
-            var moderatorId = this.connection.id;
-            if(RoomMethods.IsModerator(roomCode, moderatorId)) {
+            if(RoomMethods.IsModerator(roomCode)) {
                 RoomMethods.ResetModerator(roomCode);
             }
         }

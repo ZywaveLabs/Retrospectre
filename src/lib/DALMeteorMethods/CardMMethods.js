@@ -9,8 +9,8 @@ Meteor.methods({
     submitCard: function (cardObject) {
         CardMethods.SubmitCard(cardObject);
     },
-    deleteCard: function(cardId, roomCode) {
-        var isModerator = Meteor.call("isModerator", Meteor.get("roomCode"));
+    deleteCard: function(cardId) {
+        var isModerator = RoomMethods.IsModerator(Meteor.get("roomCode"));
         var cardAuthor = Cards.findOne({_id:cardId}).author;
         var currUser = UserMethods.getAuthor();
 

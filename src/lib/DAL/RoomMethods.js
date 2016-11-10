@@ -83,6 +83,13 @@ RoomMethods.HideCards = function(roomCode){
 
 RoomMethods.IsModerator = function(roomCode, moderatorID){
     var room = Rooms.findOne({"roomCode":roomCode});
+    if(moderatorID === undefined) {
+        if(Meteor.isServer) {
+            moderatorID = this.connection.id;
+        } else {
+            moderatorID = Meteor.connection._lastSessionId;
+        }
+    }
     return room.moderator === moderatorID;
 };
 

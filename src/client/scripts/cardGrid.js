@@ -1,5 +1,5 @@
 "use strict";
-/* global Cards:false Rooms:false UserMethods:false*/
+/* global Cards:false Rooms:false UserMethods:false RoomMethods:true*/
 var uniqueIdCount = 0;
 
 Template.cardGrid.onRendered(function(){
@@ -17,15 +17,16 @@ Template.cardGrid.helpers({
     cards : function(category) {
         var roomData = Rooms.findOne({"roomCode": Session.get("roomCode")});
         var cards = [];
+        var roomCode = Session.get("roomCode");
         var author = UserMethods.getAuthor();
-        if(roomData.reveal || Meteor.connection._lastSessionId === roomData.moderator){
+        if(roomData.reveal || RoomMethods.IsModerator(roomCode)){
             cards = Cards.find({
-                "roomCode": Session.get("roomCode"),
+                "roomCode": roomCode,
                 "category": category
             },{sort:{createdAt:-1}});
         } else {
             cards = Cards.find({
-                "roomCode": Session.get("roomCode"),
+                "roomCode": roomCode,
                 "category": category,
                 $or: [{"reveal": true}, {"author": author}]
             },{sort: {createdAt: -1}});
